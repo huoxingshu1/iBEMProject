@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Elastic">
+      <UniqueIdentifier>{cb7816f9-900c-48ee-a815-0577d02b128c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\service">
+      <UniqueIdentifier>{4854b37a-b802-4986-b804-06426cf23443}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Elastic">
+      <UniqueIdentifier>{83965f1d-1ae1-4ee2-b9d1-8f1132764721}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BEMBuilderElastic3D.cpp">
+      <Filter>Source Files\Elastic</Filter>
+    </ClCompile>
+    <ClCompile Include="BEMElasticHelper3D.cpp">
+      <Filter>Source Files\Elastic</Filter>
+    </ClCompile>
+    <ClCompile Include="integratorElastic3D.cpp">
+      <Filter>Source Files\Elastic</Filter>
+    </ClCompile>
+    <ClCompile Include="integratorElastic3DHelper.cpp">
+      <Filter>Source Files\Elastic</Filter>
+    </ClCompile>
+    <ClCompile Include="postProcessorElastic3D.cpp">
+      <Filter>Source Files\Elastic</Filter>
+    </ClCompile>
+    <ClCompile Include="ibemRunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="inputGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BEMBuilderElastic3D.h">
+      <Filter>Header Files\Elastic</Filter>
+    </ClInclude>
+    <ClInclude Include="BEMElasticHelper3D.h">
+      <Filter>Header Files\Elastic</Filter>
+    </ClInclude>
+    <ClInclude Include="configElastic3D.h">
+      <Filter>Header Files\Elastic</Filter>
+    </ClInclude>
+    <ClInclude Include="integratorElastic3D.h">
+      <Filter>Header Files\Elastic</Filter>
+    </ClInclude>
+    <ClInclude Include="iBEMSystemService.h">
+      <Filter>Header Files\service</Filter>
+    </ClInclude>
+    <ClInclude Include="postprocessService.h">
+      <Filter>Header Files\service</Filter>
+    </ClInclude>
+    <ClInclude Include="preprocessService.h">
+      <Filter>Header Files\service</Filter>
+    </ClInclude>
+    <ClInclude Include="systemSolverService.h">
+      <Filter>Header Files\service</Filter>
+    </ClInclude>
+    <ClInclude Include="BEMBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="classFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalConstant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="integrator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="service.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serviceWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="integratorElastic3DHelper.h">
+      <Filter>Header Files\Elastic</Filter>
+    </ClInclude>
+    <ClInclude Include="postProcessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="postProcessorElastic3D.h">
+      <Filter>Header Files\Elastic</Filter>
+    </ClInclude>
+    <ClInclude Include="systemSolverElastic3D.h">
+      <Filter>Header Files\Elastic</Filter>
+    </ClInclude>
+    <ClInclude Include="systemSolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ibemRunner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inputGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
