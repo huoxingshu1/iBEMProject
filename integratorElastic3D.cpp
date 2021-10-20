@@ -415,7 +415,7 @@ void integratorElastic3D::addFluxEquivalentInclusion(Config& config_) {
 	{
 		for (int j = 0; j < 78 * num; j++)
 		{
-			HMAT(3 * NN + i, 3 * NN + j) = A[i][j];
+			HMAT(3 * NN + i, 3 * NN + j) += A[i][j];
 		}
 	}
 
@@ -530,7 +530,7 @@ void integratorElastic3D::addFluxEquivalentFirstOrderInclusion(Config& config_) 
 	{
 		for (int j = 0; j < 78 * num; j++)
 		{
-			HMAT(3 * NN + i, 3 * NN + j) = A[i][j];
+			HMAT(3 * NN + i, 3 * NN + j) += A[i][j];
 		}
 	}
 
@@ -645,7 +645,7 @@ void integratorElastic3D::addFluxEquivalentSecondOrderInclusion(Config& config_)
 	{
 		for (int j = 0; j < 78 * num; j++)
 		{
-			HMAT(3 * NN + i, 3 * NN + j) = A[i][j];
+			HMAT(3 * NN + i, 3 * NN + j) += A[i][j];
 		}
 	}
 

@@ -177,16 +177,16 @@ public:
 
 		getline(myfile, TT);
 		Title = TT;
-		cout << "Title is: " << T << "\n";
+		cout << "Title is: " << TT << "\n";
 
 		getline(myfile, TT);
 		EE = stod(TT);
 
-		printf("EE = %f \n", EE);
-		printf("mu_0 = %f \n", mu_0);
+		printf("EE = %f \n", EE);		
 
 		getline(myfile, TT);
 		XNU = stod(TT);
+		printf("mu_0 = %f \n", XNU);
 
 		getline(myfile, TT);
 		NN = stoi(TT);

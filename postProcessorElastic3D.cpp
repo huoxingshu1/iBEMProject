@@ -549,6 +549,15 @@ void postProcessorElastic3D::getFlux (Config& config_) {
 
 	config.s_pt = s_pt;
 
+	ofstream myfile7;
+	myfile7.open("stress.txt");
+
+	for (int KK = 0; KK < nump; KK++) {
+		myfile7 << std::scientific << config.s_pt[KK][0] << " " << config.s_pt[KK][1] << " " << config.s_pt[KK][2] << " " << config.s_pt[KK][3] << " " << config.s_pt[KK][4] << " " << config.s_pt[KK][5];
+		myfile7 << "\n";
+	}
+	myfile7.close();
+
 };
 
 

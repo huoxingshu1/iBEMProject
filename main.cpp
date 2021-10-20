@@ -8,7 +8,7 @@ int main() {
 
 	//define the target service!!!!! {"preprocessService", "iBEMSystemService", "systemSolverService", "postprocessService" }
 
-	string mainService = "iBEMSystemService";
+	string mainService = "postprocessService";
 	ibemRunner runner{};
 	runner.run(mainService);
 	
