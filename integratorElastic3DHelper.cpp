@@ -1,4 +1,5 @@
 #include "integratorElastic3DHelper.h"
+#include "configElastic3D.h"
 #include <math.h>
 #include"Eigen/Dense"
 

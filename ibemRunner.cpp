@@ -19,9 +19,9 @@ void ibemRunner::run(string mainService) {
 	vector<string> iBEMSystemService;
 	vector<string> systemSloverService;
 	vector<string> postprocessService;
-	map<string, int> indegree;                     // a mapping describes the number of prerequisites for each service
-	map<string, vector<string>> dependency;        // dependency map
-	map<string, vector<string>> graph;             // a mapping describes the dependents for each service
+	std::map<string, int> indegree;                     // a mapping describes the number of prerequisites for each service
+	std::map<string, vector<string>> dependency;        // dependency map
+	std::map<string, vector<string>> graph;             // a mapping describes the dependents for each service
 
 
 	// read the caltulation type from input fiels

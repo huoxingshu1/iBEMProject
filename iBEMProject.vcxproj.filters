@@ -48,6 +48,9 @@
     <ClCompile Include="inputGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="configElastic3D.cpp">
+      <Filter>Source Files\Elastic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BEMBuilderElastic3D.h">

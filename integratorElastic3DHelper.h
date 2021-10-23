@@ -2,10 +2,6 @@
 #include "GlobalConstant.h"
 #include "Eigen/Dense"
 
-extern double mu_0;
-extern double nu0;
-extern double mu_1;
-extern double nu1;
 
 using namespace Eigen;
 

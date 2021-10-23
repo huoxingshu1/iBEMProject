@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="BEMBuilderElastic3D.cpp" />
     <ClCompile Include="BEMElasticHelper3D.cpp" />
+    <ClCompile Include="configElastic3D.cpp" />
     <ClCompile Include="inputGenerator.cpp" />
     <ClCompile Include="integratorElastic3D.cpp" />
     <ClCompile Include="integratorElastic3DHelper.cpp" />

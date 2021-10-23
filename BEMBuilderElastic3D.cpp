@@ -1,12 +1,13 @@
 #include "configElastic3D.h"
+#include "integratorElastic3DHelper.h"
 #include "BEMBuilderElastic3D.h"
 #include "BEMElasticHelper3D.h"
-#include "integratorElastic3DHelper.h"
 
-double mu_0 = 400000.0;
-double nu0 = 0.25;
-double mu_1 = 800000.0;
-double nu1 = 0.25;
+
+//double mu_0 = 400000.0;
+//double nu0 = 0.25;
+//double mu_1 = 800000.0;
+//double nu1 = 0.25;
 
 void get_for_stress_BEM2(double* Vnorm, double* point, double* GCcor, double** Dstwz, double** Dsuwz)
 {
@@ -1341,8 +1342,8 @@ void BEMBuilderElastic3D::addBEM(Config& config_) {
 	Ref<MatrixXd> GMAT = config.GMAT;
 	int Dimension = config.Dimension;
 
-	EE = 2 * mu_0 * (1 + nu0);
-	XNU = nu0;
+	//EE = 2 * mu_0 * (1 + nu0);
+	//XNU = nu0;
 
 	MatrixXd Diag = MatrixX3d::Zero(Dimension * NN, Dimension);
 
