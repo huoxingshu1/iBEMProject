@@ -24,11 +24,21 @@
 
 #include "inputGenerator.h"
 
+// this source file specifies the types of PDEs to solve
 shared_ptr<Config> inputGenerator(int ID) {
+	
+	switch (ID):{
+		case 1:
+			return make_shared<configElastic3D>();
+			break;
+		case 2:
+			return make_shared<configElastic2D>();
+	}
 
+	/*
 	if (ID == 1) {
 		return make_shared<configElastic3D>();
-	}
+	}*/
 
 	return NULL;
 }
