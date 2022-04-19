@@ -3,12 +3,13 @@
  */
 
 # include "BEMElasticHelper2D.h"
-# include "Eigen/Dense"
+# include "configElastic2D.h"
+#include "GlobalConstant.h"
 
 /*----------------------------------------------------------
         Apply shape function in local and global coordinate
 ------------------------------------------------------------*/
-inline void  Cartesian(double** Elcor, double& N1, double& N2, double& N3, double* GCcor)
+void BEM_2D::Cartesian(double** Elcor, double& N1, double& N2, double& N3, double* GCcor)
 {
     for (int i = 0; i < 2; i++) {
         GCcor[i] = N1 * Elcor[0][i] + N2 * Elcor[1][i] + N3 * Elcor[2][i];
@@ -19,7 +20,7 @@ inline void  Cartesian(double** Elcor, double& N1, double& N2, double& N3, doubl
         Serendip_func: calculate the shape function of
         the quadratic 2D element
 ------------------------------------------------------------*/
-inline void Serendip_func(double xsi, double& N1, double& N2, double& N3, double** Ni, double* N)
+void BEM_2D::Serendip_func(double xsi, double& N1, double& N2, double& N3, double** Ni, double* N)
 {
     // Ni is used for int_stress function
     // j is the product of node freedom 2 times nodes number 3
@@ -48,7 +49,7 @@ inline void Serendip_func(double xsi, double& N1, double& N2, double& N3, double
            Calculate the derivative of the shape functions
            and jacobian, the length of the element
 -----------------------------------------------------------------*/
-inline void Normal_Jac(double xsi, double** Elcor, double& Jac, double* Vnorm)
+void BEM_2D::Normal_Jac(double xsi, double** Elcor, double& Jac, double* Vnorm)
 {
     double dN1_dxsi, dN2_dxsi, dN3_dxsi;
     double V_xsi[2]; // the vnorm
@@ -78,7 +79,7 @@ inline void Normal_Jac(double xsi, double** Elcor, double& Jac, double* Vnorm)
 /*------------------------------------------------------------------
         Compute the element length using Gauss integral method
 --------------------------------------------------------------------*/
-inline double Compute_length(double xsi, double weight, double** Elcor)
+double BEM_2D::Compute_length(double xsi, double weight, double** Elcor)
 {
     // loop n times in the external loops
     double V_xsi[2]; double N1, N2, N3, dElength;
@@ -104,7 +105,7 @@ inline double Compute_length(double xsi, double weight, double** Elcor)
           The boundary integral origin function
           Tk (H),  Uk(G), plane strain problem
 ---------------------------------------------------------------------*/
-inline void UK(double* dxr, double r, double E, double nu, double** UP)
+void BEM_2D::UK(double* dxr, double r, double E, double nu, double** UP)
 {
     double mu, c1, conr, c, clog;
     // lame constants
@@ -124,7 +125,7 @@ inline void UK(double* dxr, double r, double E, double nu, double** UP)
           The boundary integral origin function
           Tk (H),  Uk(G), plane strain problem
 -----------------------------------------------------------------------*/
-inline void TK(double* dxr, double r, double E, double nu, double** TP, double* Vnorm)
+void BEM_2D::TK(double* dxr, double r, double E, double nu, double** TP, double* Vnorm)
 {
     double c3, conr, Costh, c2;
     c3 = 1.0 - 2.0 * nu;
@@ -144,4 +145,114 @@ inline void TK(double* dxr, double r, double E, double nu, double** TP, double* 
         }
     }
 
+}
+
+/*
+    Define the partial derivatives of Green's function
+*/
+/*----------------------------------------------------------------------------------------------*/
+double BEM_2D::Green_01(double* x, int i, int j, int k)
+{
+    // first derivative of Green's function
+    double result, para;
+    double r = sqrt(x[0] * x[0] + x[1] * x[1]);
+    para = (1.0) / (8.0 * pi * (1.0 - nu0) * mu_0);
+    double cons = -(3.0 - 4.0 * nu0);
+    double term1 = cons * ((d[i][j] * x[k]) / (r * r));
+    double term2 = (d[i][k] * x[j] + d[j][k] * x[i]) / (r * r);
+    double term3 = (-2.0 / (r * r * r * r)) * (x[i] * x[j] * x[k]);
+
+    result = para * (term1 + term2 + term3);
+    return result;
+
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+double BEM_2D::Green_02(double* x, int i, int j, int k, int l)
+{
+    // second derivative of the Green's function
+    double result, para, cons;
+    double r = sqrt(x[0] * x[0] + x[1] * x[1]);
+    para = (1.0) / (8.0 * pi * (1.0 - nu0) * mu_0);
+    cons = -(3.0 - 4.0 * nu0);
+
+    double term1 = cons * d[i][j] * ((d[k][l] / (r * r)) - (2.0 / pow(r, 4)) * x[k] * x[l]);
+    double term2 = (1.0 / (r * r)) * (d[i][k] * d[j][l] + d[j][k] * d[i][l]);
+    double term3 = (-2.0 / pow(r, 4)) * x[l] * (d[i][k] * x[j] + d[j][k] * x[i]);
+    double term4 = (-2.0 / pow(r, 4)) * (d[i][l] * x[j] * x[k] + d[j][l] * x[i] * x[k] + d[k][l] * x[i] * x[j]);
+    double term5 = (8.0 / pow(r, 6)) * x[i] * x[k] * x[l] * x[j];
+
+    result = para * (term1 + term2 + term3 + term4 + term5);
+    return result;
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+double BEM_2D::Green_03(double* x, int i, int j, int k, int l, int s)
+{
+    // third derivatives of the Green's function
+    double result, para, cons;
+    double term1, term2, term3, term4, term5, term6, term7, term8;
+    result = 0.0;
+    double r = sqrt(x[0] * x[0] + x[1] * x[1]);
+    para = (1.0) / (8.0 * pi * (1.0 - nu0) * mu_0);
+    cons = -(3.0 - 4.0 * nu0);
+
+    term1 = cons * d[i][j] * (-d[k][l] * 2.0 * x[s] * pow(r, -4.0) - 2.0 * (pow(r, -4.0) * (d[s][k] * x[l] + d[l][s] * x[k]) - 4.0 * pow(r, -6.0) * x[s] * x[k] * x[l]));
+    term2 = -2.0 * pow(r, -4.0) * x[s] * (d[i][k] * d[j][l] + d[i][l] * d[j][k]);
+    term8 = 8.0 * pow(r, -6.0) * (d[i][k] * x[j] * x[l] + d[j][k] * x[i] * x[l]) * x[s];
+    term3 = -2.0 * pow(r, -4.0) * (d[i][k] * (d[l][s] * x[j] + d[j][s] * x[l]) + d[j][k] * (d[i][s] * x[l] + d[l][s] * x[i]));
+    term4 = -2.0 * pow(r, -4.0) * (d[i][l] * (d[j][s] * x[k] + d[k][s] * x[j]) + d[j][l] * (d[s][i] * x[k] + d[s][k] * x[i]) + d[k][l] * (d[i][s] * x[j] + d[j][s] * x[i]));
+    term5 = 8.0 * pow(r, -6.0) * x[s] * (d[i][l] * x[j] * x[k] + d[j][l] * x[i] * x[k] + d[k][l] * x[i] * x[j]);
+    term6 = 8.0 * pow(r, -6.0) * (d[i][s] * x[j] * x[k] * x[l] + d[j][s] * x[i] * x[k] * x[l] + d[k][s] * x[i] * x[j] * x[l] + d[l][s] * x[i] * x[j] * x[k]);
+    term7 = -48.0 * pow(r, -8.0) * x[i] * x[j] * x[k] * x[l] * x[s];
+
+    result = para * (term1 + term2 + term3 + term4 + term5 + term6 + term7 + term8);
+
+    return result;
+}
+
+/*------------------------------------------------------------------------------------------------*/
+double BEM_2D::Green_04(double* x, int i, int j, int k, int l, int s, int m)
+{
+    // fourth derivatives of the Green's function
+    double result;
+    double para = (1.0) / (8.0 * pi * (1.0 - nu0) * mu_0);
+    double r = sqrt(x[0] * x[0] + x[1] * x[1]);
+    double term1 = -(3.0 - 4.0 * nu0) * d[i][j] * (
+        -2.0 * d[k][l] * (pow(r, -4.0) * d[s][m] - 4.0 * x[s] * x[m] * pow(r, -6.0))
+        - 2.0 * ((d[k][s] * d[l][m] + d[l][s] * d[k][m]) * pow(r, -4.0) - 4.0 * x[m] * pow(r, -6.0) * (d[k][s] * x[l] + d[l][s] * x[k]))
+        + 8.0 * ((d[s][m] * x[k] * x[l] + d[k][m] * x[s] * x[l] + d[l][m] * x[s] * x[k]) * pow(r, -6.0) - 6.0 * (x[s] * x[k] * x[l] * x[m]) * pow(r, -8.0))
+        );
+
+    double term2 = -2.0 * (d[i][k] * d[j][l] + d[i][l] * d[j][k]) * (d[s][m] * pow(r, -4.0) - 4.0 * x[s] * x[m] * pow(r, -6.0));
+
+    double term3 = 8.0 * pow(r, -6.0) * (d[s][m] * (d[i][k] * x[j] * x[l] + d[j][k] * x[l] * x[i]) + x[s] * (d[i][k] * (d[j][m] * x[l] + d[l][m] * x[j]) + d[j][k] * (d[i][m] * x[l] + d[l][m] * x[i])))
+        - 48.0 * x[s] * x[m] * pow(r, -8.0) * (d[i][k] * x[j] * x[l] + d[j][k] * x[i] * x[l]);
+
+    double term4 = -2.0 * ((d[i][k] * (d[l][s] * d[j][m] + d[j][s] * d[l][m]) + d[j][k] * (d[i][s] * d[l][m] + d[l][s] * d[i][m])) * pow(r, -4.0)
+        - 4.0 * x[m] * pow(r, -6.0) * (d[i][k] * (d[l][s] * x[j] + d[j][s] * x[l]) + d[j][k] * (d[i][s] * x[l] + d[l][s] * x[i])));
+
+    double term5 = -2.0 * ((d[i][l] * (d[j][s] * d[k][m] + d[k][s] * d[j][m]) + d[j][l] * (d[s][i] * d[k][m] + d[s][k] * d[i][m]) + d[k][l] * (d[i][s] * d[j][m] + d[j][s] * d[i][m])) * pow(r, -4.0)
+        - 4.0 * (d[i][l] * (d[j][s] * x[k] + d[k][s] * x[j]) + d[j][l] * (d[s][i] * x[k] + d[s][k] * x[i]) + d[k][l] * (d[i][s] * x[j] + d[j][s] * x[i])) * x[m] * pow(r, -6.0));
+
+    double term6 = 8.0 * ((d[s][m] * (d[i][l] * x[j] * x[k] + d[j][l] * x[i] * x[k] + d[k][l] * x[i] * x[j]) + x[s] * (d[i][l] * (d[j][m] * x[k] + d[k][m] * x[j]) + d[j][l] * (d[i][m] * x[k] + d[k][m] * x[i]) + d[k][l] * (d[i][m] * x[j] + d[j][m] * x[i]))) * pow(r, -6.0)
+        - 6.0 * pow(r, -8.0) * x[s] * x[m] * (d[i][l] * x[j] * x[k] + d[j][l] * x[i] * x[k] + d[k][l] * x[i] * x[j]));
+
+    double term7 = 8.0 * (
+        (d[i][s] * (d[j][m] * x[k] * x[l] + d[k][m] * x[j] * x[l] + d[l][m] * x[k] * x[j])
+            + d[j][s] * (d[i][m] * x[k] * x[l] + d[k][m] * x[i] * x[l] + d[l][m] * x[i] * x[k])
+            + d[k][s] * (d[i][m] * x[j] * x[l] + d[j][m] * x[i] * x[l] + d[l][m] * x[i] * x[j])
+            + d[l][s] * (d[i][m] * x[j] * x[k] + d[j][m] * x[i] * x[k] + d[k][m] * x[i] * x[j])) * pow(r, -6.0)
+        - 6.0 * pow(r, -8.0) * x[m] * (d[i][s] * x[j] * x[k] * x[l] + d[j][s] * x[i] * x[k] * x[l] + d[k][s] * x[i] * x[j] * x[l] + d[l][s] * x[i] * x[j] * x[k])
+        );
+
+    double term8 = -48.0 * ((d[i][m] * x[j] * x[k] * x[l] * x[s]
+        + d[j][m] * x[i] * x[k] * x[l] * x[s]
+        + d[k][m] * x[i] * x[j] * x[l] * x[s]
+        + d[l][m] * x[i] * x[j] * x[k] * x[s]
+        + d[s][m] * x[i] * x[j] * x[k] * x[l]) * pow(r, -8.0)
+        - 8.0 * pow(r, -10.0) * x[i] * x[j] * x[k] * x[l] * x[s] * x[m]);
+
+    result = para * (term1 + term2 + term3 + term4 + term5 + term6 + term7 + term8);
+    return result;
 }

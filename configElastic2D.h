@@ -1,3 +1,27 @@
+/* ----------------------------------------------------------------------
+   iBEM - inclusion-based Boundary Element Method
+   This software is distributed under the GNU General Public License
+   version 3 or any later version.
+------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------
+    This file is part of iBEM.
+
+    iBEM is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    iBEM is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with iBEM.  If not, see <https://www.gnu.org/licenses/>.
+
+------------------------------------------------------------------------- */
+
 
 /*
  This header file defines the input file kinds in iBEM
@@ -17,6 +41,11 @@
 using namespace std;
 using namespace Eigen;
 
+extern double mu_0;
+extern double nu0;
+extern double mu_1;
+extern double nu1;
+
 class configElastic2D : public Config {
 
 public:
@@ -25,9 +54,9 @@ public:
     int NE = 0;
     int num = 0;
     int nump = 0;
-    double XNU = 0.0;
-    double EE = 0.0;
-    int Dimension = 3;
+    double XNU = 0.0; double XNU1;
+    double EE = 0.0;  double EE1;
+    int Dimension = 2;
     double** s_pt;
 
     string particleInput = "position_2D.txt";
@@ -54,17 +83,30 @@ public:
 
     void Readparticle_num() {
 
+        // the comment symbol is "#"
+
         ifstream myfile; int line_num = 0;
         myfile.open(particleInput); string line;
-        // only input one line, so string number equals 1
-        // # is the comment symbol!
         
-        while(!myfile.eof() && line_num < 1){
+        while(!myfile.eof() && line_num < 3){
             // obtain the information in 1 line
             getline(myfile, line);
             // juding the # symbol of blank line
             if(line[0] != '#' && line.length() != 0){
-                num = stoi(line); line_num++;
+                if (line_num == 0) {
+                    num = stoi(line); line_num++;
+                }
+                else if (line_num == 1) {
+                    EE1 = stod(line); line_num++;
+                }
+                
+                else if (line_num == 2) {
+                    XNU1 = stod(line);
+
+                    mu_1 = EE1 * 0.5 / (1.0 + XNU1); nu1 = XNU1;
+
+                    line_num++;
+                }
             }
         }
         
@@ -78,7 +120,7 @@ public:
         myfile8.open(particleInput);
         stringstream ss; int line_num = 0;
         // 1 by num + num * positions
-        while(!myfile.eof() && line_num < 1 + num){
+        while(!myfile8.eof() && line_num < 3 + num){
             getline(myfile8, line);
             if(line[0] != '#' && line.length() != 0){
                 
@@ -95,19 +137,30 @@ public:
                     index_E_ijkl = new int*** [Dimension * num];
                     
                     // output details
-                    cout << "number of 2D elliptical particles =" << " " << num;
+                    cout << "number of 2D elliptical particles =" << " " << num << endl;
                 }
                 
+                else if (line_num < 3) {
+                    line_num++;
+                }
+
                 // input the positions and radius
                 else{
                     // assign text string to stringstream ss
                     ss << line;
                     
                     // input the positions, be careful "line_num - 1"
-                    ss >> eigen_point(line_num - 1, 0) >>eigen_point(line_num - 1, 1) >> radius(line_num - 1);
+                    ss >> eigen_point(line_num - 3, 0) >>eigen_point(line_num - 3, 1) >> radius(line_num - 3);
                     
-                    line_num++;
+                    line_num++; ss.clear();
                 }
+            }
+
+            // print the comment as author required
+            else if(line[0] == '#'){
+
+                cout << line << endl;
+
             }
             
             
@@ -117,7 +170,7 @@ public:
 
         // create the index matrix, 2D problem with 2
         for (int i = 0; i < 2 * num; i++) {
-            index_E_ij[i] = new int[3];
+            index_E_ij[i] = new int[2];
         }
 
         for (int i = 0; i < 2 * num; i++)
@@ -189,12 +242,12 @@ public:
         
         string line; int line_num = 0;
         
-        while (!myfile.eof() && line_number < 5){
+        while (!myfile.eof() && line_num < 5){
             getline(myfile, line);
             
             if(line[0] != '#' && line.length() != 0){
                 
-                switch (line_num):{
+                switch (line_num){
                         
                     case 0:
                         cout << "Title file is: " << line << endl;
@@ -208,15 +261,18 @@ public:
                         break;
                         
                     case 2:
-                        XNU = stoi(line);
+                        XNU = stod(line);
                         cout << "Poisson's ratio of matrix is: " << XNU << endl;
+
+                        nu0 = XNU; mu_0 = EE * 0.5 / (1.0 + nu0);
+
                         line_num++;
                         break;
                         
                     case 3:
                         NN = stoi(line);
                         cout << "Number of Nodes is: " << NN << endl;
-                        line_num++
+                        line_num++;
                         break;
                         
                     case 4:
@@ -250,7 +306,7 @@ public:
         BC = MatrixXd(Dimension * NN, 2);
         
         // t_BC is boundary conditions about tractions, (Dimension * number of nodes in one element * define and number)
-        t_bc = MatrixXd(NE, Dimension * 3 * 2);
+        t_bc = MatrixXd(NE, Dimension * 3 * Dimension);
     }
 
     
@@ -260,7 +316,7 @@ public:
         
         myfile.open(bemInput, ios::in);
 
-        while(!myfile.eof() && line_num < 5 + NN + NE + Dimension * NN + Dimension * 3 * 2){
+        while(!myfile.eof()){
             getline(myfile, line);
             
             if(line[0] != '#' && line.length() != 0){
@@ -272,43 +328,48 @@ public:
                 else if (line_num < 5 + NN){
                     // read positions of BEM boundary nodes
                     ss << line; ss >> NODES(line_num - 5, 0) >> NODES(line_num - 5, 1);
-                    line_num++;
+                    line_num++; ss.clear();
                 }
                 
                 else if (line_num < 5 + NN + NE){
                     // input the connection of the Elements, currently equal 3
                     ss << line; ss >> NConnect(line_num - 5 - NN, 0) >> NConnect(line_num - 5 - NN, 1) >> NConnect(line_num - 5 - NN, 2);
-                    line_num++;
+                    line_num++; ss.clear();
                 }
                 
                 else if (line_num < 5 + NN + NE + Dimension * NN){
                     // input the BCs of displacements
                     ss << line; ss >> BC(line_num - 5 - NN - NE, 0) >> BC(line_num - 5 - NN - NE, 1);
-                    line_num++;
+                    line_num++; ss.clear();
                 }
                 
-                else{
+                else if (line_num < 5 + NN + NE + Dimension * NN + NE){
                     // input the BCs of tractions
                     ss << line;
                     for(int ii = 0; ii < Dimension * 3 * 2;ii++){
-                        ss >> t_BC(line_num - 5 - NN - NE - Dimension * NN, ii);
+                        ss >> t_bc(line_num - 5 - NN - NE - Dimension * NN, ii);
                     }
-                    
+                    line_num++;
+                    //cout << line << endl;
+                    ss.clear();
                 }
                 
             }
             
+            else if (line[0] == '#') {
+
+                cout << line << endl;
+            }
         }
 
         myfile.close();
-        
         // Assign the memory of iBEM matrix
         // 21 = 3 + 3 * 2 + 3 * 2^2, based on the Taylor series of expansion of elliptical particles
         
         HMAT = MatrixXd::Zero(Dimension * NN + 21 * num, Dimension * NN + 21 * num);
-        GMAT = MatrixXd::Zero(Dimension * NN + 21 * num);
+        GMAT = MatrixXd::Zero(Dimension * NN + 21 * num, 3 * Dimension * NE);
         
-        // Boundary solution vectors
+        // Boundary solution vectors and eigenstrain in each particles
         U = VectorXd::Zero(Dimension * NN + 21 * num);
         
         // tractions = number of nodes in one element * Dimension * Number of elements = 6 * NE
@@ -316,7 +377,7 @@ public:
 
         // Define the Re-organized matrix
         A = MatrixXd::Zero(Dimension * NN + 21 * num, Dimension * NN + 21 * num);
-        b = VectorXd:Zero(Dimension * NN + 21 * num);
+        b = VectorXd::Zero(Dimension * NN + 21 * num);
 
     }
 
@@ -339,8 +400,12 @@ public:
                 }
                 else{
                     ss << line; ss >> x_p(line_num - 1, 0) >> x_p(line_num - 1, 1);
-                    line_num++;
+                    line_num++; ss.clear();
                 }
+            }
+
+            else if (line[0] == '#') {
+                cout << line << endl;
             }
             
         }

@@ -34,11 +34,11 @@ public:
 	VectorXd b;
 	VectorXd X;
 	MatrixXd x_p;
-	virtual void setUp() {		
-		this->ReadBEM_num();       // read BEM node and element numbers
-		this->ReadBEM_info();      // read BEM geometry
+	virtual void setUp() {	
 		this->Readparticle_num();  // read partical number
 		this->Readpartical_info(); // read partical positons and radius
+		this->ReadBEM_num();       // read BEM node and element numbers
+		this->ReadBEM_info();      // read BEM geometry
 		this->ReadPostProcess_info();
 	};
 

@@ -10,7 +10,7 @@
 /*------------------------------------------------------------------------------------------
     Obtain the strain field and multiply with the constitutive law of inclusion
 -------------------------------------------------------------------------------------------*/
-inline void sr_ijk_inclusion(double *Vnorm, double *point, double *GCcor, double ** Dst, double **Dsu)
+void BEMBuilderElastic2D::sr_ijk_inclusion(double *Vnorm, double *point, double *GCcor, double ** Dst, double **Dsu)
 {
     int t = 0;
 
@@ -32,7 +32,7 @@ inline void sr_ijk_inclusion(double *Vnorm, double *point, double *GCcor, double
 
     for (int n = 0; n < 2; n++){
         for (int i = 0; i < 2; i++){
-            TG1[n] = TG1[n] + Green_01(x, n, i, i);
+            TG1[n] = TG1[n] + B2D.Green_01(x, n, i, i);
         }
     }
 
@@ -40,20 +40,20 @@ inline void sr_ijk_inclusion(double *Vnorm, double *point, double *GCcor, double
     for (int i = 0; i < 2; i++){
         for (int j = 0; j < 2; j++){
             for (int l = 0; l < 2; l++){
-                TG[tt] = TG[tt] + Green_02(x, l, i, l, j);
+                TG[tt] = TG[tt] + B2D.Green_02(x, l, i, l, j);
             }
             tt++;
         }
     }
 
     tt = 0;
-    double lambda0 = (2.0 * mu0 * nu0) / (1.0 - 2.0 * nu0);
-    double lambda1 = (2.0 * mu1 * nu1) / (1.0 - 2.0 * nu1);
+    double lambda0 = (2.0 * mu_0 * nu0) / (1.0 - 2.0 * nu0);
+    double lambda1 = (2.0 * mu_1 * nu1) / (1.0 - 2.0 * nu1);
     // to obtain the strain field by the original solution
     for (int m = 0; m < 2; m++){
         for (int n = 0; n < 2; n++){
             for (int i = 0; i < 2; i++){
-                sgm[tt] = sgm[tt] + lambda0 * d[m][n] * TG[2 * i + i] + 2.0*mu0*Green_02(x, m, i, n, i);
+                sgm[tt] = sgm[tt] + lambda0 * d[m][n] * TG[2 * i + i] + 2.0*mu_0* B2D.Green_02(x, m, i, n, i);
             }
             tt++;
         }
@@ -85,11 +85,11 @@ inline void sr_ijk_inclusion(double *Vnorm, double *point, double *GCcor, double
         for (int l = 0; l < 2; l++){
             for (int n = 0; n < 2; n++){
                 for (int m = 0; m < 2; m++){
-                    DST[k][l][n] += ((lambda0 - lambda1)*d[k][l] * sgm[2 * m + n] + (mu0 - mu1)*(2.0*mu0*nu0 / (1 - 2 * nu0)*d[m][n] * (TG[2 * k + l] + TG[2 * l + k]) + mu0*Green_02(x, m, k, n, l) + mu0*Green_02(x, m, l, n, k) + mu0*Green_02(x, n, k, m, l) + mu0*Green_02(x, n, l, m, k)))* Vnorm[m];
+                    DST[k][l][n] += ((lambda0 - lambda1)*d[k][l] * sgm[2 * m + n] + (mu_0 - mu_1)*(2.0*mu_0*nu0 / (1 - 2 * nu0)*d[m][n] * (TG[2 * k + l] + TG[2 * l + k]) + mu_0* B2D.Green_02(x, m, k, n, l) + mu_0* B2D.Green_02(x, m, l, n, k) + mu_0* B2D.Green_02(x, n, k, m, l) + mu_0* B2D.Green_02(x, n, l, m, k)))* Vnorm[m];
 
                 }
 
-                DSU[k][l][n] += -((lambda0 - lambda1)*d[k][l] * TG1[n] + (mu0 - mu1)*Green_01(x, n, k, l) + (mu0 - mu1)*Green_01(x, n, l, k));
+                DSU[k][l][n] += -((lambda0 - lambda1)*d[k][l] * TG1[n] + (mu_0 - mu_1)* B2D.Green_01(x, n, k, l) + (mu_0 - mu_1)* B2D.Green_01(x, n, l, k));
             }
         }
     }
@@ -125,7 +125,7 @@ inline void sr_ijk_inclusion(double *Vnorm, double *point, double *GCcor, double
 /*----------------------------------------------------------------------------------------
         Obtain the strain field and multiply with the constitutive law of inclusion
 ------------------------------------------------------------------------------------------*/
-void sr_ijk_inclusion_linear(double* Vnorm, double* point, double* GCcor, double** Dstw, double** Dsuw)
+void BEMBuilderElastic2D::sr_ijk_inclusion_linear(double* Vnorm, double* point, double* GCcor, double** Dstw, double** Dsuw)
 {
     int t = 0;
 
@@ -152,7 +152,7 @@ void sr_ijk_inclusion_linear(double* Vnorm, double* point, double* GCcor, double
     for (int n = 0; n < 2; n++) {
         for (int w = 0; w < 2; w++) {
             for (int i = 0; i < 2; i++) {
-                TG1[tt] = TG1[tt] + Green_02(x, n, i, i, w);
+                TG1[tt] = TG1[tt] + B2D.Green_02(x, n, i, i, w);
             }
             tt = tt + 1;
         }
@@ -165,7 +165,7 @@ void sr_ijk_inclusion_linear(double* Vnorm, double* point, double* GCcor, double
             for (int w = 0; w < 2; w++) {
 
                 for (int l = 0; l < 2; l++) {
-                    TG[tt] = TG[tt] + Green_03(x, l, i, l, j, w);
+                    TG[tt] = TG[tt] + B2D.Green_03(x, l, i, l, j, w);
                 }
 
                 tt = tt + 1;
@@ -179,7 +179,7 @@ void sr_ijk_inclusion_linear(double* Vnorm, double* point, double* GCcor, double
             for (int w = 0; w < 2; w++) {
 
                 for (int i = 0; i < 2; i++) {
-                    sgm[tt] = sgm[tt] + 2.0 * mu0 * nu0 / (1 - 2 * nu0) * d[m][n] * TG[4 * i + 2 * i + w] + mu0 * Green_03(x, m, i, n, i, w) + mu0 * Green_03(x, n, i, m, i, w);
+                    sgm[tt] = sgm[tt] + 2.0 * mu_0 * nu0 / (1 - 2 * nu0) * d[m][n] * TG[4 * i + 2 * i + w] + mu_0 * B2D.Green_03(x, m, i, n, i, w) + mu_0 * B2D.Green_03(x, n, i, m, i, w);
                 }
 
                 tt = tt + 1;
@@ -195,11 +195,11 @@ void sr_ijk_inclusion_linear(double* Vnorm, double* point, double* GCcor, double
 
                     for (int m = 0; m < 2; m++) {
 
-                        Dsuw[t][n] = Dsuw[t][n] - ((2.0 * mu0 * nu0 / (1 - 2 * nu0) - 2.0 * mu1 * nu1 / (1 - 2 * nu1)) * d[k][l] * sgm[4 * m + 2 * n + w] + (mu0 - mu1) * (2.0 * mu0 * nu0 / (1 - 2 * nu0) * d[m][n] * (TG[4 * k + 2 * l + w] + TG[4 * l + 2 * k + w]) + mu0 * Green_03(x, m, k, n, l, w) + mu0 * Green_03(x, m, l, n, k, w) + mu0 * Green_03(x, n, k, m, l, w) + mu0 * Green_03(x, n, l, m, k, w))) * Vnorm[m];
+                        Dsuw[t][n] = Dsuw[t][n] - ((2.0 * mu_0 * nu0 / (1 - 2 * nu0) - 2.0 * mu_1 * nu1 / (1 - 2 * nu1)) * d[k][l] * sgm[4 * m + 2 * n + w] + (mu_0 - mu_1) * (2.0 * mu_0 * nu0 / (1 - 2 * nu0) * d[m][n] * (TG[4 * k + 2 * l + w] + TG[4 * l + 2 * k + w]) + mu_0 * B2D.Green_03(x, m, k, n, l, w) + mu_0 * B2D.Green_03(x, m, l, n, k, w) + mu_0 * B2D.Green_03(x, n, k, m, l, w) + mu_0 * B2D.Green_03(x, n, l, m, k, w))) * Vnorm[m];
                     }
 
 
-                    Dstw[t][n] = Dstw[t][n] + ((2.0 * mu0 * nu0 / (1 - 2 * nu0) - 2.0 * mu1 * nu1 / (1 - 2 * nu1)) * d[k][l] * TG1[2 * n + w] + (mu0 - mu1) * Green_02(x, n, k, l, w) + (mu0 - mu1) * Green_02(x, n, l, k, w));
+                    Dstw[t][n] = Dstw[t][n] + ((2.0 * mu_0 * nu0 / (1 - 2 * nu0) - 2.0 * mu_1 * nu1 / (1 - 2 * nu1)) * d[k][l] * TG1[2 * n + w] + (mu_0 - mu_1) * B2D.Green_02(x, n, k, l, w) + (mu_0 - mu_1) * B2D.Green_02(x, n, l, k, w));
 
                 }
 
@@ -214,7 +214,7 @@ void sr_ijk_inclusion_linear(double* Vnorm, double* point, double* GCcor, double
 /*---------------------------------------------------------------------------------------
         Obtain the strain field and multiply with the constitutive law of inclusion
 ----------------------------------------------------------------------------------------*/
-void sr_ijk_inclusion_quadratic(double* Vnorm, double* point, double* GCcor, double** Dstwz, double** Dsuwz)
+void BEMBuilderElastic2D::sr_ijk_inclusion_quadratic(double* Vnorm, double* point, double* GCcor, double** Dstwz, double** Dsuwz)
 {
     int t = 0;
 
@@ -243,7 +243,7 @@ void sr_ijk_inclusion_quadratic(double* Vnorm, double* point, double* GCcor, dou
             for (int z = 0; z < 2; z++) {
 
                 for (int i = 0; i < 2; i++) {
-                    TG1[tt] = TG1[tt] + Green_03(x, n, i, i, w, z);
+                    TG1[tt] = TG1[tt] + B2D.Green_03(x, n, i, i, w, z);
                 }
                 tt++;
             }
@@ -258,7 +258,7 @@ void sr_ijk_inclusion_quadratic(double* Vnorm, double* point, double* GCcor, dou
                 for (int z = 0; z < 2; z++) {
 
                     for (int l = 0; l < 2; l++) {
-                        TG[tt] = TG[tt] + Green_04(x, l, i, l, j, w, z);
+                        TG[tt] = TG[tt] + B2D.Green_04(x, l, i, l, j, w, z);
                     }
 
                     tt = tt + 1;
@@ -274,9 +274,9 @@ void sr_ijk_inclusion_quadratic(double* Vnorm, double* point, double* GCcor, dou
                 for (int z = 0; z < 2; z++) {
 
                     for (int i = 0; i < 2; i++) {
-                        sgm[tt] = sgm[tt] + 2.0 * mu0 * nu0 / (1 - 2 * nu0) * d[m][n] * TG[8 * i + 4 * i + 2 * w + z]
-                                + mu0 * Green_04(x, m, i, n, i, w, z)
-                                + mu0 * Green_04(x, n, i, m, i, w, z);
+                        sgm[tt] = sgm[tt] + 2.0 * mu_0 * nu0 / (1 - 2 * nu0) * d[m][n] * TG[8 * i + 4 * i + 2 * w + z]
+                                + mu_0 * B2D.Green_04(x, m, i, n, i, w, z)
+                                + mu_0 * B2D.Green_04(x, n, i, m, i, w, z);
                     }
 
                     tt = tt + 1;
@@ -294,11 +294,11 @@ void sr_ijk_inclusion_quadratic(double* Vnorm, double* point, double* GCcor, dou
 
                         for (int m = 0; m < 2; m++) {
 
-                            Dsuwz[t][n] = Dsuwz[t][n] + ((2.0 * mu0 * nu0 / (1 - 2 * nu0) - 2.0 * mu1 * nu1 / (1 - 2 * nu1)) * d[k][l] * sgm[8 * m + 4 * n + 2 * w + z] + (mu0 - mu1) * (2.0 * mu0 * nu0 / (1 - 2 * nu0) * d[m][n] * (TG[8 * k + 4 * l + 2 * w + z] + TG[8 * l + 4 * k + 2 * w + z]) + mu0 * Green_04(x, m, k, n, l, w, z) + mu0 * Green_04(x, m, l, n, k, w, z) + mu0 * Green_04(x, n, k, m, l, w, z) + mu0 * Green_04(x, n, l, m, k, w, z))) * Vnorm[m];
+                            Dsuwz[t][n] = Dsuwz[t][n] + ((2.0 * mu_0 * nu0 / (1 - 2 * nu0) - 2.0 * mu_1 * nu1 / (1 - 2 * nu1)) * d[k][l] * sgm[8 * m + 4 * n + 2 * w + z] + (mu_0 - mu_1) * (2.0 * mu_0 * nu0 / (1 - 2 * nu0) * d[m][n] * (TG[8 * k + 4 * l + 2 * w + z] + TG[8 * l + 4 * k + 2 * w + z]) + mu_0 * B2D.Green_04(x, m, k, n, l, w, z) + mu_0 * B2D.Green_04(x, m, l, n, k, w, z) + mu_0 * B2D.Green_04(x, n, k, m, l, w, z) + mu_0 * B2D.Green_04(x, n, l, m, k, w, z))) * Vnorm[m];
                         }
 
 
-                        Dstwz[t][n] = Dstwz[t][n] - ((2.0 * mu0 * nu0 / (1 - 2 * nu0) - 2.0 * mu1 * nu1 / (1 - 2 * nu1)) * d[k][l] * TG1[4 * n + 2 * w + z] + (mu0 - mu1) * Green_03(x, n, k, l, w, z) + (mu0 - mu1) * Green_03(x, n, l, k, w, z));
+                        Dstwz[t][n] = Dstwz[t][n] - ((2.0 * mu_0 * nu0 / (1 - 2 * nu0) - 2.0 * mu_1 * nu1 / (1 - 2 * nu1)) * d[k][l] * TG1[4 * n + 2 * w + z] + (mu_0 - mu_1) * B2D.Green_03(x, n, k, l, w, z) + (mu_0 - mu_1) * B2D.Green_03(x, n, l, k, w, z));
 
                     }
 
@@ -317,7 +317,7 @@ void sr_ijk_inclusion_quadratic(double* Vnorm, double* point, double* GCcor, dou
 /*---------------------------------------------------------------------------------------
         Integ2e_stress created for BEM in equilibrium equation
 -----------------------------------------------------------------------------------------*/
-inline void Integ2e_stress(double** Elcor, double** DDsu, double** DDst, double* point)
+void BEMBuilderElastic2D::Integ2e_stress(double** Elcor, double** DDsu, double** DDst, double* point)
 {
     int i, m, k, ngp;
     double xsi, W, Jac, N1, N2, N3;
@@ -347,9 +347,9 @@ inline void Integ2e_stress(double** Elcor, double** DDsu, double** DDst, double*
     for (m = 0; m < ngp; m++) {
         xsi = gp[m]; W = w[m];
 
-        Serendip_func(xsi, N1, N2, N3, Ni, N);
-        Normal_Jac(xsi, Elcor, Jac, Vnorm);
-        Cartesian(Elcor, N1, N2, N3, GCcor);
+        B2D.Serendip_func(xsi, N1, N2, N3, Ni, N);
+        B2D.Normal_Jac(xsi, Elcor, Jac, Vnorm);
+        B2D.Cartesian(Elcor, N1, N2, N3, GCcor);
 
         //get_for_stress_BEM(Vnorm, point, GCcor, Dst, Dsu);
         sr_ijk_inclusion(Vnorm, point, GCcor, Dst, Dsu);
@@ -406,7 +406,7 @@ inline void Integ2e_stress(double** Elcor, double** DDsu, double** DDst, double*
 /*---------------------------------------------------------------------------------------
         Compute stress for linear strain terms for EIM
 -----------------------------------------------------------------------------------------*/
-inline void Integ2e_stress_linear(double** Elcor, double** DDsuw, double** DDstw, double* point)
+void BEMBuilderElastic2D::Integ2e_stress_linear(double** Elcor, double** DDsuw, double** DDstw, double* point)
 {
     int i, m, k, ngp;
 
@@ -434,9 +434,9 @@ inline void Integ2e_stress_linear(double** Elcor, double** DDsuw, double** DDstw
 
     for (m = 0; m < ngp; m++) {
         xsi = gp[m]; W = w[m];
-        Serendip_func(xsi, N1, N2, N3, Ni, N);
-        Normal_Jac(xsi, Elcor, Jac, Vnorm);
-        Cartesian(Elcor, N1, N2, N3, GCcor);
+        B2D.Serendip_func(xsi, N1, N2, N3, Ni, N);
+        B2D.Normal_Jac(xsi, Elcor, Jac, Vnorm);
+        B2D.Cartesian(Elcor, N1, N2, N3, GCcor);
 
         sr_ijk_inclusion_linear(Vnorm, point, GCcor, Dstw, Dsuw);
 
@@ -473,7 +473,7 @@ inline void Integ2e_stress_linear(double** Elcor, double** DDsuw, double** DDstw
 /*---------------------------------------------------------------------------------------
         Compute stress for quadratic strain terms for EIM
 ----------------------------------------------------------------------------------------*/
-inline void Integ2e_stress_quadratic(double** Elcor, double** DDsuwz, double** DDstwz, double* point)
+void BEMBuilderElastic2D::Integ2e_stress_quadratic(double** Elcor, double** DDsuwz, double** DDstwz, double* point)
 {
     int i, m, k, ngp;
 
@@ -501,9 +501,9 @@ inline void Integ2e_stress_quadratic(double** Elcor, double** DDsuwz, double** D
 
     for (m = 0; m < ngp; m++) {
         xsi = gp[m]; W = w[m];
-        Serendip_func(xsi, N1, N2, N3, Ni, N);
-        Normal_Jac(xsi, Elcor, Jac, Vnorm);
-        Cartesian(Elcor, N1, N2, N3, GCcor);
+        B2D.Serendip_func(xsi, N1, N2, N3, Ni, N);
+        B2D.Normal_Jac(xsi, Elcor, Jac, Vnorm);
+        B2D.Cartesian(Elcor, N1, N2, N3, GCcor);
 
         sr_ijk_inclusion_quadratic(Vnorm, point, GCcor, Dstwz, Dsuwz);
 
@@ -590,16 +590,16 @@ void BEMBuilderElastic2D::Integ3(double E, double nu, int* sctrb, double** Elcor
         for (m = 0; m < ngp; m++) {
             xsi = gp[m];                            // only 1 GP coordinate
             W = w[m];
-            Serendip_func(xsi, N1, N2, N3, Ni, N);  // function for shape functions
-            Normal_Jac(xsi, Elcor, Jac, Vnorm);     // Jacobian and normal unit vector
-            Cartesian(Elcor, N1, N2, N3, GCcor);     // change coordinates to the intrinsic way
+            B2D.Serendip_func(xsi, N1, N2, N3, Ni, N);  // function for shape functions
+            B2D.Normal_Jac(xsi, Elcor, Jac, Vnorm);     // Jacobian and normal unit vector
+            B2D.Cartesian(Elcor, N1, N2, N3, GCcor);     // change coordinates to the intrinsic way
             r = sqrt((GCcor[0] - xP(i, 0)) * (GCcor[0] - xP(i, 0)) + (GCcor[1] - xP(i, 1)) * (GCcor[1] - xP(i, 1)));
 
             dxr[0] = (GCcor[0] - xP(i, 0)) / r;
             dxr[1] = (GCcor[1] - xP(i, 1)) / r;
 
-            UK(dxr, r, E, nu, UP);                  // For H matrix
-            TK(dxr, r, E, nu, TP, Vnorm);           // For G matrix
+            B2D.UK(dxr, r, E, nu, UP);                  // For H matrix
+            B2D.TK(dxr, r, E, nu, TP, Vnorm);           // For G matrix
 
             for (ii = 0; ii < Ndof; ii++) {
                 iD = Ndof * i + ii;                 // insert position of the integration in the matrix
@@ -638,7 +638,7 @@ void BEMBuilderElastic2D::Integ3(double E, double nu, int* sctrb, double** Elcor
             double Elength = 0.0; double xxi, wwi; double dxdxb; double conspp = 0.0;
             for (int kkk = 0; kkk < ngp; kkk++) {         // compute the element length
                 xxi = gp[kkk]; wwi = w[kkk];
-                Elength += Compute_length(xxi, wwi, Elcor);
+                Elength += B2D.Compute_length(xxi, wwi, Elcor);
             }
 
             if (n != 2) Ntri = 1;                        // if node == 3, 2 regions
@@ -659,8 +659,8 @@ void BEMBuilderElastic2D::Integ3(double E, double nu, int* sctrb, double** Elcor
                         else xsi = gl[m];
                     }
 
-                    Serendip_func(xsi, N1, N2, N3, Ni, N);
-                    Normal_Jac(xsi, Elcor, Jac, Vnorm);
+                    B2D.Serendip_func(xsi, N1, N2, N3, Ni, N);
+                    B2D.Normal_Jac(xsi, Elcor, Jac, Vnorm);
 
                     for (ii = 0; ii < Ndof; ii++) {
                         iD = Ndof * i + ii;
@@ -693,8 +693,8 @@ void BEMBuilderElastic2D::Integ3(double E, double nu, int* sctrb, double** Elcor
 
                 xsi = gp[m]; W = w[m];
 
-                Serendip_func(xsi, N1, N2, N3, Ni, N);
-                Normal_Jac(xsi, Elcor, Jac, Vnorm);
+                B2D.Serendip_func(xsi, N1, N2, N3, Ni, N);
+                B2D.Normal_Jac(xsi, Elcor, Jac, Vnorm);
 
                 for (ii = 0; ii < Ndof; ii++) {
                     iD = Ndof * i + ii;
@@ -729,7 +729,7 @@ void BEMBuilderElastic2D::Integ3(double E, double nu, int* sctrb, double** Elcor
 }
 
 // construct conventional BEM part
-void BEMBuilderElastic2D::addBEM()Config& config_)
+void BEMBuilderElastic2D::addBEM(Config& config_)
 {
     
     configElastic2D& config = dynamic_cast<configElastic2D&> (config_);
@@ -745,7 +745,7 @@ void BEMBuilderElastic2D::addBEM()Config& config_)
     int Dimension = config.Dimension;
     
     // the diag matrix to cancel strong singularities
-    MatrixXd Diag = MatrixX3d::Zero(Dimension * NN, Dimension);
+    MatrixXd Diag = MatrixXd::Zero(Dimension * NN, Dimension);
     
 #pragma omp parallel shared(HMAT,GMAT)
     {
@@ -1183,7 +1183,7 @@ void BEMBuilderElastic2D::addFluxEquivalentSecondOrderBEM(Config& config_)
 // rearrange the matrix based on BCs
 
 // judge the connections in the element
-int  ffloord(int i, int j)
+int  BEMBuilderElastic2D::ffloord(int i, int j)
 {
 
     int d;
@@ -1211,7 +1211,7 @@ int  ffloord(int i, int j)
         Therefore, the parameters for the displacement field could
         be placed together to solve the BVP
 ------------------------------------------------------------------*/
-int Find(int h, int e, int i, double** record, Ref<MatrixXi> NConnect, int NE)
+int BEMBuilderElastic2D::Find(int h, int e, int i, double** record, Ref<MatrixXi> NConnect, int NE)
 {
     int t, p;
     p = 2;
@@ -1249,7 +1249,7 @@ void BEMBuilderElastic2D::ApplyBC(Config& config_)
 
     ////////////////////////////////////////////////////////////////
     
-    double** record; record = new double*[NE * 6];               // recording 2 traction directions * 3 node per element
+    record = new double*[NE * 6];               // recording 2 traction directions * 3 node per element
     for (int i = 0; i < 6 * NE; i++) {
         record[i] = new double[2];
     }
@@ -1329,7 +1329,9 @@ void BEMBuilderElastic2D::ApplyBC(Config& config_)
             AA(i, j) = HMAT(i, j);
         }
     }
-    
+
+
+
     config.HMAT.resize(0, 0);
     config.GMAT.resize(0, 0);
 }

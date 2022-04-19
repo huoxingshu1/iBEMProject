@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -92,9 +92,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\huoxingshu1\source\repos\iBEMProject\eigen-eigen-1306d75b4a21\Eigen;C:\Users\huoxingshu1\source\repos\iBEMProject\eigen-eigen-1306d75b4a21;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\iBEM_pubish_code\iBEMProject-X\eigen-eigen-1306d75b4a21;C:\Users\huoxingshu1\source\repos\iBEMProject\eigen-eigen-1306d75b4a21\Eigen;C:\Users\huoxingshu1\source\repos\iBEMProject\eigen-eigen-1306d75b4a21;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,9 +110,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\huoxingshu1\source\repos\iBEMProject\eigen-eigen-1306d75b4a21\Eigen;C:\Users\huoxingshu1\source\repos\iBEMProject\eigen-eigen-1306d75b4a21;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\iBEM_pubish_code\iBEMProject-X\eigen-eigen-1306d75b4a21;C:\Users\huoxingshu1\source\repos\iBEMProject\eigen-eigen-1306d75b4a21\Eigen;C:\Users\huoxingshu1\source\repos\iBEMProject\eigen-eigen-1306d75b4a21;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,6 +130,9 @@
       <ConformanceMode>true</ConformanceMode>
       <OpenMPSupport>true</OpenMPSupport>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>D:\iBEM_pubish_code\iBEMProject-X\eigen-eigen-1306d75b4a21;</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <AdditionalOptions>/ZC:twoPhase- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +149,8 @@
       <ConformanceMode>true</ConformanceMode>
       <OpenMPSupport>true</OpenMPSupport>
       <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>D:\iBEM_pubish_code\iBEMProject-X\eigen-eigen-1306d75b4a21;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,37 +160,50 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BEMBuilderElastic2D.cpp" />
     <ClCompile Include="BEMBuilderElastic3D.cpp" />
+    <ClCompile Include="BEMElasticHelper2D.cpp" />
     <ClCompile Include="BEMElasticHelper3D.cpp" />
+    <ClCompile Include="configElastic2D.cpp" />
     <ClCompile Include="configElastic3D.cpp" />
     <ClCompile Include="inputGenerator.cpp" />
+    <ClCompile Include="integratorElastic2D.cpp" />
+    <ClCompile Include="integratorElastic2DHelper.cpp" />
     <ClCompile Include="integratorElastic3D.cpp" />
     <ClCompile Include="integratorElastic3DHelper.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="postProcessorElastic2D.cpp" />
     <ClCompile Include="postProcessorElastic3D.cpp" />
     <ClCompile Include="ibemRunner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BEMBuilder.h" />
+    <ClInclude Include="BEMBuilderElastic2D.h" />
     <ClInclude Include="BEMBuilderElastic3D.h" />
+    <ClInclude Include="BEMElasticHelper2D.h" />
     <ClInclude Include="BEMElasticHelper3D.h" />
     <ClInclude Include="classFinder.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="configElastic2D.h" />
     <ClInclude Include="configElastic3D.h" />
     <ClInclude Include="GlobalConstant.h" />
     <ClInclude Include="ibemRunner.h" />
     <ClInclude Include="iBEMSystemService.h" />
     <ClInclude Include="inputGenerator.h" />
     <ClInclude Include="integrator.h" />
+    <ClInclude Include="integratorElastic2D.h" />
+    <ClInclude Include="integratorElastic2DHelper.h" />
     <ClInclude Include="integratorElastic3D.h" />
     <ClInclude Include="integratorElastic3DHelper.h" />
     <ClInclude Include="postProcessor.h" />
+    <ClInclude Include="postProcessorElastic2D.h" />
     <ClInclude Include="postProcessorElastic3D.h" />
     <ClInclude Include="postprocessService.h" />
     <ClInclude Include="preprocessService.h" />
     <ClInclude Include="service.h" />
     <ClInclude Include="serviceWrapper.h" />
     <ClInclude Include="systemSolver.h" />
+    <ClInclude Include="systemSolverElastic2D.h" />
     <ClInclude Include="systemSolverElastic3D.h" />
     <ClInclude Include="systemSolverService.h" />
   </ItemGroup>

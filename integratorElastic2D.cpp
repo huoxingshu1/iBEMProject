@@ -7,7 +7,7 @@
     functions: Eshelby's tensor for displacement, get_addu_tensor, Gikl
     u = -Gikl * epsilon_{kl}
 -------------------------------------------------------------------------*/
-void get_addu_tensor(double* x, double a, double** DD_u3, int** index)
+void integratorElastic2D::get_addu_tensor(double* x, double a, double** DD_u3, int** index)
 {
     for (int ii = 0; ii < 2; ii++) {
         for (int jj = 0; jj < 3; jj++) {
@@ -32,7 +32,7 @@ void get_addu_tensor(double* x, double a, double** DD_u3, int** index)
     \int_{\omega} G_{ikl}x_p' dx'
     u_i = -M_{iklp} e_{klp}
 ---------------------------------------------------------------------------*/
-void get_addu1_tensor(double* x, double a, double** DD_u4, int*** indexp)
+void integratorElastic2D::get_addu1_tensor(double* x, double a, double** DD_u4, int*** indexp)
 {
     for (int ii = 0; ii < 2; ii++) {
         for (int jj = 0; jj < 6; jj++) {
@@ -60,7 +60,7 @@ void get_addu1_tensor(double* x, double a, double** DD_u4, int*** indexp)
     \int_{\omega} G_{ikl}x_p' dx'
     u_i = -M_{iklpm} e_{klpm}
 -------------------------------------------------------------------------*/
-void get_addu2_tensor(double* x, double a, double** DD_u5, int**** indexpp)
+void integratorElastic2D::get_addu2_tensor(double* x, double a, double** DD_u5, int**** indexpp)
 {
     for (int ii = 0; ii < 2; ii++) {
         for (int jj = 0; jj < 12; jj++) {
@@ -97,7 +97,8 @@ void integratorElastic2D::addFieldToBEM(Config& config_)
     int num = config.num;
     int NN = config.NN;
     
-# pragma omp parallel shared (HMAT) {
+# pragma omp parallel shared (HMAT) 
+    {
         double* x = new double[2];
         double** DD_u3, ** DD_u4, ** DD_u5;
 
@@ -253,6 +254,7 @@ void integratorElastic2D::addFieldToBEM(Config& config_)
         delete[] indexp;
         delete[] indexpp;
     }
+
 }
 
 
@@ -268,8 +270,6 @@ void integratorElastic2D::addFluxEquivalentInclusion(Config& config_)
     int***& index_E_ijk = config.index_E_ijk;
     int****& index_E_ijkl = config.index_E_ijkl;
     double** A;
-    double &mu0 = config.mu_0; double &mu1 = config.mu_1;
-    double &nu0 = config.nu0; double &nu1 = config.nu1;
 
     int num = config.num;
     int NN = config.NN;
@@ -300,18 +300,19 @@ void integratorElastic2D::addFluxEquivalentInclusion(Config& config_)
                                 double D_ijmn = 0.0;
                                 for (k = 0; k < 2; k++) {
                                     for (l = 0; l < 2; l++) {
-                                        D_ijmn = D_ijmn - (cons_law(nu0, mu0, i, j, k, l) - cons_law(nu1, mu1, i, j, k, l)) * Eshelby_strain_integration_v(k, l, m, n, s, h, radius, x_o, x_o);
+                                        D_ijmn = D_ijmn - (cons_law(nu0, mu_0, i, j, k, l) - cons_law(nu1, mu_1, i, j, k, l)) * Eshelby_strain_integration(k, l, m, n, s, h, radius, x_o, x_o);
+
                                     }
                                 }
                                 if (h == s) sym = 1.0;
                                 else sym = 0.0;
-                                A[index_E_ij[2 * s + i][j]][index_E_ij[2 * h + m][n]] = map[m][n] * (D_ijmn + cons_law(nu0, mu0, i, j, m, n) * sym);
+                                A[index_E_ij[2 * s + i][j]][index_E_ij[2 * h + m][n]] = map[m][n] * (D_ijmn + cons_law(nu0, mu_0, i, j, m, n) * sym);
                             
                                 for (p = 0; p < 2; p++) {
                                     double D_ijmnp = 0.0;
                                     for (k = 0; k < 2; k++) {
                                         for (l = 0; l < 2; l++) {
-                                            D_ijmnp = D_ijmnp - (cons_law(nu0, mu0, i, j, k, l) - cons_law(nu1, mu1, i, j, k, l)) * Eshelby_strain_integration_linear(k,l,m,n,p,s,h,radius,x_o,x_o);
+                                            D_ijmnp = D_ijmnp - (cons_law(nu0, mu_0, i, j, k, l) - cons_law(nu1, mu_1, i, j, k, l)) * Eshelby_strain_integration_linear(k,l,m,n,p,s,h,radius,x_o,x_o);
 
                                         }
                                     }
@@ -326,7 +327,7 @@ void integratorElastic2D::addFluxEquivalentInclusion(Config& config_)
                                         for (int k = 0; k < 2; k++) {
                                             for (l = 0; l < 2; l++) {
 
-                                                D_ijmnpq = D_ijmnpq - (cons_law(nu0,mu0,i, j, k, l) - cons_law(nu1,mu1,i, j, k, l)) * Eshelby_strain_integration_quadratic(k, l, m, n, p, q, s, h, radius, x_o, x_o);
+                                                D_ijmnpq = D_ijmnpq - (cons_law(nu0,mu_0,i, j, k, l) - cons_law(nu1,mu_1,i, j, k, l)) * Eshelby_strain_integration_quadratic(k, l, m, n, p, q, s, h, radius, x_o, x_o);
 
                                             }
                                         }
@@ -377,8 +378,7 @@ void integratorElastic2D::addFluxEquivalentFirstOrderInclusion(Config& config_)
     int***& index_E_ijk = config.index_E_ijk;
     int****& index_E_ijkl = config.index_E_ijkl;
     double** A;
-    double &mu0 = config.mu_0; double &mu1 = config.mu_1;
-    double &nu0 = config.nu0; double &nu1 = config.nu1;
+
 
     int num = config.num;
     int NN = config.NN;
@@ -415,7 +415,7 @@ void integratorElastic2D::addFluxEquivalentFirstOrderInclusion(Config& config_)
                                     for (k = 0; k < 2; k++) {
                                         for (l = 0; l < 2; l++) {
 
-                                            D_ijmn_r = D_ijmn_r - (cons_law(nu0, mu0, i, j, k, l) - cons_law(nu1, mu1, i, j, k, l)) * Eshelby_strain_integration_der(k, l, m, n, r, s, h, radius, x_o, x_o);
+                                            D_ijmn_r = D_ijmn_r - (cons_law(nu0, mu_0, i, j, k, l) - cons_law(nu1, mu_1, i, j, k, l)) * Eshelby_strain_integration_der(k, l, m, n, r, s, h, radius, x_o, x_o);
 
                                         }
                                     }
@@ -432,11 +432,11 @@ void integratorElastic2D::addFluxEquivalentFirstOrderInclusion(Config& config_)
                                         for (k = 0; k < 2; k++) {
                                             for (l = 0; l < 2; l++) {
 
-                                                D_ijmnp_r = D_ijmnp_r - (cons_law(nu0, mu0, i, j, k, l) - cons_law(nu1, mu1, i, j, k, l)) * Eshelby_strain_integration_linear_der(k, l, m, n, p, r, s, h, radius, x_o, x_o);
+                                                D_ijmnp_r = D_ijmnp_r - (cons_law(nu0, mu_0, i, j, k, l) - cons_law(nu1, mu_1, i, j, k, l)) * Eshelby_strain_integration_linear_der(k, l, m, n, p, r, s, h, radius, x_o, x_o);
 
                                             }
                                         }
-                                        A[index_E_ijk[2 * s + i][j][r]][index_E_ijk[2 * h + m][n][p]] = map[m][n] * (D_ijmnp_r + sym * cons_law(nu0, mu0, i, j, m, n) * d[p][r]);
+                                        A[index_E_ijk[2 * s + i][j][r]][index_E_ijk[2 * h + m][n][p]] = map[m][n] * (D_ijmnp_r + sym * cons_law(nu0, mu_0, i, j, m, n) * d[p][r]);
                                     }
 
 
@@ -446,7 +446,7 @@ void integratorElastic2D::addFluxEquivalentFirstOrderInclusion(Config& config_)
                                             for (int k = 0; k < 2; k++) {
                                                 for (l = 0; l < 2; l++) {
 
-                                                    D_ijmnpq_r = D_ijmnpq_r - (cons_law(nu0, mu0, i, j, k, l) - cons_law(nu1, mu1, i, j, k, l)) * Eshelby_strain_integration_quadratic_der(k, l, m, n, p, q, r, s, h, radius, x_o, x_o);
+                                                    D_ijmnpq_r = D_ijmnpq_r - (cons_law(nu0, mu_0, i, j, k, l) - cons_law(nu1, mu_1, i, j, k, l)) * Eshelby_strain_integration_quadratic_der(k, l, m, n, p, q, r, s, h, radius, x_o, x_o);
 
                                                 }
                                             }
@@ -483,7 +483,7 @@ void integratorElastic2D::addFluxEquivalentFirstOrderInclusion(Config& config_)
 }
 
 
-void integratorElastic3D::addFluxEquivalentSecondOrderInclusion(Config& config_)
+void integratorElastic2D::addFluxEquivalentSecondOrderInclusion(Config& config_)
 {
     configElastic2D& config = dynamic_cast<configElastic2D&> (config_);
     Ref<MatrixXd> HMAT = config.HMAT;
@@ -494,8 +494,7 @@ void integratorElastic3D::addFluxEquivalentSecondOrderInclusion(Config& config_)
     int***& index_E_ijk = config.index_E_ijk;
     int****& index_E_ijkl = config.index_E_ijkl;
     double** A;
-    double &mu0 = config.mu_0; double &mu1 = config.mu_1;
-    double &nu0 = config.nu0; double &nu1 = config.nu1;
+
 
     int num = config.num;
     int NN = config.NN;
@@ -529,7 +528,7 @@ void integratorElastic3D::addFluxEquivalentSecondOrderInclusion(Config& config_)
                                         for (int k = 0; k < 2; k++) {
                                             for (l = 0; l < 2; l++) {
 
-                                                D_ijmn_rz = D_ijmn_rz - 0.5 * (cons_law(nu0, mu0, i, j, k, l) - cons_law(nu1, mu1, i, j, k, l)) * Eshelby_strain_integration_uniform_der2(k, l, m, n, r, z, s, h, radius, x_o, x_o);
+                                                D_ijmn_rz = D_ijmn_rz - 0.5 * (cons_law(nu0, mu_0, i, j, k, l) - cons_law(nu1, mu_1, i, j, k, l)) * Eshelby_strain_integration_uniform_der2(k, l, m, n, r, z, s, h, radius, x_o, x_o);
 
                                             }
                                         }
@@ -540,7 +539,7 @@ void integratorElastic3D::addFluxEquivalentSecondOrderInclusion(Config& config_)
                                             for (int k = 0; k < 2; k++) {
                                                 for (l = 0; l < 2; l++) {
 
-                                                    D_ijmnp_rz = D_ijmnp_rz - 0.5 * (cons_law(nu0, mu0, i, j, k, l) - cons_law(nu1, mu1, i, j, k, l)) * Eshelby_strain_integration_linear_der2(k, l, m, n, p, r, z, s, h, radius, x_o, x_o);
+                                                    D_ijmnp_rz = D_ijmnp_rz - 0.5 * (cons_law(nu0, mu_0, i, j, k, l) - cons_law(nu1, mu_1, i, j, k, l)) * Eshelby_strain_integration_linear_der2(k, l, m, n, p, r, z, s, h, radius, x_o, x_o);
 
                                                 }
                                             }
@@ -558,12 +557,12 @@ void integratorElastic3D::addFluxEquivalentSecondOrderInclusion(Config& config_)
                                                 for (int k = 0; k < 2; k++) {
                                                     for (l = 0; l < 2; l++) {
 
-                                                        D_ijmnpq_rz = D_ijmnpq_rz - 0.5 * (cons_law(nu0,mu0,i, j, k, l) - cons_law(nu1,mu1,i, j, k, l)) * Eshelby_strain_integration_quadratic_der2(k, l, m, n, p, q, r, z, s, h, radius, x_o, x_o);
+                                                        D_ijmnpq_rz = D_ijmnpq_rz - 0.5 * (cons_law(nu0,mu_0,i, j, k, l) - cons_law(nu1,mu_1,i, j, k, l)) * Eshelby_strain_integration_quadratic_der2(k, l, m, n, p, q, r, z, s, h, radius, x_o, x_o);
 
                                                     }
                                                 }
 
-                                                A[index_E_ijkl[2 * s + i][j][r][z]][index_E_ijkl[2 * h + m][n][p][q]] = map[m][n] * (D_ijmnpq_rz + sym * cons_law(nu0,mu0,i, j, m, n) * d[p][r] * d[q][z]);
+                                                A[index_E_ijkl[2 * s + i][j][r][z]][index_E_ijkl[2 * h + m][n][p][q]] = map[m][n] * (D_ijmnpq_rz + sym * cons_law(nu0,mu_0,i, j, m, n) * d[p][r] * d[q][z]);
 
                                             }
                                         }

@@ -22,6 +22,12 @@
     <Filter Include="Source Files\Elastic">
       <UniqueIdentifier>{83965f1d-1ae1-4ee2-b9d1-8f1132764721}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Elastic_2D">
+      <UniqueIdentifier>{0c11285d-fe40-478a-948b-e4ba1644fe20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Elastic_2D">
+      <UniqueIdentifier>{fb5885d2-0b8e-428d-81ac-b783a024e3fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +56,24 @@
     </ClCompile>
     <ClCompile Include="configElastic3D.cpp">
       <Filter>Source Files\Elastic</Filter>
+    </ClCompile>
+    <ClCompile Include="integratorElastic2DHelper.cpp">
+      <Filter>Source Files\Elastic_2D</Filter>
+    </ClCompile>
+    <ClCompile Include="BEMBuilderElastic2D.cpp">
+      <Filter>Source Files\Elastic_2D</Filter>
+    </ClCompile>
+    <ClCompile Include="BEMElasticHelper2D.cpp">
+      <Filter>Source Files\Elastic_2D</Filter>
+    </ClCompile>
+    <ClCompile Include="configElastic2D.cpp">
+      <Filter>Source Files\Elastic_2D</Filter>
+    </ClCompile>
+    <ClCompile Include="integratorElastic2D.cpp">
+      <Filter>Source Files\Elastic_2D</Filter>
+    </ClCompile>
+    <ClCompile Include="postProcessorElastic2D.cpp">
+      <Filter>Source Files\Elastic_2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +142,27 @@
     </ClInclude>
     <ClInclude Include="inputGenerator.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BEMBuilderElastic2D.h">
+      <Filter>Header Files\Elastic_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="BEMElasticHelper2D.h">
+      <Filter>Header Files\Elastic_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="configElastic2D.h">
+      <Filter>Header Files\Elastic_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="integratorElastic2DHelper.h">
+      <Filter>Header Files\Elastic_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="systemSolverElastic2D.h">
+      <Filter>Header Files\Elastic_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="postProcessorElastic2D.h">
+      <Filter>Header Files\Elastic_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="integratorElastic2D.h">
+      <Filter>Header Files\Elastic_2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

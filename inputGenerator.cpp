@@ -27,7 +27,7 @@
 // this source file specifies the types of PDEs to solve
 shared_ptr<Config> inputGenerator(int ID) {
 	
-	switch (ID):{
+	switch (ID){
 		case 1:
 			return make_shared<configElastic3D>();
 			break;

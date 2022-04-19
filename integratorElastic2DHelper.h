@@ -1,3 +1,27 @@
+/* ----------------------------------------------------------------------
+   iBEM - inclusion-based Boundary Element Method
+   This software is distributed under the GNU General Public License
+   version 3 or any later version.
+------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------
+    This file is part of iBEM.
+
+    iBEM is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    iBEM is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with iBEM.  If not, see <https://www.gnu.org/licenses/>.
+
+------------------------------------------------------------------------- */
+
 
 /*
  This file contains the integration of Green's function of
@@ -25,16 +49,13 @@ inline double rho_der2(double* x, double a, double r, int j, int m, int flag);
 
 inline double rho_der3(double* x, double a, double r, int i, int j, int k);
 
+inline double rho_der4(double* x, double a, double r, int i, int j, int k, int l);
+
+inline double rho_der5(double* x, double a, double r, int i, int j, int k, int l, int s);
+
 inline double dir_der(double* x, double a, double r, int p, int j);
 
 inline double dir_der2(double* x, double a, double r, int i, int j, int m);
-
-// influence on the boundary
-inline double Eshelby_displacement(double* x, double a, int i, int k, int l);
-
-inline double Eshelby_displacement_linear(double* x, double a, int i, int k, int l, int p);
-
-inline double Eshelby_displacement_quadratic(double* x, double a, int i, int k, int l, int p, int q);
 
 // integration for displacements
 
@@ -52,7 +73,7 @@ inline double Phi_2_2(double* x, double a, int p,int q, int i, int j);
 
 inline double Psi_1_4(double* x, double a, int p, int i, int j, int k, int l);
 
-inline double Psi_2_4(double* x, double a, int p,int q, int i, int j, int k, int l)
+inline double Psi_2_4(double* x, double a, int p, int q, int i, int j, int k, int l);
 
 // integration for strain der
 inline double phi_der2(double* x, double a, double r, int i, int j, int m);
@@ -113,6 +134,11 @@ inline double vxa_5(double* x, double a, int i, int j, int k, int l, int s);
 inline double vx_4(double* x, double a, int i, int j, int k, int l);
 inline double vx_5(double* x, double a, int i, int j, int k, int l, int s);
 
+// displacement
+double Eshelby_displacement(double* x, double a, int i, int k, int l);
+double Eshelby_displacement_linear(double* x, double a, int i, int k, int l, int p);
+double Eshelby_displacement_quadratic(double* x, double a, int i, int k, int l, int p, int q);
+
 // Eshelby tensor integration results by uniform strain
 double Eshelby_strain_integration(int i, int j, int k, int l, int fir, int sec, Ref<VectorXd> radius, Ref<MatrixXd> x_f, Ref<MatrixXd> x_s);
 
@@ -137,3 +163,6 @@ double Eshelby_strain_integration_uniform_der2(int i, int j, int k, int l, int m
 double Eshelby_strain_integration_linear_der2(int i, int j, int k, int l, int p, int m,int s, int fir, int sec, Ref<VectorXd> radius, Ref<MatrixXd> x_f, Ref<MatrixXd> x_s);
 
 double Eshelby_strain_integration_quadratic_der2(int i, int j, int k, int l, int p,int q, int m, int s, int fir, int sec, Ref<VectorXd> radius, Ref<MatrixXd> x_f, Ref<MatrixXd> x_s);
+
+// constutive law
+double cons_law(double nu, double mu, int i, int j, int k, int l);

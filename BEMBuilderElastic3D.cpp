@@ -1865,7 +1865,7 @@ void BEMBuilderElastic3D::addFluxEquivalentSecondOrderBEM(Config& config_) {
 	}
 };
 
-int ffloord(int i, int j)
+int BEMBuilderElastic3D::ffloord(int i, int j)
 {
 
 	int d;
@@ -1890,7 +1890,7 @@ int ffloord(int i, int j)
 
 }
 
-int Find(int h, int e, int i, double** record, Ref<MatrixXi> NConnect, int NE)
+int BEMBuilderElastic3D::Find(int h, int e, int i, double** record, Ref<MatrixXi> NConnect, int NE)
 {
 
 
