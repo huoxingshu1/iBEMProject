@@ -28,6 +28,12 @@
     <Filter Include="Source Files\Elastic_2D">
       <UniqueIdentifier>{fb5885d2-0b8e-428d-81ac-b783a024e3fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Elastic_2D_arbitrary">
+      <UniqueIdentifier>{f6ef6577-6573-496d-b2df-6a96c081b47a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Elastic_2D_arbitrary">
+      <UniqueIdentifier>{62f73643-268e-4418-b1e2-57e62ee86b97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,6 +80,30 @@
     </ClCompile>
     <ClCompile Include="postProcessorElastic2D.cpp">
       <Filter>Source Files\Elastic_2D</Filter>
+    </ClCompile>
+    <ClCompile Include="configElastic2D_arbitrary.cpp">
+      <Filter>Source Files\Elastic_2D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="BEMElasticHelper2D_arbitrary.cpp">
+      <Filter>Source Files\Elastic_2D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="BEMBuilderElastic2D_arbitrary.cpp">
+      <Filter>Source Files\Elastic_2D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="integratorElastic2D_arbitrary.cpp">
+      <Filter>Source Files\Elastic_2D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Uniform_polygon_integral.cpp">
+      <Filter>Source Files\Elastic_2D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Linear_Polygon_integral.cpp">
+      <Filter>Source Files\Elastic_2D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Quadratic_Polygon_integral.cpp">
+      <Filter>Source Files\Elastic_2D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="postProcessorElastic2D_arbitrary.cpp">
+      <Filter>Source Files\Elastic_2D_arbitrary</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +193,33 @@
     </ClInclude>
     <ClInclude Include="integratorElastic2D.h">
       <Filter>Header Files\Elastic_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="configElastic2D_arbitrary.h">
+      <Filter>Header Files\Elastic_2D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="BEMBuilderElastic2D_arbitrary.h">
+      <Filter>Header Files\Elastic_2D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="BEMElasticHelper2D_arbitrary.h">
+      <Filter>Header Files\Elastic_2D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="integratorElastic2D_arbitrary.h">
+      <Filter>Header Files\Elastic_2D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Uniform_polygon_integral.h">
+      <Filter>Header Files\Elastic_2D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Linear_Polygon_integral.h">
+      <Filter>Header Files\Elastic_2D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadratic_Polygon_integral.h">
+      <Filter>Header Files\Elastic_2D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="systemSolverElastic2D_arbitrary.h">
+      <Filter>Header Files\Elastic_2D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="postProcessorElastic2D_arbitrary.h">
+      <Filter>Header Files\Elastic_2D_arbitrary</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,14 +22,15 @@
 
 ------------------------------------------------------------------------- */
 
-# include "BEMElasticHelper2D.h"
-# include "configElastic2D.h"
+
+# include "BEMElasticHelper2D_arbitrary.h"
+# include "configElastic2D_arbitrary.h"
 #include "GlobalConstant.h"
 
 /*----------------------------------------------------------
         Apply shape function in local and global coordinate
 ------------------------------------------------------------*/
-void BEM_2D::Cartesian(double** Elcor, double& N1, double& N2, double& N3, double* GCcor)
+void BEM_2D_arbitrary::Cartesian(double** Elcor, double& N1, double& N2, double& N3, double* GCcor)
 {
     for (int i = 0; i < 2; i++) {
         GCcor[i] = N1 * Elcor[0][i] + N2 * Elcor[1][i] + N3 * Elcor[2][i];
@@ -40,7 +41,7 @@ void BEM_2D::Cartesian(double** Elcor, double& N1, double& N2, double& N3, doubl
         Serendip_func: calculate the shape function of
         the quadratic 2D element
 ------------------------------------------------------------*/
-void BEM_2D::Serendip_func(double xsi, double& N1, double& N2, double& N3, double** Ni, double* N)
+void BEM_2D_arbitrary::Serendip_func(double xsi, double& N1, double& N2, double& N3, double** Ni, double* N)
 {
     // Ni is used for int_stress function
     // j is the product of node freedom 2 times nodes number 3
@@ -69,7 +70,7 @@ void BEM_2D::Serendip_func(double xsi, double& N1, double& N2, double& N3, doubl
            Calculate the derivative of the shape functions
            and jacobian, the length of the element
 -----------------------------------------------------------------*/
-void BEM_2D::Normal_Jac(double xsi, double** Elcor, double& Jac, double* Vnorm)
+void BEM_2D_arbitrary::Normal_Jac(double xsi, double** Elcor, double& Jac, double* Vnorm)
 {
     double dN1_dxsi, dN2_dxsi, dN3_dxsi;
     double V_xsi[2]; // the vnorm
@@ -99,7 +100,7 @@ void BEM_2D::Normal_Jac(double xsi, double** Elcor, double& Jac, double* Vnorm)
 /*------------------------------------------------------------------
         Compute the element length using Gauss integral method
 --------------------------------------------------------------------*/
-double BEM_2D::Compute_length(double xsi, double weight, double** Elcor)
+double BEM_2D_arbitrary::Compute_length(double xsi, double weight, double** Elcor)
 {
     // loop n times in the external loops
     double V_xsi[2]; double N1, N2, N3, dElength;
@@ -125,7 +126,7 @@ double BEM_2D::Compute_length(double xsi, double weight, double** Elcor)
           The boundary integral origin function
           Tk (H),  Uk(G), plane strain problem
 ---------------------------------------------------------------------*/
-void BEM_2D::UK(double* dxr, double r, double E, double nu, double** UP)
+void BEM_2D_arbitrary::UK(double* dxr, double r, double E, double nu, double** UP)
 {
     double mu, c1, conr, c, clog;
     // lame constants
@@ -145,7 +146,7 @@ void BEM_2D::UK(double* dxr, double r, double E, double nu, double** UP)
           The boundary integral origin function
           Tk (H),  Uk(G), plane strain problem
 -----------------------------------------------------------------------*/
-void BEM_2D::TK(double* dxr, double r, double E, double nu, double** TP, double* Vnorm)
+void BEM_2D_arbitrary::TK(double* dxr, double r, double E, double nu, double** TP, double* Vnorm)
 {
     double c3, conr, Costh, c2;
     c3 = 1.0 - 2.0 * nu;
@@ -171,7 +172,7 @@ void BEM_2D::TK(double* dxr, double r, double E, double nu, double** TP, double*
     Define the partial derivatives of Green's function
 */
 /*----------------------------------------------------------------------------------------------*/
-double BEM_2D::Green_01(double* x, int i, int j, int k)
+double BEM_2D_arbitrary::Green_01(double* x, int i, int j, int k)
 {
     // first derivative of Green's function
     double result, para;
@@ -188,7 +189,7 @@ double BEM_2D::Green_01(double* x, int i, int j, int k)
 }
 
 /*-----------------------------------------------------------------------------------------------*/
-double BEM_2D::Green_02(double* x, int i, int j, int k, int l)
+double BEM_2D_arbitrary::Green_02(double* x, int i, int j, int k, int l)
 {
     // second derivative of the Green's function
     double result, para, cons;
@@ -207,7 +208,7 @@ double BEM_2D::Green_02(double* x, int i, int j, int k, int l)
 }
 
 /*-----------------------------------------------------------------------------------------------*/
-double BEM_2D::Green_03(double* x, int i, int j, int k, int l, int s)
+double BEM_2D_arbitrary::Green_03(double* x, int i, int j, int k, int l, int s)
 {
     // third derivatives of the Green's function
     double result, para, cons;
@@ -232,7 +233,7 @@ double BEM_2D::Green_03(double* x, int i, int j, int k, int l, int s)
 }
 
 /*------------------------------------------------------------------------------------------------*/
-double BEM_2D::Green_04(double* x, int i, int j, int k, int l, int s, int m)
+double BEM_2D_arbitrary::Green_04(double* x, int i, int j, int k, int l, int s, int m)
 {
     // fourth derivatives of the Green's function
     double result;
@@ -276,3 +277,130 @@ double BEM_2D::Green_04(double* x, int i, int j, int k, int l, int s, int m)
     result = para * (term1 + term2 + term3 + term4 + term5 + term6 + term7 + term8);
     return result;
 }
+
+double BEM_2D_arbitrary::Triangle_area(double** coor)
+{
+    double result = 0.5 * (coor[1][0] * coor[2][1] + coor[2][0] * coor[0][1] + coor[0][0] * coor[1][1]
+        - coor[0][1] * coor[1][0] - coor[1][1] * coor[2][0] - coor[2][1] * coor[0][0]);
+    return abs(result);
+}
+
+void BEM_2D_arbitrary::Triangle_shape(double** coor, int n, double* SH)
+{
+    // n is used to show which one is the I node
+    int j, k;
+    if (n == 0) {
+        j = 1; k = 2;
+    }
+    else if (n == 1) {
+        j = 2; k = 0;
+    }
+    else if (n == 2) {
+        j = 0; k = 1;
+    }
+    // note that n,j,k is in counter clockwise sequence
+    double area = Triangle_area(coor);
+    double alpha, beta, gamma;
+    alpha = coor[j][0] * coor[k][1] - coor[k][0] * coor[j][1];
+    beta = coor[j][1] - coor[k][1];
+    gamma = coor[k][0] - coor[j][0];
+
+    SH[0] = alpha / (2.0 * area);
+    SH[1] = beta / (2.0 * area);
+    SH[2] = gamma / (2.0 * area);
+
+}
+
+double BEM_2D_arbitrary::Triangle_shape_6(double** coord, int n, double* x)
+{
+    double SH[3] = {}; double L;
+
+    switch (n) {
+    case 0:
+        Triangle_shape(coord, n, SH);
+        L = SH[0] + SH[1] * x[0] + SH[2] * x[1];
+        L = (2.0 * L - 1.0) * L;
+        break;
+    case 1:
+        Triangle_shape(coord, n, SH);
+        L = SH[0] + SH[1] * x[0] + SH[2] * x[1];
+        L = (2.0 * L - 1.0) * L;
+        break;
+    case 2:
+        Triangle_shape(coord, n, SH);
+        L = SH[0] + SH[1] * x[0] + SH[2] * x[1];
+        L = (2.0 * L - 1.0) * L;
+        break;
+    case 3:
+        Triangle_shape(coord, 0, SH);
+        L = SH[0] + SH[1] * x[0] + SH[2] * x[1];
+        Triangle_shape(coord, 1, SH);
+        L = 4.0 * L * (SH[0] + SH[1] * x[0] + SH[2] * x[1]);
+        break;
+    case 4:
+        Triangle_shape(coord, 1, SH);
+        L = SH[0] + SH[1] * x[0] + SH[2] * x[1];
+        Triangle_shape(coord, 2, SH);
+        L = 4.0 * L * (SH[0] + SH[1] * x[0] + SH[2] * x[1]);
+        break;
+    case 5:
+        Triangle_shape(coord, 2, SH);
+        L = SH[0] + SH[1] * x[0] + SH[2] * x[1];
+        Triangle_shape(coord, 0, SH);
+        L = 4.0 * L * (SH[0] + SH[1] * x[0] + SH[2] * x[1]);
+        break;
+
+    }
+
+    return L;
+}
+
+void BEM_2D_arbitrary::Trangle_shape_6_coeff_6(double* SH_0, double* SH_1, double* SH_2, double** coeff)
+{
+    for (int i = 0; i < 6; i++) {
+        for (int h = 0; h < 6; h++) {
+            coeff[i][h] = 0.0;
+        }
+    }
+
+    // define the first 3 corner nodes, vertex 0
+    coeff[0][0] = 2.0 * SH_0[0] * SH_0[0] - SH_0[0]; coeff[0][1] = 4.0 * (SH_0[0] * SH_0[1]) - SH_0[1]; coeff[0][2] = 4.0 * (SH_0[0] * SH_0[2]) - SH_0[2];
+    coeff[0][3] = 4.0 * SH_0[1] * SH_0[2]; coeff[0][4] = 2.0 * SH_0[1] * SH_0[1]; coeff[0][5] = 2.0 * SH_0[2] * SH_0[2];
+
+    // vertex 1,
+    coeff[1][0] = 2.0 * SH_1[0] * SH_1[0] - SH_1[0]; coeff[1][1] = 4.0 * (SH_1[0] * SH_1[1]) - SH_1[1]; coeff[1][2] = 4.0 * (SH_1[0] * SH_1[2]) - SH_1[2];
+    coeff[1][3] = 4.0 * SH_1[1] * SH_1[2]; coeff[1][4] = 2.0 * SH_1[1] * SH_1[1]; coeff[1][5] = 2.0 * SH_1[2] * SH_1[2];
+
+    // vertex 2,
+    coeff[2][0] = 2.0 * SH_2[0] * SH_2[0] - SH_2[0]; coeff[2][1] = 4.0 * (SH_2[0] * SH_2[1]) - SH_2[1]; coeff[2][2] = 4.0 * (SH_2[0] * SH_2[2]) - SH_2[2];
+    coeff[2][3] = 4.0 * SH_2[1] * SH_2[2]; coeff[2][4] = 2.0 * SH_2[1] * SH_2[1]; coeff[2][5] = 2.0 * SH_2[2] * SH_2[2];
+
+    // mid-points, vertex 3, (0 and 1)
+    coeff[3][0] = 4.0 * SH_0[0] * SH_1[0]; coeff[3][1] = 4.0 * (SH_0[0] * SH_1[1] + SH_0[1] * SH_1[0]); coeff[3][2] = 4.0 * (SH_0[0] * SH_1[2] + SH_0[2] * SH_1[0]);
+    coeff[3][3] = 4.0 * (SH_0[1] * SH_1[2] + SH_0[2] * SH_1[1]); coeff[3][4] = 4.0 * SH_0[1] * SH_1[1]; coeff[3][5] = 4.0 * SH_0[2] * SH_1[2];
+
+    // mid-points, vertex 4, (1 and 2)
+    coeff[4][0] = 4.0 * SH_2[0] * SH_1[0]; coeff[4][1] = 4.0 * (SH_2[0] * SH_1[1] + SH_2[1] * SH_1[0]); coeff[4][2] = 4.0 * (SH_2[0] * SH_1[2] + SH_2[2] * SH_1[0]);
+    coeff[4][3] = 4.0 * (SH_2[1] * SH_1[2] + SH_2[2] * SH_1[1]); coeff[4][4] = 4.0 * SH_2[1] * SH_1[1]; coeff[4][5] = 4.0 * SH_2[2] * SH_1[2];
+
+    // mid-points, vertex 5, (2 and 0)
+    coeff[5][0] = 4.0 * SH_2[0] * SH_0[0]; coeff[5][1] = 4.0 * (SH_2[0] * SH_0[1] + SH_2[1] * SH_0[0]); coeff[5][2] = 4.0 * (SH_2[0] * SH_0[2] + SH_2[2] * SH_0[0]);
+    coeff[5][3] = 4.0 * (SH_2[1] * SH_0[2] + SH_2[2] * SH_0[1]); coeff[5][4] = 4.0 * SH_2[1] * SH_0[1]; coeff[5][5] = 4.0 * SH_2[2] * SH_0[2];
+
+
+}
+
+
+void BEM_2D_arbitrary::direction_normal(double* Vnorm, double* Vdir, double* x1, double* x2)
+{
+    double len = sqrt((x1[1] - x2[1]) * (x1[1] - x2[1]) + (x1[0] - x2[0]) * (x1[0] - x2[0]));
+
+    // x2 = v+, x1 = v-
+    Vdir[0] = (x2[0] - x1[0]) / len;
+    Vdir[1] = (x2[1] - x1[1]) / len;
+
+    Vnorm[0] = Vdir[1];
+    Vnorm[1] = -Vdir[0];
+
+}
+

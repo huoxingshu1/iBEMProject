@@ -35,6 +35,12 @@
 #include "postProcessorElastic2D.h"
 #include "systemSolverElastic2D.h"
 
+// 2D arbitrary library
+#include "integratorElastic2D_arbitrary.h"
+#include "BEMBuilderElastic2D_arbitrary.h"
+#include"postProcessorElastic2D_arbitrary.h"
+#include "systemSolverElastic2D_arbitrary.h"
+
 /*
 This header file allows iBEM to locate which specific problems to be run
 
@@ -53,6 +59,9 @@ shared_ptr<integrator> getIntegrator(string type) {
 		return make_shared <integratorElastic2D>();
 	}
 
+	else if (type == "integratorElastic2D_arbitrary") {
+		return make_shared <integratorElastic2D_arbitrary>();
+	}
 
 	return NULL;
 }
@@ -68,6 +77,10 @@ shared_ptr<BEMBuilder> getBEMBuilder(string type) {
 		return make_shared <BEMBuilderElastic2D>();
 	}
 
+	else if (type == "BEMBuilderElastic2D_arbitrary") {
+		return make_shared <BEMBuilderElastic2D_arbitrary>();
+	}
+
 	return NULL;
 }
 
@@ -78,7 +91,9 @@ shared_ptr<postProcessor> getPostProcessor(string type) {
 	else if (type == "postProcessorElastic2D") {
 		return make_shared <postProcessorElastic2D>();
 	}
-
+	else if (type == "postProcessorElastic2D_arbitrary") {
+		return make_shared <postProcessorElastic2D_arbitrary>();
+	}
 	return NULL;
 }
 
@@ -89,5 +104,9 @@ shared_ptr<systemSolver> getSystemSolver(string type) {
 	else if (type == "systemSolverElastic2D") {
 		return make_shared <systemSolverElastic2D>();
 	}
+	else if (type == "systemSolverElastic2D_arbitrary") {
+		return make_shared <systemSolverElastic2D_arbitrary>();
+	}
+
 	return NULL;
 }

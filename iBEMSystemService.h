@@ -44,13 +44,25 @@ public:
 
 };
 
+/*
+	In ellipsoidal cases, the interchange of function:
+	(a) addFluxEquivalentInclusion (b) addFluxEquivalentBEM
+	will not change the results; 
+
+	However, for arbitrary cases, we need to calculate the Gaussian weights
+	for subdomain collocation method. Hence, it is necessary to run inclusion functions
+	firtstly!
+
+*/
+
 void iBEMSystemService::run() {
 	this->tradition_BEM();
 	this->addFieldToBEM();
+	this->addFluxEquivalentInclusion();
 	this->addFluxEquivalentBEM();
 	this->addFluxEquivalentFirstOrderBEM();
 	this->addFluxEquivalentSecondOrderBEM();
-	this->addFluxEquivalentInclusion();
+	
 
 }
 

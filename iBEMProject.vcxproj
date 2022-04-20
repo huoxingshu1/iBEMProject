@@ -151,6 +151,7 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>D:\iBEM_pubish_code\iBEMProject-X\eigen-eigen-1306d75b4a21;</AdditionalIncludeDirectories>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,30 +162,41 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BEMBuilderElastic2D.cpp" />
+    <ClCompile Include="BEMBuilderElastic2D_arbitrary.cpp" />
     <ClCompile Include="BEMBuilderElastic3D.cpp" />
     <ClCompile Include="BEMElasticHelper2D.cpp" />
+    <ClCompile Include="BEMElasticHelper2D_arbitrary.cpp" />
     <ClCompile Include="BEMElasticHelper3D.cpp" />
     <ClCompile Include="configElastic2D.cpp" />
+    <ClCompile Include="configElastic2D_arbitrary.cpp" />
     <ClCompile Include="configElastic3D.cpp" />
     <ClCompile Include="inputGenerator.cpp" />
     <ClCompile Include="integratorElastic2D.cpp" />
     <ClCompile Include="integratorElastic2DHelper.cpp" />
+    <ClCompile Include="integratorElastic2D_arbitrary.cpp" />
     <ClCompile Include="integratorElastic3D.cpp" />
     <ClCompile Include="integratorElastic3DHelper.cpp" />
+    <ClCompile Include="Linear_Polygon_integral.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="postProcessorElastic2D.cpp" />
+    <ClCompile Include="postProcessorElastic2D_arbitrary.cpp" />
     <ClCompile Include="postProcessorElastic3D.cpp" />
     <ClCompile Include="ibemRunner.cpp" />
+    <ClCompile Include="Quadratic_Polygon_integral.cpp" />
+    <ClCompile Include="Uniform_polygon_integral.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BEMBuilder.h" />
     <ClInclude Include="BEMBuilderElastic2D.h" />
+    <ClInclude Include="BEMBuilderElastic2D_arbitrary.h" />
     <ClInclude Include="BEMBuilderElastic3D.h" />
     <ClInclude Include="BEMElasticHelper2D.h" />
+    <ClInclude Include="BEMElasticHelper2D_arbitrary.h" />
     <ClInclude Include="BEMElasticHelper3D.h" />
     <ClInclude Include="classFinder.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="configElastic2D.h" />
+    <ClInclude Include="configElastic2D_arbitrary.h" />
     <ClInclude Include="configElastic3D.h" />
     <ClInclude Include="GlobalConstant.h" />
     <ClInclude Include="ibemRunner.h" />
@@ -193,19 +205,25 @@
     <ClInclude Include="integrator.h" />
     <ClInclude Include="integratorElastic2D.h" />
     <ClInclude Include="integratorElastic2DHelper.h" />
+    <ClInclude Include="integratorElastic2D_arbitrary.h" />
     <ClInclude Include="integratorElastic3D.h" />
     <ClInclude Include="integratorElastic3DHelper.h" />
+    <ClInclude Include="Linear_Polygon_integral.h" />
     <ClInclude Include="postProcessor.h" />
     <ClInclude Include="postProcessorElastic2D.h" />
+    <ClInclude Include="postProcessorElastic2D_arbitrary.h" />
     <ClInclude Include="postProcessorElastic3D.h" />
     <ClInclude Include="postprocessService.h" />
     <ClInclude Include="preprocessService.h" />
+    <ClInclude Include="Quadratic_Polygon_integral.h" />
     <ClInclude Include="service.h" />
     <ClInclude Include="serviceWrapper.h" />
     <ClInclude Include="systemSolver.h" />
     <ClInclude Include="systemSolverElastic2D.h" />
+    <ClInclude Include="systemSolverElastic2D_arbitrary.h" />
     <ClInclude Include="systemSolverElastic3D.h" />
     <ClInclude Include="systemSolverService.h" />
+    <ClInclude Include="Uniform_polygon_integral.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
