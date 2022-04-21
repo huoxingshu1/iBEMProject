@@ -40,7 +40,7 @@ void integratorElastic2D_arbitrary::Polyhedral_Eshelby_displacement_all_6(int i,
     double bI, lp, lm, delta, para;
     double Shape_0[3] = {}; double Shape_1[3] = {}; double Shape_2[3] = {};
     double Vnorm[2], Vdir[2]; double vm[2], vp[2]; int om, op;
-    para = 1.0 / (8.0 * pi * (1.0 - nu0)); delta = 1E-7;
+    para = 1.0 / (8.0 * Pi * (1.0 - nu0)); delta = 1E-7;
     double* A_ijk = new double[6]; double* B_rest = new double[6];
 
     B2D_A.Triangle_shape(coord, 0, Shape_0);  B2D_A.Triangle_shape(coord, 1, Shape_1);  B2D_A.Triangle_shape(coord, 2, Shape_2);
@@ -423,9 +423,9 @@ void integratorElastic2D_arbitrary::gauss_6_point_shared(int s, int num_NE, Ref<
             // initilize thr GS coordinate
             GS[0] = GS[1] = 0.0;
             // corner points
-            SH[0] = (2.0 * Shape_L1[i] - 1.0) * Shape_L1[i]; SH[1] = (2.0 * Shape_L2[i] - 1.0) * Shape_L2[i]; SH[2] = (2.0 * Shape_L3[i] - 1.0) * Shape_L3[i];
+            SH[0] = (2.0 * Shape_L1_2D[i] - 1.0) * Shape_L1_2D[i]; SH[1] = (2.0 * Shape_L2_2D[i] - 1.0) * Shape_L2_2D[i]; SH[2] = (2.0 * Shape_L3_2D[i] - 1.0) * Shape_L3_2D[i];
             // mid-points
-            SH[3] = 4.0 * Shape_L1[i] * Shape_L2[i]; SH[4] = 4.0 * Shape_L2[i] * Shape_L3[i]; SH[5] = 4.0 * Shape_L3[i] * Shape_L1[i];
+            SH[3] = 4.0 * Shape_L1_2D[i] * Shape_L2_2D[i]; SH[4] = 4.0 * Shape_L2_2D[i] * Shape_L3_2D[i]; SH[5] = 4.0 * Shape_L3_2D[i] * Shape_L1_2D[i];
 
             // given the specific coordinates of Gauss point
             for (int q = 0; q < 6; q++) {
@@ -445,9 +445,9 @@ void integratorElastic2D_arbitrary::gauss_6_point_shared(int s, int num_NE, Ref<
                 for (int q = 0; q < 6; q++) {
                     record_weight[s][n][q][0] = eigen_connect(record[n], q) - 1;
                     record_weight[s][n][q][1] = SH[q];
-                    record_weight[s][n][q][2] = Weight[i];
+                    record_weight[s][n][q][2] = Weight_2D[i];
                 }
-                number_weight[s][n] = Weight[i];
+                number_weight[s][n] = Weight_2D[i];
 
             }
 
@@ -470,7 +470,7 @@ void integratorElastic2D_arbitrary::Polyhedral_Eshelby_strain_all_6(int i, int j
     double bI, lp, lm, delta, para;
     double Shape_0[3] = {}; double Shape_1[3] = {}; double Shape_2[3] = {};
     double Vnorm[2], Vdir[2]; double vm[2], vp[2]; int om, op;
-    para = 1.0 / (8.0 * pi * (1.0 - nu0)); delta = 1E-7;
+    para = 1.0 / (8.0 * Pi * (1.0 - nu0)); delta = 1E-7;
     double* A_ijkl = new double[6]; double* B_rest = new double[6];
 
     B2D_A.Triangle_shape(coord, 0, Shape_0);  B2D_A.Triangle_shape(coord, 1, Shape_1);  B2D_A.Triangle_shape(coord, 2, Shape_2);

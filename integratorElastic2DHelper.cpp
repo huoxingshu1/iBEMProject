@@ -114,10 +114,10 @@ double Eshelby_displacement(double* x, double a, int i, int k, int l)
     double rp = sqrt(x[0] * x[0] + x[1] * x[1]);
     rho = a / rp;
 
-    conp = (1.0 - 2.0 * nu) / (4.0 * pi * (1.0 - nu));
-    conpp = -pi * rho * rho;
-    para = -(2.0) / (4.0 * pi * (1.0 - nu));
-    parap = -(pi * a * rho) / (4.0);
+    conp = (1.0 - 2.0 * nu) / (4.0 * Pi * (1.0 - nu));
+    conpp = -Pi * rho * rho;
+    para = -(2.0) / (4.0 * Pi * (1.0 - nu));
+    parap = -(Pi * a * rho) / (4.0);
     parapp = 4.0 * (1.0 - (rho * rho));
 
     double delta_kl, delta_il, delta_ik, ni, nk, nl;
@@ -140,7 +140,7 @@ double Eshelby_displacement_linear(double* x, double a, int i, int k, int l, int
     // p is the xp' linear term
     double result = 0.0;
     // tensor in jupyter notebook is F_{iklp}
-    double para = (1.0) / (8.0 * pi * (1.0 - nu0));
+    double para = (1.0) / (8.0 * Pi * (1.0 - nu0));
 
     result = para * (Psi_1_3(x, a, p, i, k, l) - 2.0 * nu0 * d[k][l] * Phi_1_1(x, a, p, i) - 2.0 * (1.0 - nu0) * d[i][k] * Phi_1_1(x, a, p, l) - 2.0 * (1.0 - nu0) * d[i][l] * Phi_1_1(x, a, p, k));
     // the reason for a negative sign is due to the Eshelby tensor on the left of the matrix
@@ -154,7 +154,7 @@ double Eshelby_displacement_quadratic(double* x, double a, int i, int k, int l, 
 {
     // p is the xp' quadratic term, q is the xq' quadratic term
     double result = 0.0;
-    double para = (1.0) / (8.0 * pi * (1.0 - nu0));
+    double para = (1.0) / (8.0 * Pi * (1.0 - nu0));
 
     result = para * (Psi_2_3(x, a, p, q, i, k, l)
             - 2.0 * nu0 * Phi_2_1(x, a, p, q, i) * d[k][l]
@@ -184,7 +184,7 @@ inline double Phi_1_1(double *x,double a, int p, int i)
         result = 0.0;
         double rho = a / r;
         double n[2] = { x[0] / r, x[1] / r };
-        result = pi * 0.5 * a * a * rho * rho * d[p][i] - pi * a * a * rho * rho * n[i] * n[p];
+        result = Pi * 0.5 * a * a * rho * rho * d[p][i] - Pi * a * a * rho * rho * n[i] * n[p];
     }
     return result;
 }
@@ -196,7 +196,7 @@ inline double Phi_2_1(double* x, double a, int m, int n, int i)
 
     if (a >= r) {       // interior case
         result = 0.0;
-        cout << "please check the overlapping of the boundary of the inclusion" << endl;
+        cout << "please check the overlapPing of the boundary of the inclusion" << endl;
     }
 
     else {          // exterior case
@@ -223,12 +223,12 @@ inline double Psi_1_3(double* x, double a, int p, int i, int k, int l)
     else {      // exterior case
         double rho = a / r;
         double n[2] = { x[0] / r, x[1] / r };
-        double PI = pi;
-        double term1 = a * a * (d[p][i] * d[k][l] + d[p][l] * d[i][k] + d[p][k] * d[i][l]) * PI * (0.5 * pow(rho, 2.0) - pow(rho, 4.0) / 6.0);
-        double term2 = (d[p][i] * x[k] + d[p][k] * x[i] + d[i][k] * x[p]) * PI * x[l] * (-pow(rho, 4.0) + (2.0 / 3.0) * pow(rho, 6.0));
-        double term3 = x[p] * x[i] * PI * (-d[k][l] * pow(rho, 4.0) + 4.0 * n[k] * n[l] * pow(rho, 4.0));
-        double term4 = (d[p][l] * x[i] + d[i][l] * x[p]) * x[k] * PI * (-pow(rho, 4.0) + (2.0 / 3.0) * pow(rho, 6.0));
-        double term5 = x[p] * x[i] * (2.0 / 3.0) * PI * (d[k][l] * pow(rho, 6.0) - 6.0 * n[k] * n[l] * pow(rho, 6.0));
+
+        double term1 = a * a * (d[p][i] * d[k][l] + d[p][l] * d[i][k] + d[p][k] * d[i][l]) * Pi * (0.5 * pow(rho, 2.0) - pow(rho, 4.0) / 6.0);
+        double term2 = (d[p][i] * x[k] + d[p][k] * x[i] + d[i][k] * x[p]) * Pi * x[l] * (-pow(rho, 4.0) + (2.0 / 3.0) * pow(rho, 6.0));
+        double term3 = x[p] * x[i] * Pi * (-d[k][l] * pow(rho, 4.0) + 4.0 * n[k] * n[l] * pow(rho, 4.0));
+        double term4 = (d[p][l] * x[i] + d[i][l] * x[p]) * x[k] * Pi * (-pow(rho, 4.0) + (2.0 / 3.0) * pow(rho, 6.0));
+        double term5 = x[p] * x[i] * (2.0 / 3.0) * Pi * (d[k][l] * pow(rho, 6.0) - 6.0 * n[k] * n[l] * pow(rho, 6.0));
         
         result = term1 + term2 + term3 + term4 + term5;
     }
@@ -241,7 +241,7 @@ inline double Psi_2_3(double* x, double a, int m, int n, int i, int j, int k)
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
     if (a >= r) {       // interior case
         result = 0.0;
-        cout << "please check the overlapping of the boundary of the inclusion" << endl;
+        cout << "please check the overlapPing of the boundary of the inclusion" << endl;
     }
 
     else {          // exterior case
@@ -274,7 +274,7 @@ inline double Phi_1_2(double* x, double a, int p, int i, int j)
     double result = 0.0;
 
     if (a >= r) {   // interior case
-        result = -pi * (d[i][p] * x[j] + d[j][p] * x[i] + d[i][j] * x[p]);
+        result = -Pi * (d[i][p] * x[j] + d[j][p] * x[i] + d[i][j] * x[p]);
 
     }
     else {      // exterior case
@@ -283,7 +283,7 @@ inline double Phi_1_2(double* x, double a, int p, int i, int j)
         term1 = d[p][i] * rho_der(x, a, r, j, 2);
         term2 = d[p][j] * rho_der(x, a, r, i, 2);
         term3 = x[p] * rho_der2(x, a, r, i, j, 2);
-        result = 0.5 * pi * a * a * (term1 + term2 + term3);
+        result = 0.5 * Pi * a * a * (term1 + term2 + term3);
 
     }
     return result;
@@ -357,38 +357,38 @@ inline double Psi_2_4(double* x, double a, int p,int q, int i, int j, int k, int
 }
 
 // integration for strain der
-inline double phi_der2(double* x, double a, double r, int i, int j, int m)
+inline double Phi_der2(double* x, double a, double r, int i, int j, int m)
 {
     double result = 0.0;
-   // double cons = -pi * a * a;
+   // double cons = -Pi * a * a;
    // result = d[i][j] * (-2.0) * x[m] * pow(r, -4) - 2.0 * ((d[i][m] * x[j] + d[j][m] * x[i]) * pow(r, -4) - 4.0 * x[i] * x[j] * x[m] * pow(r, -6));
-    double cons = -pi;
+    double cons = -Pi;
     result = d[i][j] * rho_der(x, a, r, m, 2) + d[i][m] * rho_der(x, a, r, j, 2) + x[i] * rho_der2(x, a, r, j, m, 2);
     result *= cons;
     return result;
 }
 
-inline double psi_der2(double* x, double a, double r, int i, int k, int l, int j, int m)
+inline double Psi_der2(double* x, double a, double r, int i, int k, int l, int j, int m)
 {
     double result = 0.0;    double rho = a / r;
     double n[2] = {x[0] / r, x[1] / r};
-    double para1 = -pi * a * rho_der2(x,a,r,j,m,1) / (8.0);
+    double para1 = -Pi * a * rho_der2(x,a,r,j,m,1) / (8.0);
     double term1 = 2.0 * rho * rho * ((d[i][k] * n[l] + d[i][l] * n[k] + d[k][l] * n[i]) + 8.0 * (1.0 - pow(rho,2)) * n[i] * n[k] * n[l]);
 
-    double para2 = -pi * a * rho_der(x, a, r, j, 1) / (8.0);
+    double para2 = -Pi * a * rho_der(x, a, r, j, 1) / (8.0);
     double term2 = 2.0 * rho_der(x, a, r, m, 2) * (d[i][k] * n[l] + d[i][l] * n[k] + d[k][l] * n[i]);
     term2 += 2.0 * rho * rho * (d[i][k] * dir_der(x, a, r, l, m) + d[i][l] * dir_der(x, a, r, k, m) + d[k][l] * dir_der(x, a, r, i, m));
     term2 -= 8.0 * rho_der(x, a, r, m, 2) * n[i] * n[k] * n[l];
     term2 += 8.0 * (1.0 - pow(rho, 2)) * (dir_der(x, a, r, i, m) * n[k] * n[l] + dir_der(x, a, r, k, m) * n[i] * n[l] + dir_der(x, a, r, l, m) * n[i] * n[k]);
 
 
-    double para3 = -pi * a * rho_der(x, a, r, m, 1) / (8.0);
+    double para3 = -Pi * a * rho_der(x, a, r, m, 1) / (8.0);
     double term3 = 2.0 * rho_der(x, a, r, j, 2) * (d[i][k] * n[l] + d[i][l] * n[k] + d[k][l] * n[i]);
     term3 += 2.0 * rho * rho * (d[i][k] * dir_der(x, a, r, l, j) + d[i][l] * dir_der(x, a, r, k, j) + d[k][l] * dir_der(x, a, r, i, j));
     term3 -= 8.0 * rho_der(x, a, r, j, 2) * n[i] * n[k] * n[l];
     term3 += 8.0 * (1.0 - pow(rho, 2)) * (dir_der(x, a, r, i, j) * n[k] * n[l] + dir_der(x, a, r, k, j) * n[i] * n[l] + dir_der(x, a, r, l, j) * n[i] * n[k]);
 
-    double para4 = -pi * a * rho / (8.0);
+    double para4 = -Pi * a * rho / (8.0);
     double term4 = 2.0 * rho_der2(x, a, r, j, m, 2) * (d[i][k] * n[l] + d[i][l] * n[k] + d[k][l] * n[i]);
     term4 += 2.0 * rho_der(x, a, r, j, 2) * (d[i][k] * dir_der(x, a, r, l, m) + d[i][l] * dir_der(x, a, r, k, m) + d[k][l] * dir_der(x, a, r, i, m));
     term4 += 2.0 * rho_der(x, a, r, m, 2) * (d[i][k] * dir_der(x, a, r, l, j) + d[i][l] * dir_der(x, a, r, k, j) + d[k][l] * dir_der(x, a, r, i, j));
@@ -408,10 +408,10 @@ inline double Phi_1_3(double* x, double a, int p, int i, int j, int k)
     double result = 0.0;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
     if (a >= r) {
-        result = -pi * (d[i][p] * d[j][k] + d[j][p] * d[i][k] + d[p][k] * d[i][j]);
+        result = -Pi * (d[i][p] * d[j][k] + d[j][p] * d[i][k] + d[p][k] * d[i][j]);
     }
     else {
-        result = 0.5 * pi * pow(a, 2.0) * (d[i][p] * rho_der2(x, a, r, j, k, 2)
+        result = 0.5 * Pi * pow(a, 2.0) * (d[i][p] * rho_der2(x, a, r, j, k, 2)
                 + d[j][p] * rho_der2(x, a, r, i, k, 2)
                 + d[p][k] * rho_der2(x, a, r, i, j, 2)
                 + x[p] * rho_der3(x, a, r, i, j, k));
@@ -506,7 +506,7 @@ inline double Phi_der3(double* x, double a, double r, int i, int j, int k, int l
         result = 0.0;
     }
     else {
-        result = -2.0 * pi * (d[i][j] * rho_der2(x, a, r, k, l, 2) + rho_der3(x, a, r, j, k, l) * x[i] + rho_der2(x, a, r, j, k, 2) * d[i][l] + d[i][k] * rho_der2(x, a, r, j, l, 2));
+        result = -2.0 * Pi * (d[i][j] * rho_der2(x, a, r, k, l, 2) + rho_der3(x, a, r, j, k, l) * x[i] + rho_der2(x, a, r, j, k, 2) * d[i][l] + d[i][k] * rho_der2(x, a, r, j, l, 2));
     }
     return result;
 }
@@ -519,7 +519,7 @@ inline double Phi_1_4(double* x, double a, int p, int i, int j, int k, int l)
         result = 0.0;
     }
     else {
-        result = 0.5 * pi * pow(a, 2.0) * (d[i][p] * rho_der3(x, a, r, j, k, l)
+        result = 0.5 * Pi * pow(a, 2.0) * (d[i][p] * rho_der3(x, a, r, j, k, l)
             + d[j][p] * rho_der3(x, a, r, i, k, l)
             + d[p][k] * rho_der3(x, a, r, i, j, l)
             + d[p][l] * rho_der3(x, a, r, i, j, k)
@@ -648,10 +648,10 @@ inline double vxx_0(double* x, double a)
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
 
     if (a >= r) {
-        result = 0.5 * pi * (pow(a, -2.0) - (2.0 / 3.0) * pow(a, -4.0) * pow(r, 2.0));
+        result = 0.5 * Pi * (pow(a, -2.0) - (2.0 / 3.0) * pow(a, -4.0) * pow(r, 2.0));
     }
     else {
-        result = 0.5 * pi * (1.0 / 3.0) * pow(a, 2.0) * pow(r, -4.0);
+        result = 0.5 * Pi * (1.0 / 3.0) * pow(a, 2.0) * pow(r, -4.0);
     }
 
     return result;
@@ -666,11 +666,11 @@ inline double vxx_1(double* x, double a, int i)
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
 
     if (a >= r) {
-        result = -pi * (2.0 / 3.0) * pow(a, -4.0) * x[i];
+        result = -Pi * (2.0 / 3.0) * pow(a, -4.0) * x[i];
     }
     else {
         double rho = a / r;
-        result = pi * (1.0 / 3.0) * pow(a, -2.0) * pow(rho, 2.0) * rho_der(x, a, r, i, 2);
+        result = Pi * (1.0 / 3.0) * pow(a, -2.0) * pow(rho, 2.0) * rho_der(x, a, r, i, 2);
     }
 
     return result;
@@ -685,11 +685,11 @@ inline double vxx_2(double* x, double a, int i, int j)
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
 
     if (a >= r) {
-        result = -pi * (2.0 / 3.0) * pow(a, -4.0) * d[i][j];
+        result = -Pi * (2.0 / 3.0) * pow(a, -4.0) * d[i][j];
     }
     else {
         double rho = a / r;
-        result = pi * (1.0 / 3.0) * pow(a, -2.0) * (rho_der(x,a,r,j,2) * rho_der(x, a, r, i, 2) + rho_der2(x,a,r,i,j,2) * rho * rho);
+        result = Pi * (1.0 / 3.0) * pow(a, -2.0) * (rho_der(x,a,r,j,2) * rho_der(x, a, r, i, 2) + rho_der2(x,a,r,i,j,2) * rho * rho);
     }
 
     return result;
@@ -708,7 +708,7 @@ inline double vxx_3(double* x, double a, int i, int j, int k)
     }
     else {
         double rho = a / r;
-        result = pi * (1.0 / 3.0) * pow(a, -2.0) * (rho_der2(x, a, r, j, k, 2) * rho_der(x, a, r, i, 2)
+        result = Pi * (1.0 / 3.0) * pow(a, -2.0) * (rho_der2(x, a, r, j, k, 2) * rho_der(x, a, r, i, 2)
             + rho_der(x, a, r, j, 2) * rho_der2(x, a, r, i, k, 2)
             + rho_der3(x, a, r, i, j, k) * rho * rho
             + rho_der2(x, a, r, i, j, 2) * rho_der(x, a, r, k, 2));
@@ -730,7 +730,7 @@ inline double vxx_4(double* x, double a, int i, int j, int k, int l)
     }
     else {
         double rho = a / r;
-        result = pi * (1.0 / 3.0) * pow(a, -2.0) * (rho_der3(x, a, r, j, k, l) * rho_der(x, a, r, i, 2)
+        result = Pi * (1.0 / 3.0) * pow(a, -2.0) * (rho_der3(x, a, r, j, k, l) * rho_der(x, a, r, i, 2)
             + rho_der2(x, a, r, j, k, 2) * rho_der2(x, a, r, i, l, 2)
             + rho_der2(x, a, r, j, l, 2) * rho_der2(x, a, r, i, k, 2)
             + rho_der(x, a, r, j, 2) * rho_der3(x, a, r, i, k, l)
@@ -751,10 +751,10 @@ inline double vxxa_0(double* x, double a)
     double result = 0.0;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
     if (a >= r) {   // interior case
-        result = pi * (1.0 / 6.0) * (pow(a, -2.0) - 0.5 * pow(a, -4.0) * pow(r, 2.0));
+        result = Pi * (1.0 / 6.0) * (pow(a, -2.0) - 0.5 * pow(a, -4.0) * pow(r, 2.0));
     }
     else {      // exterior case
-        result = pi * (1.0 / 6.0) * (pow(a, 2.0) * pow(r, -4.0) - 0.5 * pow(a, 4.0) * pow(r, -6.0));
+        result = Pi * (1.0 / 6.0) * (pow(a, 2.0) * pow(r, -4.0) - 0.5 * pow(a, 4.0) * pow(r, -6.0));
     }
     return result;
 }
@@ -767,12 +767,12 @@ inline double vxxa_1(double* x, double a, int i)
     double result = 0.0;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
     if (a >= r) {   // interior case
-        result = -pi * (1.0 / 6.0) * x[i] * pow(a, -4.0);
+        result = -Pi * (1.0 / 6.0) * x[i] * pow(a, -4.0);
     }
     else {      // exterior case
         double rho = a / r;
        
-        result = (1.0 / 12.0) * pi * pow(a, -2.0) * rho_der(x, a, r, i, 2) * (4.0 * pow(rho, 2.0) - 3.0 * pow(rho, 4.0));
+        result = (1.0 / 12.0) * Pi * pow(a, -2.0) * rho_der(x, a, r, i, 2) * (4.0 * pow(rho, 2.0) - 3.0 * pow(rho, 4.0));
     }
     return result;
 }
@@ -785,12 +785,12 @@ inline double vxxa_2(double* x, double a, int i, int j)
     double result = 0.0;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
     if (a >= r) {   // interior case
-        result = -pi * (1.0 / 6.0) * d[i][j] * pow(a, -4.0);
+        result = -Pi * (1.0 / 6.0) * d[i][j] * pow(a, -4.0);
     }
     else {      // exterior case
 
         double rho = a / r;
-        result = (1.0 / 12.0) * pi * pow(a, -2.0) * (
+        result = (1.0 / 12.0) * Pi * pow(a, -2.0) * (
             rho_der2(x, a, r, i, j, 2) * (4.0 * pow(rho, 2.0) - 3.0 * pow(rho, 4.0))
             + rho_der(x, a, r, i, 2) * rho_der(x, a, r, j, 2) * (4.0 - 6.0 * pow(rho, 2.0))
             );
@@ -811,7 +811,7 @@ inline double vxxa_3(double* x, double a, int i, int j, int k)
     else {      // exterior case
        
         double rho = a / r;
-        result = (1.0 / 12.0) * pi * pow(a, -2.0) * (
+        result = (1.0 / 12.0) * Pi * pow(a, -2.0) * (
             rho_der3(x, a, r, i, j, k) * (4.0 * pow(rho, 2.0) - 3.0 * pow(rho, 4.0))
             + rho_der2(x, a, r, i, j, 2) * rho_der(x, a, r, k, 2) * (4.0 - 6.0 * pow(rho, 2.0))
             + (rho_der2(x, a, r, i, k, 2) * rho_der(x, a, r, j, 2) + rho_der2(x, a, r, j, k, 2) * rho_der(x, a, r, i, 2)) * (4.0 - 6.0 * pow(rho, 2.0))
@@ -834,7 +834,7 @@ inline double vxxa_4(double* x, double a, int i, int j, int k, int l)
     else {      // exterior case
       
         double rho = a / r;
-        result = (1.0 / 12.0) * pi * pow(a, -2.0) * (
+        result = (1.0 / 12.0) * Pi * pow(a, -2.0) * (
             rho_der4(x, a, r, i, j, k, l) * (4.0 * pow(rho, 2.0) - 3.0 * pow(rho, 4.0))
             + rho_der3(x, a, r, i, j, k) * rho_der(x, a, r, l, 2) * (4.0 - 6.0 * pow(rho, 2.0))
             + (rho_der3(x, a, r, i, j, l) * rho_der(x, a, r, k, 2) + rho_der2(x, a, r, i, j, 2) * rho_der2(x, a, r, k, l, 2)) * (4.0 - 6.0 * pow(rho, 2.0))
@@ -860,7 +860,7 @@ inline double vxxa_5(double* x, double a, int i, int j, int k, int l, int m)
     else {      // exterior case
         
         double rho = a / r;
-        result = (1.0 / 12.0) * pi * pow(a, -2.0) * (
+        result = (1.0 / 12.0) * Pi * pow(a, -2.0) * (
             rho_der5(x, a, r, i, j, k, l, m) * (4.0 * pow(rho, 2.0) - 3.0 * pow(rho, 4.0))
             + rho_der4(x, a, r, i, j, k, l) * rho_der(x, a, r, m, 2) * (4.0 - 6.0 * pow(rho, 2.0))
             + (rho_der4(x, a, r, i, j, k, m) * rho_der(x, a, r, l, 2) + rho_der3(x, a, r, i, j, k) * rho_der2(x, a, r, l, m, 2)) * (4.0 - 6.0 * pow(rho, 2.0))
@@ -891,11 +891,11 @@ inline double vx2axxx_0(double* x, double a)
     double result = 0.0;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
     if (a >= r) {   // interior case
-        result = pi * ((1.0 / 3.0) - (1.0 / 12.0) * pow(a, -2.0) * pow(r, 2.0));
+        result = Pi * ((1.0 / 3.0) - (1.0 / 12.0) * pow(a, -2.0) * pow(r, 2.0));
     }
     else {      // exterior case
         double rho = a / r;
-        result = pi * (0.5 * pow(rho, 2.0)
+        result = Pi * (0.5 * pow(rho, 2.0)
                  - (1.0 / 3.0) * pow(rho, 4.0)
                 + (1.0 / 12.0) * pow(rho, 6.0));
     }
@@ -910,11 +910,11 @@ inline double vx2axxx_1(double* x, double a, int i)
     double result = 0.0;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
     if (a >= r) {   // interior case
-        result = -pi * (1.0 / 6.0) * x[i] * pow(a, -2.0);
+        result = -Pi * (1.0 / 6.0) * x[i] * pow(a, -2.0);
     }
     else {      // exterior case
         double rho = a / r;
-        result = pi * (0.5 * rho_der(x, a, r, i, 2)
+        result = Pi * (0.5 * rho_der(x, a, r, i, 2)
             - (2.0 / 3.0) * rho * rho * rho_der(x, a, r, i, 2)
             + (1.0 / 4.0) * pow(rho, 4.0) * rho_der(x, a, r, i, 2));
     }
@@ -929,11 +929,11 @@ inline double vx2axxx_2(double* x, double a, int i, int j)
     double result = 0.0;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
     if (a >= r) {   // interior case
-        result = -pi * (1.0 / 6.0) * d[i][j] * pow(a, -2.0);
+        result = -Pi * (1.0 / 6.0) * d[i][j] * pow(a, -2.0);
     }
     else {      // exterior case
         double rho = a / r;
-        result = pi * (
+        result = Pi * (
             rho_der2(x, a, r, i, j, 2) * (0.5 - (2.0 / 3.0) * rho * rho + 0.25 * pow(rho, 4.0))
             + rho_der(x, a, r, i, 2) * rho_der(x, a, r, j, 2) * ((-2.0 / 3.0) + 0.5 * rho * rho)
             );
@@ -953,7 +953,7 @@ inline double vx2axxx_3(double* x, double a, int i, int j, int k)
     }
     else {      // exterior case
         double rho = a / r;
-        result = pi * (
+        result = Pi * (
             rho_der3(x, a, r, i, j, k) * (0.5 - (2.0 / 3.0) * rho * rho + 0.25 * pow(rho, 4.0))
             + rho_der2(x, a, r, i, j, 2) * rho_der(x, a, r, k, 2) * ((-2.0 / 3.0) + 0.5 * rho * rho)
             + (rho_der2(x, a, r, i, k, 2) * rho_der(x, a, r, j, 2) + rho_der(x, a, r, i, 2) * rho_der2(x, a, r, j, k, 2)) * ((-2.0 / 3.0) + 0.5 * rho * rho)
@@ -971,12 +971,12 @@ inline double vx2axxx_4(double* x, double a, int i, int j, int k, int l)
     double result = 0.0;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
     if (a >= r) {   // interior case
-        result = -pi * (1.0 / 6.0) * x[i] * pow(a, -2.0);
+        result = -Pi * (1.0 / 6.0) * x[i] * pow(a, -2.0);
     }
     else {      // exterior case
         double rho = a / r;
 
-        result = pi * (
+        result = Pi * (
             rho_der4(x, a, r, i, j, k, l) * (0.5 - (2.0 / 3.0) * rho * rho + 0.25 * pow(rho, 4.0))
             + rho_der3(x, a, r, i, j, k) * ((-2.0 / 3.0) + 0.5 * rho * rho) * rho_der(x, a, r, l, 2)
             + (rho_der3(x, a, r, i, j, l) * rho_der(x, a, r, k, 2) + rho_der2(x, a, r, i, j, 2) * rho_der2(x, a, r, k, l, 2)) * ((-2.0 / 3.0) + 0.5 * rho * rho)
@@ -996,11 +996,11 @@ inline double vxa_0(double* x, double a)
     double result = 0.0;
 
     if (a >= r) {
-        result = pi * (0.5 - (1.0 / 6.0) * pow(a, -2.0) * pow(r, 2.0));
+        result = Pi * (0.5 - (1.0 / 6.0) * pow(a, -2.0) * pow(r, 2.0));
     }
     else {
         double rho = a / r;
-        result = pi * (0.5 * pow(rho, 2.0) - (1.0 / 6.0) * pow(rho, 4.0));
+        result = Pi * (0.5 * pow(rho, 2.0) - (1.0 / 6.0) * pow(rho, 4.0));
     }
     return result;
 
@@ -1015,11 +1015,11 @@ inline double vxa_1(double* x, double a, int i)
     double result = 0.0;
     
     if (a >= r) {
-        result = (-pi / 3.0) * pow(a, -2.0) * x[i];
+        result = (-Pi / 3.0) * pow(a, -2.0) * x[i];
     }
     else {
         double rho = a / r;
-        result = pi * rho_der(x, a, r, i, 2) * (0.5 - (1.0 / 3.0) * pow(rho, 2.0));
+        result = Pi * rho_der(x, a, r, i, 2) * (0.5 - (1.0 / 3.0) * pow(rho, 2.0));
     }
     return result;
 }
@@ -1033,11 +1033,11 @@ inline double vxa_2(double* x, double a, int i, int j)
     double result = 0.0;
 
     if (a >= r) {
-        result = (-pi / 3.0) * pow(a, -2.0) * d[i][j];
+        result = (-Pi / 3.0) * pow(a, -2.0) * d[i][j];
     }
     else {
         double rho = a / r;
-        result = pi * (rho_der2(x, a, r, i, j, 2) * (0.5 - (1.0 / 3.0) * pow(rho, 2.0))
+        result = Pi * (rho_der2(x, a, r, i, j, 2) * (0.5 - (1.0 / 3.0) * pow(rho, 2.0))
                 - (1.0 / 3.0) * rho_der(x, a, r, i, 2) * rho_der(x, a, r, j, 2));
 
     }
@@ -1057,8 +1057,8 @@ inline double vxa_3(double* x, double a, int i, int j, int k)
     }
     else {
         double rho = a / r;
-        result = pi * rho_der3(x, a, r, i, j, k) * (0.5 - (1.0 / 3.0) * pow(rho, 2.0));
-        result += pi * (-1.0 / 3.0) * (rho_der2(x, a, r, i, j, 2) * rho_der(x, a, r, k, 2)
+        result = Pi * rho_der3(x, a, r, i, j, k) * (0.5 - (1.0 / 3.0) * pow(rho, 2.0));
+        result += Pi * (-1.0 / 3.0) * (rho_der2(x, a, r, i, j, 2) * rho_der(x, a, r, k, 2)
                 + rho_der2(x, a, r, i, k, 2) * rho_der(x, a, r, j, 2)
                 + rho_der2(x, a, r, j, k, 2) * rho_der(x, a, r, i, 2));
     }
@@ -1078,8 +1078,8 @@ inline double vxa_4(double* x, double a, int i, int j, int k, int l)
     }
     else {
         double rho = a / r;
-        result = pi * rho_der4(x, a, r, i, j, k,l) * (0.5 - (1.0 / 3.0) * pow(rho, 2.0));
-        result += pi * (-1.0 / 3.0) * (
+        result = Pi * rho_der4(x, a, r, i, j, k,l) * (0.5 - (1.0 / 3.0) * pow(rho, 2.0));
+        result += Pi * (-1.0 / 3.0) * (
             rho_der3(x, a, r, i, j, k) * rho_der(x, a, r, l, 2)
             + rho_der3(x, a, r, i, j, l) * rho_der(x, a, r, k, 2)
             + rho_der2(x, a, r, i, j, 2) * rho_der2(x, a, r, k, l, 2)
@@ -1104,8 +1104,8 @@ inline double vxa_5(double* x, double a, int i, int j, int k, int l, int s)
     }
     else {
         double rho = a / r;
-        result = pi * rho_der5(x, a, r, i, j, k, l, s) * (0.5 - (1.0 / 3.0) * pow(rho, 2.0));
-        result += pi * (-1.0 / 3.0) * (
+        result = Pi * rho_der5(x, a, r, i, j, k, l, s) * (0.5 - (1.0 / 3.0) * pow(rho, 2.0));
+        result += Pi * (-1.0 / 3.0) * (
             rho_der4(x, a, r, i, j, k, s) * rho_der(x, a, r, l, 2)
             + rho_der3(x, a, r, i, j, k) * rho_der2(x, a, r, l, s, 2)
             + rho_der4(x, a, r, i, j, k, l) * rho_der(x, a, r, s, 2)
@@ -1136,8 +1136,8 @@ inline double vx_4(double* x, double a, int i, int j, int k, int l)
         result = 0.0;
     }
     else {
-        result = -2.0 * pi * (d[i][j] * rho_der2(x, a, r, k, l, 2) + rho_der2(x, a, r, j, l, 2) * d[i][k] + rho_der3(x, a, r, j, k, l) * x[i] + d[i][l] * rho_der2(x, a, r, j, k,2));
-        result += -0.5 * pi * a * a * rho_der4(x, a, r, i, j, k, l);
+        result = -2.0 * Pi * (d[i][j] * rho_der2(x, a, r, k, l, 2) + rho_der2(x, a, r, j, l, 2) * d[i][k] + rho_der3(x, a, r, j, k, l) * x[i] + d[i][l] * rho_der2(x, a, r, j, k,2));
+        result += -0.5 * Pi * a * a * rho_der4(x, a, r, i, j, k, l);
     }
     return result;
 }
@@ -1153,8 +1153,8 @@ inline double vx_5(double* x, double a, int i, int j, int k, int l, int s)
         result = 0.0;
     }
     else {
-        result = -2.0 * pi * (d[i][j] * rho_der3(x, a, r, k, l, s) + rho_der3(x, a, r, j, l, s) * d[i][k] + rho_der4(x, a, r, j, k, l, s) * x[i] + d[i][s] * rho_der3(x, a, r, j, k, l) + d[i][l] * rho_der3(x,a,r,j,k,s));
-        result += -0.5 * pi * a * a * rho_der5(x, a, r, i, j, k, l, s);
+        result = -2.0 * Pi * (d[i][j] * rho_der3(x, a, r, k, l, s) + rho_der3(x, a, r, j, l, s) * d[i][k] + rho_der4(x, a, r, j, k, l, s) * x[i] + d[i][s] * rho_der3(x, a, r, j, k, l) + d[i][l] * rho_der3(x,a,r,j,k,s));
+        result += -0.5 * Pi * a * a * rho_der5(x, a, r, i, j, k, l, s);
     }
     return result;
 }
@@ -1215,7 +1215,7 @@ double Eshelby_strain_integration_linear(int i, int j, int k, int l, int p, int 
     double a = radius[sec];
     double r = sqrt(x1[0] * x1[0] + x1[1] * x1[1]);
 
-    double para = (1.0) / (8.0 * pi * (1.0 - nu0));
+    double para = (1.0) / (8.0 * Pi * (1.0 - nu0));
 
     // the 0.5 is due to make the tensor major symmetry
     result = para * (Psi_1_4(x1, a, p, k, l, i, j)
@@ -1239,7 +1239,7 @@ double Eshelby_strain_integration_quadratic(int i, int j, int k, int l, int p, i
     double a = radius[sec];
     double r = sqrt(x1[0] * x1[0] + x1[1] * x1[1]);
 
-    double para = (1.0) / (8.0 * pi * (1.0 - nu0));
+    double para = (1.0) / (8.0 * Pi * (1.0 - nu0));
 
     result = para * (Psi_2_4(x1, a, p, q, k, l, i, j)
         - 2.0 * nu0 * d[k][l] * Phi_2_2(x1, a, p, q, i, j)
@@ -1259,12 +1259,12 @@ double Eshelby_strain_integration_der(int i, int j, int k, int l, int m, int fir
     double a = radius[sec];
     double rp = sqrt(x1[0] * x1[0] + x1[1] * x1[1]);
     if (a <= rp) {
-        double para1 = (1.0 - 2.0 * nu0) / (8.0 * pi * (1.0 - nu0));
-        double para2 = (1.0) / (4.0 * pi * (1.0 - nu0));
+        double para1 = (1.0 - 2.0 * nu0) / (8.0 * Pi * (1.0 - nu0));
+        double para2 = (1.0) / (4.0 * Pi * (1.0 - nu0));
         double term1, term2;        // taking partial derivative w,r,t x_m
         
-        term1 = d[i][l] * phi_der2(x1, a, rp, k, j, m) + d[i][k] * phi_der2(x1, a, rp, l, j, m) + d[j][l] * phi_der2(x1, a, rp, k, i, m) + d[j][k] * phi_der2(x1, a, rp, l, i, m) - d[k][l] * phi_der2(x1, a, rp, i, j, m) - d[k][l] * phi_der2(x1, a, rp, j, i, m);
-        term2 = psi_der2(x1, a, rp, i, k, l, j, m) + psi_der2(x1, a, rp, j, k, l, i, m);
+        term1 = d[i][l] * Phi_der2(x1, a, rp, k, j, m) + d[i][k] * Phi_der2(x1, a, rp, l, j, m) + d[j][l] * Phi_der2(x1, a, rp, k, i, m) + d[j][k] * Phi_der2(x1, a, rp, l, i, m) - d[k][l] * Phi_der2(x1, a, rp, i, j, m) - d[k][l] * Phi_der2(x1, a, rp, j, i, m);
+        term2 = Psi_der2(x1, a, rp, i, k, l, j, m) + Psi_der2(x1, a, rp, j, k, l, i, m);
         result =-(para1 * term1 + para2 * term2);
     }
     else // interior has no derivatives since it is x not related
@@ -1282,7 +1282,7 @@ double Eshelby_strain_integration_linear_der(int i, int j, int k, int l, int p,i
     x1[0] = x_f(fir, 0) - x_s(sec, 0); x1[1] = x_f(fir, 1) - x_s(sec, 1);
     double a = radius[sec];
     double r = sqrt(x1[0] * x1[0] + x1[1] * x1[1]);
-    double para = 1.0 / (8.0 * pi * (1.0 - nu0));
+    double para = 1.0 / (8.0 * Pi * (1.0 - nu0));
 
 
     result = para * (Psi_1_5(x1, a, p, k, l, i, j, m)
@@ -1304,7 +1304,7 @@ double Eshelby_strain_integration_quadratic_der(int i, int j, int k, int l, int 
     x1[0] = x_f(fir, 0) - x_s(sec, 0); x1[1] = x_f(fir, 1) - x_s(sec, 1);
     double a = radius[sec];
     double r = sqrt(x1[0] * x1[0] + x1[1] * x1[1]);
-    double para = 1.0 / (8.0 * pi * (1.0 - nu0));
+    double para = 1.0 / (8.0 * Pi * (1.0 - nu0));
 
 
     result = para * (Psi_2_5(x1, a, p, q, k, l, i, j, m)
@@ -1326,7 +1326,7 @@ double Eshelby_strain_integration_uniform_der2(int i, int j, int k, int l, int m
     x1[0] = x_f(fir, 0) - x_s(sec, 0); x1[1] = x_f(fir, 1) - x_s(sec, 1);
     double a = radius[sec];
     double r = sqrt(x1[0] * x1[0] + x1[1] * x1[1]);
-    double para = 1.0 / (8.0 * pi * (1.0 - nu0));
+    double para = 1.0 / (8.0 * Pi * (1.0 - nu0));
 
 
     result = para * (Psi_der3(x1, a, r, k, l, i, j, m, s)
@@ -1348,7 +1348,7 @@ double Eshelby_strain_integration_linear_der2(int i, int j, int k, int l, int p,
     x1[0] = x_f(fir, 0) - x_s(sec, 0); x1[1] = x_f(fir, 1) - x_s(sec, 1);
     double a = radius[sec];
     double r = sqrt(x1[0] * x1[0] + x1[1] * x1[1]);
-    double para = 1.0 / (8.0 * pi * (1.0 - nu0));
+    double para = 1.0 / (8.0 * Pi * (1.0 - nu0));
 
 
     result = para * (Psi_1_6(x1, a, p, k, l, i, j, m, s)
@@ -1370,7 +1370,7 @@ double Eshelby_strain_integration_quadratic_der2(int i, int j, int k, int l, int
     x1[0] = x_f(fir, 0) - x_s(sec, 0); x1[1] = x_f(fir, 1) - x_s(sec, 1);
     double a = radius[sec];
     double r = sqrt(x1[0] * x1[0] + x1[1] * x1[1]);
-    double para = 1.0 / (8.0 * pi * (1.0 - nu0));
+    double para = 1.0 / (8.0 * Pi * (1.0 - nu0));
 
 
     result = para * (Psi_2_6(x1, a, p, q, k, l, i, j, m, s)

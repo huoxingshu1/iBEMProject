@@ -166,7 +166,7 @@ void BEMBuilderElastic2D_arbitrary::Integ2e(double E, double nu, int* sctrb, dou
     for (i = 0; i < 2; i++) {
         UP[i] = new double[2]; TP[i] = new double[2]; Ni[i] = new double[6];
     }
-    double cons = (1.0 + nu) / (4.0 * pi * E * (1.0 - nu));
+    double cons = (1.0 + nu) / (4.0 * Pi * E * (1.0 - nu));
     double consp = cons * (3.0 - 4.0 * nu);
 
     ngp = 8;
@@ -602,8 +602,6 @@ void BEMBuilderElastic2D_arbitrary::addFluxEquivalentBEM(Config& config_)
     configElastic2D_arbitrary& config = dynamic_cast<configElastic2D_arbitrary&> (config_);
 
     int& num_NN = config.num_NN;    
-    // call three arrays from integratorElastic2D_arbitrary
-    integratorElastic2D_arbitrary I2D_A;
 
     int *&count_number = config.count_number;
     double***& changed_coord = config.changed_coord;

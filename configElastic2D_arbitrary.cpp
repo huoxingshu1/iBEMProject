@@ -239,7 +239,7 @@ void configElastic2D_arbitrary::ReadBEM_num() {
     BC = MatrixXd(Dimension * NN, 2);
 
     // t_BC is boundary conditions about tractions, (Dimension * number of nodes in one element * define and number)
-    t_bc = MatrixXd(NE, Dimension * 3 * Dimension);
+    t_bc = MatrixXd(NE, 2 * 3 * Dimension);
 }
 
 

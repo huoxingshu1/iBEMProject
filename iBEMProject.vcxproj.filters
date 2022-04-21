@@ -34,6 +34,12 @@
     <Filter Include="Source Files\Elastic_2D_arbitrary">
       <UniqueIdentifier>{62f73643-268e-4418-b1e2-57e62ee86b97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Elastic_3D_arbitrary">
+      <UniqueIdentifier>{be0b7f56-3b48-4dd4-ba6e-df7cfc4c3bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Elastic_3D_arbitrary">
+      <UniqueIdentifier>{f54c0eaa-a298-46dc-8980-8be2937fbb43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -104,6 +110,33 @@
     </ClCompile>
     <ClCompile Include="postProcessorElastic2D_arbitrary.cpp">
       <Filter>Source Files\Elastic_2D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="configElastic3D_arbitrary.cpp">
+      <Filter>Source Files\Elastic_3D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="BEMBuilderElastic3D_arbitrary.cpp">
+      <Filter>Source Files\Elastic_3D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="integratorElastic3D_arbitrary.cpp">
+      <Filter>Source Files\Elastic_3D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="integratorhelper3D_arbitrary.cpp">
+      <Filter>Source Files\Elastic_3D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Uniform_Polyhedral_integral.cpp">
+      <Filter>Source Files\Elastic_3D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Linear_Polyhedral_integral.cpp">
+      <Filter>Source Files\Elastic_3D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Quadratic_Polyhedral.integral.cpp">
+      <Filter>Source Files\Elastic_3D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="integratorhelper.cpp">
+      <Filter>Source Files\Elastic_3D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="postProcessorElastic3D_arbitrary.cpp">
+      <Filter>Source Files\Elastic_3D_arbitrary</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +253,33 @@
     </ClInclude>
     <ClInclude Include="postProcessorElastic2D_arbitrary.h">
       <Filter>Header Files\Elastic_2D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="configElastic3D_arbitrary.h">
+      <Filter>Header Files\Elastic_3D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="BEMBuilderElastic3D_arbitrary.h">
+      <Filter>Header Files\Elastic_3D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="integratorElastic3D_arbitrary.h">
+      <Filter>Header Files\Elastic_3D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="integratorhelper.h">
+      <Filter>Header Files\Elastic_3D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Uniform_Polyhedral_integral.h">
+      <Filter>Header Files\Elastic_3D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Linear_Polyhedral_integral.h">
+      <Filter>Header Files\Elastic_3D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadratic_Polyhedral_integral.h">
+      <Filter>Header Files\Elastic_3D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="systemSolverElastic3D_arbitrary.h">
+      <Filter>Header Files\Elastic_3D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="postProcessorElastic3D_arbitrary.h">
+      <Filter>Header Files\Elastic_3D_arbitrary</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

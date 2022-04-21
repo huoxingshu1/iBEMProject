@@ -132,7 +132,7 @@ void BEM_2D_arbitrary::UK(double* dxr, double r, double E, double nu, double** U
     // lame constants
     mu = E / (2.0 * (1.0 + nu));
     c1 = 3.0 - 4.0 * nu;
-    c = 1.0 / (8.0 * pi * mu * (1.0 - nu));
+    c = 1.0 / (8.0 * Pi * mu * (1.0 - nu));
     clog = -c1 * log(r);
 
     // the green's functions
@@ -150,7 +150,7 @@ void BEM_2D_arbitrary::TK(double* dxr, double r, double E, double nu, double** T
 {
     double c3, conr, Costh, c2;
     c3 = 1.0 - 2.0 * nu;
-    c2 = 1.0 / (4.0 * pi * (1.0 - nu));
+    c2 = 1.0 / (4.0 * Pi * (1.0 - nu));
     conr = c2 / r;
     Costh = Vnorm[0] * dxr[0] + Vnorm[1] * dxr[1];
 
@@ -177,7 +177,7 @@ double BEM_2D_arbitrary::Green_01(double* x, int i, int j, int k)
     // first derivative of Green's function
     double result, para;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
-    para = (1.0) / (8.0 * pi * (1.0 - nu0) * mu_0);
+    para = (1.0) / (8.0 * Pi * (1.0 - nu0) * mu_0);
     double cons = -(3.0 - 4.0 * nu0);
     double term1 = cons * ((d[i][j] * x[k]) / (r * r));
     double term2 = (d[i][k] * x[j] + d[j][k] * x[i]) / (r * r);
@@ -194,7 +194,7 @@ double BEM_2D_arbitrary::Green_02(double* x, int i, int j, int k, int l)
     // second derivative of the Green's function
     double result, para, cons;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
-    para = (1.0) / (8.0 * pi * (1.0 - nu0) * mu_0);
+    para = (1.0) / (8.0 * Pi * (1.0 - nu0) * mu_0);
     cons = -(3.0 - 4.0 * nu0);
 
     double term1 = cons * d[i][j] * ((d[k][l] / (r * r)) - (2.0 / pow(r, 4)) * x[k] * x[l]);
@@ -215,7 +215,7 @@ double BEM_2D_arbitrary::Green_03(double* x, int i, int j, int k, int l, int s)
     double term1, term2, term3, term4, term5, term6, term7, term8;
     result = 0.0;
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
-    para = (1.0) / (8.0 * pi * (1.0 - nu0) * mu_0);
+    para = (1.0) / (8.0 * Pi * (1.0 - nu0) * mu_0);
     cons = -(3.0 - 4.0 * nu0);
 
     term1 = cons * d[i][j] * (-d[k][l] * 2.0 * x[s] * pow(r, -4.0) - 2.0 * (pow(r, -4.0) * (d[s][k] * x[l] + d[l][s] * x[k]) - 4.0 * pow(r, -6.0) * x[s] * x[k] * x[l]));
@@ -237,7 +237,7 @@ double BEM_2D_arbitrary::Green_04(double* x, int i, int j, int k, int l, int s, 
 {
     // fourth derivatives of the Green's function
     double result;
-    double para = (1.0) / (8.0 * pi * (1.0 - nu0) * mu_0);
+    double para = (1.0) / (8.0 * Pi * (1.0 - nu0) * mu_0);
     double r = sqrt(x[0] * x[0] + x[1] * x[1]);
     double term1 = -(3.0 - 4.0 * nu0) * d[i][j] * (
         -2.0 * d[k][l] * (pow(r, -4.0) * d[s][m] - 4.0 * x[s] * x[m] * pow(r, -6.0))

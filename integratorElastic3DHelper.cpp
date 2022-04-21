@@ -39,7 +39,7 @@ using namespace Eigen;
 
 inline double I_n0(double lambda, double a, int n)
 {
-	double I_n = 4 * pi * a * a * a / ((2 * n + 1) * pow((a * a + lambda), (n + 0.5)));
+	double I_n = 4 * Pi * a * a * a / ((2 * n + 1) * pow((a * a + lambda), (n + 0.5)));
 	return I_n;
 }
 
@@ -50,7 +50,7 @@ inline double I_n1(double lambda, double a, double* x, int n, int p)
 	if (lambda == 0)
 		I_n1 = 0.0;
 	else
-		I_n1 = -2 * pi * a * a * a / (pow((a * a + lambda), n) * delta) * 2 * x[p];
+		I_n1 = -2 * Pi * a * a * a / (pow((a * a + lambda), n) * delta) * 2 * x[p];
 
 	return I_n1;
 }
@@ -64,7 +64,7 @@ inline double I_n2(double lambda, double a, double* x, int n, int p, int q)
 	if (lambda == 0)
 		I_n2 = 0.0;
 	else
-		I_n2 = -2 * pi * a * a * a / (pow((a * a + lambda), n) * delta) * (2 * d[p][q] - 2 * x[p] * 2 * x[q] * Z1);
+		I_n2 = -2 * Pi * a * a * a / (pow((a * a + lambda), n) * delta) * (2 * d[p][q] - 2 * x[p] * 2 * x[q] * Z1);
 
 	return I_n2;
 
@@ -80,7 +80,7 @@ inline double I_n3(double lambda, double a, double* x, int n, int p, int q, int 
 	if (lambda == 0)
 		I_n3 = 0.0;
 	else
-		I_n3 = -2 * pi * a * a * a / (pow((a * a + lambda), n) * delta) * (-(2 * d[p][q] * 2 * x[r] + 2 * d[p][r] * 2 * x[q] + 2 * d[q][r] * 2 * x[p]) * Z1 + 2 * x[p] * 2 * x[q] * 2 * x[r] * (Z2 + Z1 * Z1));
+		I_n3 = -2 * Pi * a * a * a / (pow((a * a + lambda), n) * delta) * (-(2 * d[p][q] * 2 * x[r] + 2 * d[p][r] * 2 * x[q] + 2 * d[q][r] * 2 * x[p]) * Z1 + 2 * x[p] * 2 * x[q] * 2 * x[r] * (Z2 + Z1 * Z1));
 	return I_n3;
 
 }
@@ -96,7 +96,7 @@ inline double I_n4(double lambda, double a, double* x, int n, int p, int q, int 
 	if (lambda == 0)
 		I_n4 = 0.0;
 	else
-		I_n4 = -2 * pi * a * a * a / (pow((a * a + lambda), n) * delta) * (0 - (0 + 0 + 0 + 0 + 2 * d[p][q] * 2 * d[r][t] + 2 * d[p][r] * 2 * d[q][t] + 2 * d[q][r] * 2 * d[p][t]) * Z1
+		I_n4 = -2 * Pi * a * a * a / (pow((a * a + lambda), n) * delta) * (0 - (0 + 0 + 0 + 0 + 2 * d[p][q] * 2 * d[r][t] + 2 * d[p][r] * 2 * d[q][t] + 2 * d[q][r] * 2 * d[p][t]) * Z1
 			+ (2 * d[p][q] * 2 * x[r] * 2 * x[t] + 2 * d[p][r] * 2 * x[q] * 2 * x[t] + 2 * d[q][r] * 2 * x[p] * 2 * x[t] + 2 * d[p][t] * 2 * x[q] * 2 * x[r] + 2 * d[q][t] * 2 * x[p] * 2 * x[r] + 2 * d[r][t] * 2 * x[p] * 2 * x[q]) * (Z2 + Z1 * Z1)
 			- 2 * x[p] * 2 * x[q] * 2 * x[r] * 2 * x[t] * (2 * Z3 + 3 * Z1 * Z2 + Z1 * Z1 * Z1));
 	return I_n4;
@@ -114,7 +114,7 @@ inline double I_n5(double lambda, double a, double* x, int n, int p, int q, int 
 	if (lambda == 0)
 		I_n5 = 0.0;
 	else
-		I_n5 = -2 * x[h] * Z1 * I_n4(lambda, a, x, n, p, q, r, t) - 2 * pi * a * a * a / (pow((a * a + lambda), n) * delta) * (
+		I_n5 = -2 * x[h] * Z1 * I_n4(lambda, a, x, n, p, q, r, t) - 2 * Pi * a * a * a / (pow((a * a + lambda), n) * delta) * (
 
 			0 + (0 + 0 + 0 + 0 + 2 * d[p][q] * 2 * d[r][t] + 2 * d[p][r] * 2 * d[q][t] + 2 * d[q][r] * 2 * d[p][t]) * 2 * x[h] * Z2
 
@@ -2399,7 +2399,7 @@ double D_40(int i, int j, int k, int l, int s, int h, Ref<VectorXd> radius, Ref<
 	x1[2] = x_p(s, 2) - x_o(h, 2);
 
 	double a = radius[h];
-	double D_4 = 1 / (8 * pi * (1 - nu0)) * (Psi_04(x1, a, k, l, i, j) - 2 * nu0 * d[k][l] * Phi_02(x1, a, i, j) - (1 - nu0) * (Phi_02(x1, a, k, j) * d[i][l] + Phi_02(x1, a, k, i) * d[j][l] + Phi_02(x1, a, l, j) * d[i][k] + Phi_02(x1, a, l, i) * d[j][k]));
+	double D_4 = 1 / (8 * Pi * (1 - nu0)) * (Psi_04(x1, a, k, l, i, j) - 2 * nu0 * d[k][l] * Phi_02(x1, a, i, j) - (1 - nu0) * (Phi_02(x1, a, k, j) * d[i][l] + Phi_02(x1, a, k, i) * d[j][l] + Phi_02(x1, a, l, j) * d[i][k] + Phi_02(x1, a, l, i) * d[j][k]));
 
 
 	return D_4;
@@ -2416,7 +2416,7 @@ double D_50(int i, int j, int k, int l, int p, int s, int h, Ref<VectorXd> radiu
 
 
 	double a = radius[h];
-	double D_5 = 1 / (8 * pi * (1 - nu0)) * (Psi_14(x1, a, p, k, l, i, j) - 2 * nu0 * d[k][l] * Phi_12(x1, a, p, i, j) - (1 - nu0) * (Phi_12(x1, a, p, k, j) * d[i][l] + Phi_12(x1, a, p, k, i) * d[j][l] + Phi_12(x1, a, p, l, j) * d[i][k] + Phi_12(x1, a, p, l, i) * d[j][k]));
+	double D_5 = 1 / (8 * Pi * (1 - nu0)) * (Psi_14(x1, a, p, k, l, i, j) - 2 * nu0 * d[k][l] * Phi_12(x1, a, p, i, j) - (1 - nu0) * (Phi_12(x1, a, p, k, j) * d[i][l] + Phi_12(x1, a, p, k, i) * d[j][l] + Phi_12(x1, a, p, l, j) * d[i][k] + Phi_12(x1, a, p, l, i) * d[j][k]));
 
 	return D_5;
 }
@@ -2433,7 +2433,7 @@ double D_60(int i, int j, int k, int l, int p, int q, int s, int h, Ref<VectorXd
 
 
 	double a = radius[h];
-	double D_6 = 1 / (8 * pi * (1 - nu0)) * (Psi_24(x1, a, p, q, k, l, i, j) - 2 * nu0 * d[k][l] * Phi_22(x1, a, p, q, i, j) - (1 - nu0) * (Phi_22(x1, a, p, q, k, j) * d[i][l] + Phi_22(x1, a, p, q, k, i) * d[j][l] + Phi_22(x1, a, p, q, l, j) * d[i][k] + Phi_22(x1, a, p, q, l, i) * d[j][k]));
+	double D_6 = 1 / (8 * Pi * (1 - nu0)) * (Psi_24(x1, a, p, q, k, l, i, j) - 2 * nu0 * d[k][l] * Phi_22(x1, a, p, q, i, j) - (1 - nu0) * (Phi_22(x1, a, p, q, k, j) * d[i][l] + Phi_22(x1, a, p, q, k, i) * d[j][l] + Phi_22(x1, a, p, q, l, j) * d[i][k] + Phi_22(x1, a, p, q, l, i) * d[j][k]));
 
 	return D_6;
 }
@@ -2454,7 +2454,7 @@ double D_41(int i, int j, int k, int l, int r, int s, int h, Ref<VectorXd> radiu
 
 
 	double a = radius[h];
-	double D_4_r = 1 / (8 * pi * (1 - nu0)) * (Psi_05(x1, a, k, l, i, j, r) - 2 * nu0 * d[k][l] * Phi_03(x1, a, i, j, r) - (1 - nu0) * (Phi_03(x1, a, k, j, r) * d[i][l] + Phi_03(x1, a, k, i, r) * d[j][l] + Phi_03(x1, a, l, j, r) * d[i][k] + Phi_03(x1, a, l, i, r) * d[j][k]));
+	double D_4_r = 1 / (8 * Pi * (1 - nu0)) * (Psi_05(x1, a, k, l, i, j, r) - 2 * nu0 * d[k][l] * Phi_03(x1, a, i, j, r) - (1 - nu0) * (Phi_03(x1, a, k, j, r) * d[i][l] + Phi_03(x1, a, k, i, r) * d[j][l] + Phi_03(x1, a, l, j, r) * d[i][k] + Phi_03(x1, a, l, i, r) * d[j][k]));
 
 	return D_4_r;
 }
@@ -2473,7 +2473,7 @@ double D_51(int i, int j, int k, int l, int p, int r, int s, int h, Ref<VectorXd
 
 
 	double a = radius[h];
-	double D_5_r = 1 / (8 * pi * (1 - nu0)) * (Psi_15(x1, a, p, k, l, i, j, r) - 2 * nu0 * d[k][l] * Phi_13(x1, a, p, i, j, r) - (1 - nu0) * (Phi_13(x1, a, p, k, j, r) * d[i][l] + Phi_13(x1, a, p, k, i, r) * d[j][l] + Phi_13(x1, a, p, l, j, r) * d[i][k] + Phi_13(x1, a, p, l, i, r) * d[j][k]));
+	double D_5_r = 1 / (8 * Pi * (1 - nu0)) * (Psi_15(x1, a, p, k, l, i, j, r) - 2 * nu0 * d[k][l] * Phi_13(x1, a, p, i, j, r) - (1 - nu0) * (Phi_13(x1, a, p, k, j, r) * d[i][l] + Phi_13(x1, a, p, k, i, r) * d[j][l] + Phi_13(x1, a, p, l, j, r) * d[i][k] + Phi_13(x1, a, p, l, i, r) * d[j][k]));
 
 
 	return D_5_r;
@@ -2494,7 +2494,7 @@ double D_61(int i, int j, int k, int l, int p, int q, int r, int s, int h, Ref<V
 
 
 	double a = radius[h];
-	double D_6_r = 1 / (8 * pi * (1 - nu0)) * (Psi_25(x1, a, p, q, k, l, i, j, r) - 2 * nu0 * d[k][l] * Phi_23(x1, a, p, q, i, j, r) - (1 - nu0) * (Phi_23(x1, a, p, q, k, j, r) * d[i][l] + Phi_23(x1, a, p, q, k, i, r) * d[j][l] + Phi_23(x1, a, p, q, l, j, r) * d[i][k] + Phi_23(x1, a, p, q, l, i, r) * d[j][k]));
+	double D_6_r = 1 / (8 * Pi * (1 - nu0)) * (Psi_25(x1, a, p, q, k, l, i, j, r) - 2 * nu0 * d[k][l] * Phi_23(x1, a, p, q, i, j, r) - (1 - nu0) * (Phi_23(x1, a, p, q, k, j, r) * d[i][l] + Phi_23(x1, a, p, q, k, i, r) * d[j][l] + Phi_23(x1, a, p, q, l, j, r) * d[i][k] + Phi_23(x1, a, p, q, l, i, r) * d[j][k]));
 
 	return D_6_r;
 }
@@ -2512,7 +2512,7 @@ double D_42(int i, int j, int k, int l, int r, int z, int s, int h, Ref<VectorXd
 
 
 	double a = radius[h];
-	double D_4_rz = 1 / (8 * pi * (1 - nu0)) * (Psi_06(x1, a, k, l, i, j, r, z) - 2 * nu0 * d[k][l] * Phi_04(x1, a, i, j, r, z) - (1 - nu0) * (Phi_04(x1, a, k, j, r, z) * d[i][l] + Phi_04(x1, a, k, i, r, z) * d[j][l] + Phi_04(x1, a, l, j, r, z) * d[i][k] + Phi_04(x1, a, l, i, r, z) * d[j][k]));
+	double D_4_rz = 1 / (8 * Pi * (1 - nu0)) * (Psi_06(x1, a, k, l, i, j, r, z) - 2 * nu0 * d[k][l] * Phi_04(x1, a, i, j, r, z) - (1 - nu0) * (Phi_04(x1, a, k, j, r, z) * d[i][l] + Phi_04(x1, a, k, i, r, z) * d[j][l] + Phi_04(x1, a, l, j, r, z) * d[i][k] + Phi_04(x1, a, l, i, r, z) * d[j][k]));
 
 	return D_4_rz;
 }
@@ -2530,7 +2530,7 @@ double D_52(int i, int j, int k, int l, int p, int r, int z, int s, int h, Ref<V
 	x1[2] = x_p(s, 2) - x_o(h, 2);
 
 	double a = radius[h];
-	double D_5_rz = 1 / (8 * pi * (1 - nu0)) * (Psi_16(x1, a, p, k, l, i, j, r, z) - 2 * nu0 * d[k][l] * Phi_14(x1, a, p, i, j, r, z) - (1 - nu0) * (Phi_14(x1, a, p, k, j, r, z) * d[i][l] + Phi_14(x1, a, p, k, i, r, z) * d[j][l] + Phi_14(x1, a, p, l, j, r, z) * d[i][k] + Phi_14(x1, a, p, l, i, r, z) * d[j][k]));
+	double D_5_rz = 1 / (8 * Pi * (1 - nu0)) * (Psi_16(x1, a, p, k, l, i, j, r, z) - 2 * nu0 * d[k][l] * Phi_14(x1, a, p, i, j, r, z) - (1 - nu0) * (Phi_14(x1, a, p, k, j, r, z) * d[i][l] + Phi_14(x1, a, p, k, i, r, z) * d[j][l] + Phi_14(x1, a, p, l, j, r, z) * d[i][k] + Phi_14(x1, a, p, l, i, r, z) * d[j][k]));
 
 	return D_5_rz;
 }
@@ -2547,7 +2547,7 @@ double D_62(int i, int j, int k, int l, int p, int q, int r, int z, int s, int h
 	x1[2] = x_p(s, 2) - x_o(h, 2);
 
 	double a = radius[h];
-	double D_6_rz = 1 / (8 * pi * (1 - nu0)) * (Psi_26(x1, a, p, q, k, l, i, j, r, z) - 2 * nu0 * d[k][l] * Phi_24(x1, a, p, q, i, j, r, z) - (1 - nu0) * (Phi_24(x1, a, p, q, k, j, r, z) * d[i][l] + Phi_24(x1, a, p, q, k, i, r, z) * d[j][l] + Phi_24(x1, a, p, q, l, j, r, z) * d[i][k] + Phi_24(x1, a, p, q, l, i, r, z) * d[j][k]));
+	double D_6_rz = 1 / (8 * Pi * (1 - nu0)) * (Psi_26(x1, a, p, q, k, l, i, j, r, z) - 2 * nu0 * d[k][l] * Phi_24(x1, a, p, q, i, j, r, z) - (1 - nu0) * (Phi_24(x1, a, p, q, k, j, r, z) * d[i][l] + Phi_24(x1, a, p, q, k, i, r, z) * d[j][l] + Phi_24(x1, a, p, q, l, j, r, z) * d[i][k] + Phi_24(x1, a, p, q, l, i, r, z) * d[j][k]));
 
 	return D_6_rz;
 }
@@ -2557,28 +2557,28 @@ double D_62(int i, int j, int k, int l, int p, int q, int r, int z, int s, int h
 
 double Green(double* x, int i, int j) {
 
-	double G_ij = d[i][j] / (4 * pi * mu_0) * fR(x, 0) - 1 / (16 * pi * mu_0 * (1 - nu0)) * R_02(x, i, j);
+	double G_ij = d[i][j] / (4 * Pi * mu_0) * fR(x, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_02(x, i, j);
 
 	return G_ij;
 }
 
 double Green_01(double* x, int i, int j, int k) {
 
-	double G_ijk = d[i][j] / (4 * pi * mu_0) * fR_01(x, k, 0) - 1 / (16 * pi * mu_0 * (1 - nu0)) * R_03(x, i, j, k);
+	double G_ijk = d[i][j] / (4 * Pi * mu_0) * fR_01(x, k, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_03(x, i, j, k);
 
 	return G_ijk;
 }
 
 double Green_02(double* x, int i, int j, int k, int l) {
 
-	double G_ijkl = d[i][j] / (4 * pi * mu_0) * fR_02(x, k, l, 0) - 1 / (16 * pi * mu_0 * (1 - nu0)) * R_04(x, i, j, k, l);
+	double G_ijkl = d[i][j] / (4 * Pi * mu_0) * fR_02(x, k, l, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_04(x, i, j, k, l);
 
 	return G_ijkl;
 }
 
 double Green_03(double* x, int i, int j, int k, int l, int s) {
 
-	double G_ijkls = d[i][j] / (4 * pi * mu_0) * fR_03(x, k, l, s, 0) - 1 / (16 * pi * mu_0 * (1 - nu0)) * R_05(x, i, j, k, l, s);
+	double G_ijkls = d[i][j] / (4 * Pi * mu_0) * fR_03(x, k, l, s, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_05(x, i, j, k, l, s);
 
 	return G_ijkls;
 }
@@ -2586,14 +2586,14 @@ double Green_03(double* x, int i, int j, int k, int l, int s) {
 
 double Green_04(double* x, int i, int j, int k, int l, int s, int t) {
 
-	double G_ijklst = d[i][j] / (4 * pi * mu_0) * fR_04(x, k, l, s, t, 0) - 1 / (16 * pi * mu_0 * (1 - nu0)) * R_06(x, i, j, k, l, s, t);
+	double G_ijklst = d[i][j] / (4 * Pi * mu_0) * fR_04(x, k, l, s, t, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_06(x, i, j, k, l, s, t);
 
 	return G_ijklst;
 }
 
 double Green_05(double* x, int i, int j, int k, int l, int s, int t, int r) {
 
-	double G_ijklstr = d[i][j] / (4 * pi * mu_0) * fR_05(x, k, l, s, t, r, 0) - 1 / (16 * pi * mu_0 * (1 - nu0)) * R_07(x, i, j, k, l, s, t, r);
+	double G_ijklstr = d[i][j] / (4 * Pi * mu_0) * fR_05(x, k, l, s, t, r, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_07(x, i, j, k, l, s, t, r);
 
 	return G_ijklstr;
 }
@@ -2602,7 +2602,7 @@ double Green_05(double* x, int i, int j, int k, int l, int s, int t, int r) {
 
 double IGreen_01(double* x, double a, int i, int j, int l) {
 
-	double IGreen_ij_l = 1 / (4 * pi * mu_0) * (0.5 * d[i][j] * Phi_01(x, a, l) + 0.5 * d[i][l] * Phi_01(x, a, j)) - 1 / (16 * pi * mu_0 * (1 - nu0)) * Psi_03(x, a, i, j, l);
+	double IGreen_ij_l = 1 / (4 * Pi * mu_0) * (0.5 * d[i][j] * Phi_01(x, a, l) + 0.5 * d[i][l] * Phi_01(x, a, j)) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * Psi_03(x, a, i, j, l);
 
 	return IGreen_ij_l;
 }
@@ -2610,14 +2610,14 @@ double IGreen_01(double* x, double a, int i, int j, int l) {
 
 double IGreen_11(double* x, double a, int i, int j, int p, int l) {
 
-	double IGreen_ijp_l = 1 / (4 * pi * mu_0) * (0.5 * d[i][j] * Phi_11(x, a, p, l) + 0.5 * d[i][l] * Phi_11(x, a, p, j)) - 1 / (16 * pi * mu_0 * (1 - nu0)) * Psi_13(x, a, p, i, j, l);
+	double IGreen_ijp_l = 1 / (4 * Pi * mu_0) * (0.5 * d[i][j] * Phi_11(x, a, p, l) + 0.5 * d[i][l] * Phi_11(x, a, p, j)) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * Psi_13(x, a, p, i, j, l);
 
 	return IGreen_ijp_l;
 }
 
 double IGreen_21(double* x, double a, int i, int j, int p, int q, int l) {
 
-	double IGreen_ijpq_l = 1 / (4 * pi * mu_0) * (0.5 * d[i][j] * Phi_21(x, a, p, q, l) + 0.5 * d[i][l] * Phi_21(x, a, p, q, j)) - 1 / (16 * pi * mu_0 * (1 - nu0)) * Psi_23(x, a, p, q, i, j, l);
+	double IGreen_ijpq_l = 1 / (4 * Pi * mu_0) * (0.5 * d[i][j] * Phi_21(x, a, p, q, l) + 0.5 * d[i][l] * Phi_21(x, a, p, q, j)) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * Psi_23(x, a, p, q, i, j, l);
 
 	return IGreen_ijpq_l;
 }

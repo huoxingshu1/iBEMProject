@@ -279,7 +279,7 @@ void UK(double* dxr, double r, double E, double nu, double** UP)
 
 	G = E / (2 * (1 + nu));
 	c1 = 3 - 4 * nu;
-	c = 1 / (16 * pi * G * (1 - nu));
+	c = 1 / (16 * Pi * G * (1 - nu));
 	conr = c / r;
 
 	UP[0][0] = conr * (c1 + dxr[0] * dxr[0]);
@@ -300,7 +300,7 @@ void TK(double* dxr, double r, double E, double nu, double** TP, double* Vnorm)
 	int i, j;
 
 	c3 = 1 - 2 * nu;
-	c2 = 1 / (8 * pi * (1 - nu));
+	c2 = 1 / (8 * Pi * (1 - nu));
 	Costh = Vnorm[0] * dxr[0] + Vnorm[1] * dxr[1] + Vnorm[2] * dxr[2];
 	Conr = c2 / (r * r);
 

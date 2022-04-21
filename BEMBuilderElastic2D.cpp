@@ -563,7 +563,7 @@ void BEMBuilderElastic2D::Integ3(double E, double nu, int* sctrb, double** Elcor
     for (i = 0; i < 2; i++) {
         UP[i] = new double[2]; TP[i] = new double[2]; Ni[i] = new double[6];
     }
-    double cons = (1.0 + nu) / (4.0 * pi * E * (1.0 - nu));
+    double cons = (1.0 + nu) / (4.0 * Pi * E * (1.0 - nu));
     double consp = cons * (3.0 - 4.0 * nu);
 
     ngp = 8;

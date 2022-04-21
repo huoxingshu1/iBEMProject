@@ -76,13 +76,13 @@ inline double Psi_1_4(double* x, double a, int p, int i, int j, int k, int l);
 inline double Psi_2_4(double* x, double a, int p, int q, int i, int j, int k, int l);
 
 // integration for strain der
-inline double phi_der2(double* x, double a, double r, int i, int j, int m);
+inline double Phi_der2(double* x, double a, double r, int i, int j, int m);
 
 inline double Phi_1_3(double* x, double a, int p, int i, int j, int k);
 
 inline double Phi_2_3(double* x, double a, int p, int q, int i, int j, int k);
 
-inline double psi_der2(double* x, double a, double r, int i, int k, int l, int j, int m);
+inline double Psi_der2(double* x, double a, double r, int i, int k, int l, int j, int m);
 
 inline double Psi_1_5(double* x, double a, int p, int i, int j, int k, int l, int s);
 
