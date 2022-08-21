@@ -92,6 +92,14 @@ void configElastic3D::ReadBEM_info() {
 		//	printf("\n");
 	}
 
+	HMAT = MatrixXd::Zero(3 * NN + 78 * num, 3 * NN + 78 * num);
+	GMAT = MatrixXd::Zero(3 * NN + 78 * num, 12 * NE);
+	U = VectorXd::Zero(3 * NN + 78 * num);
+	T = VectorXd::Zero(12 * NE);
+
+	A = MatrixXd::Zero(3 * NN + 78 * num, 3 * NN + 78 * num);
+	b = VectorXd::Zero(3 * NN + 78 * num);
+
 	myfile.close();
 
 }
@@ -186,11 +194,4 @@ void configElastic3D::Readpartical_info() {
 
 	}
 
-	HMAT = MatrixXd::Zero(3 * NN + 78 * num, 3 * NN + 78 * num);
-	GMAT = MatrixXd::Zero(3 * NN + 78 * num, 12 * NE);
-	U = VectorXd::Zero(3 * NN + 78 * num);
-	T = VectorXd::Zero(12 * NE);
-
-	A = MatrixXd::Zero(3 * NN + 78 * num, 3 * NN + 78 * num);
-	b = VectorXd::Zero(3 * NN + 78 * num);
 }
