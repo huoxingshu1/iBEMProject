@@ -13,6 +13,6 @@ https://www.elsevier.com/books/the-inclusion-based-boundary-element-method-ibem/
 
 2. make sure the eigen external dependency is set up.
 
-3. prepare for your inputs, for each type of the problem, we provide an example under /examples/<problem type>/
+3. prepare for your inputs, for each type of the problem, we provide an example under /examples/<problem type>/..
 
 4. For debug, please use the debug mode, or ultilize multi thread running, please switch to release mode to run.
