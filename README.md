@@ -2,8 +2,9 @@
 
 Welcome to iBEM software package which is developed to solve a large numnber scale of particle-enforced composite materials.
 
-## for the theoretical part of the algorithm, please refer to our newly published book - inclusion based boundary element methods.
+## Theoretical part of the algorithm 
 
+please refer to our newly published book - inclusion based boundary element methods.
 https://www.elsevier.com/books/the-inclusion-based-boundary-element-method-ibem/yin/978-0-12-819384-6
 
 ## Creat a run:
