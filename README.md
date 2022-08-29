@@ -15,4 +15,4 @@ https://www.elsevier.com/books/the-inclusion-based-boundary-element-method-ibem/
 
 3. prepare for your inputs ( a set of txt files) and put them in the same folder of your code. For each type of the problem, we provide an example input under /examples/\<problem type\>/..
 
-4. For debug, please use the debug mode, or ultilize multi thread running, please switch to release mode to run.
+4. For debug, please use the debug mode. If utilize multi thread running, please switch to release mode to run.
