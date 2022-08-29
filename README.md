@@ -7,7 +7,7 @@ Welcome to iBEM software package which is developed to solve a large numnber sca
 please refer to our newly published book - inclusion based boundary element methods.
 https://www.elsevier.com/books/the-inclusion-based-boundary-element-method-ibem/yin/978-0-12-819384-6
 
-## Creat a run:
+## Create a run:
 
 1. git clone the code into your visual studio and open the solution.
 
