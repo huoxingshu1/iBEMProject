@@ -41,6 +41,9 @@ shared_ptr<Config> inputGenerator(int ID) {
 		case 4: 
 			return make_shared<configElastic2D_arbitrary>();
 			break;
+		case 5:
+			return make_shared<configPotential3D_elliptical>();
+			break;
 		default:
 			cout << "You have not specified the types of PDEs, check CALCULATIONTYPE.txt" << endl;
 	}

@@ -26,6 +26,7 @@
 #include "integratorElastic3D.h"
 #include "integratorElastic3DHelper.h"
 
+using namespace Elastic3DSpherical;
 void get_addu(double* x, double a, double** DD_u3, int** index)
 
 {

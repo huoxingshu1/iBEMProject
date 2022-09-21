@@ -27,6 +27,8 @@
 # include "integratorElastic3DHelper.h"
 # include "BEMElasticHelper3D.h"
 
+using namespace Elastic3DSpherical;
+
 inline void get_for_stress_BEM_post(double* Vnorm, double* point, double* GCcor, double** Dst, double** Dsu)
 {
 

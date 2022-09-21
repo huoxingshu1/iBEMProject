@@ -31,6 +31,7 @@
     Private members
 */
 
+using namespace Elastic3DSpherical;
 
 int BEMBuilderElastic3D_arbitrary::ffloord(int i, int j)
 {

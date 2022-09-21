@@ -28,6 +28,7 @@
 #include"Eigen/Dense"
 
 using namespace Eigen;
+using namespace Elastic3DSpherical;
 ////////////////////////////////////////////////////////////new subroutine//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //double mu_0 = 1.0;
@@ -37,13 +38,13 @@ using namespace Eigen;
 
 ////////////////////////////////////////////////////////////new subroutine//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-inline double I_n0(double lambda, double a, int n)
+inline double Elastic3DSpherical::I_n0(double lambda, double a, int n)
 {
 	double I_n = 4 * Pi * a * a * a / ((2 * n + 1) * pow((a * a + lambda), (n + 0.5)));
 	return I_n;
 }
 
-inline double I_n1(double lambda, double a, double* x, int n, int p)
+inline double Elastic3DSpherical::I_n1(double lambda, double a, double* x, int n, int p)
 {
 	double delta = sqrt((a * a + lambda) * (a * a + lambda) * (a * a + lambda));
 	double I_n1;
@@ -55,7 +56,7 @@ inline double I_n1(double lambda, double a, double* x, int n, int p)
 	return I_n1;
 }
 
-inline double I_n2(double lambda, double a, double* x, int n, int p, int q)
+inline double Elastic3DSpherical::I_n2(double lambda, double a, double* x, int n, int p, int q)
 {
 	double delta = sqrt((a * a + lambda) * (a * a + lambda) * (a * a + lambda));
 	double Z1 = (double)(n + 1.5) / (a * a + lambda);
@@ -70,7 +71,7 @@ inline double I_n2(double lambda, double a, double* x, int n, int p, int q)
 
 }
 
-inline double I_n3(double lambda, double a, double* x, int n, int p, int q, int r)
+inline double Elastic3DSpherical::I_n3(double lambda, double a, double* x, int n, int p, int q, int r)
 {
 	double delta = sqrt((a * a + lambda) * (a * a + lambda) * (a * a + lambda));
 	double Z1 = (double)(n + 1.5) / (a * a + lambda);
@@ -85,7 +86,7 @@ inline double I_n3(double lambda, double a, double* x, int n, int p, int q, int 
 
 }
 
-inline double I_n4(double lambda, double a, double* x, int n, int p, int q, int r, int t)
+inline double Elastic3DSpherical::I_n4(double lambda, double a, double* x, int n, int p, int q, int r, int t)
 {
 	double delta = sqrt((a * a + lambda) * (a * a + lambda) * (a * a + lambda));
 	double Z1 = (double)(n + 1.5) / (a * a + lambda);
@@ -102,7 +103,7 @@ inline double I_n4(double lambda, double a, double* x, int n, int p, int q, int 
 	return I_n4;
 }
 
-inline double I_n5(double lambda, double a, double* x, int n, int p, int q, int r, int t, int h)
+inline double Elastic3DSpherical::I_n5(double lambda, double a, double* x, int n, int p, int q, int r, int t, int h)
 {
 	double delta = sqrt((a * a + lambda) * (a * a + lambda) * (a * a + lambda));
 	double Z1 = (double)(n + 1.5) / (a * a + lambda);
@@ -130,7 +131,7 @@ inline double I_n5(double lambda, double a, double* x, int n, int p, int q, int 
 	return I_n5;
 }
 ////////////////////////////////////////////////////////////
-inline double V_00(double* x, double a)
+inline double Elastic3DSpherical::V_00(double* x, double a)
 {
 	double lambda;
 	if ((x[0] * x[0] + x[1] * x[1] + x[2] * x[2] - a * a) > 0)
@@ -141,7 +142,7 @@ inline double V_00(double* x, double a)
 	return V;
 }
 
-inline double V_10(double* x, double a, int i)
+inline double Elastic3DSpherical::V_10(double* x, double a, int i)
 {
 	double lambda;
 	if ((x[0] * x[0] + x[1] * x[1] + x[2] * x[2] - a * a) > 0)
@@ -153,7 +154,7 @@ inline double V_10(double* x, double a, int i)
 	return V_i;
 }
 
-inline double V_20(double* x, double a, int i, int j)
+inline double Elastic3DSpherical::V_20(double* x, double a, int i, int j)
 {
 	double lambda;
 	if ((x[0] * x[0] + x[1] * x[1] + x[2] * x[2] - a * a) > 0)
@@ -165,7 +166,7 @@ inline double V_20(double* x, double a, int i, int j)
 	return V_ij;
 }
 
-inline double V_n0(double* x, double a, int n)
+inline double Elastic3DSpherical::V_n0(double* x, double a, int n)
 {
 	double lambda;
 	if ((x[0] * x[0] + x[1] * x[1] + x[2] * x[2] - a * a) > 0)
@@ -178,7 +179,7 @@ inline double V_n0(double* x, double a, int n)
 }
 
 
-inline double V_n1(double* x, double a, int n, int p)
+inline double Elastic3DSpherical::V_n1(double* x, double a, int n, int p)
 {
 	double lambda;
 	if ((x[0] * x[0] + x[1] * x[1] + x[2] * x[2] - a * a) > 0)
@@ -191,7 +192,7 @@ inline double V_n1(double* x, double a, int n, int p)
 
 }
 
-inline double V_n2(double* x, double a, int n, int p, int q)
+inline double Elastic3DSpherical::V_n2(double* x, double a, int n, int p, int q)
 {
 	double lambda;
 	if ((x[0] * x[0] + x[1] * x[1] + x[2] * x[2] - a * a) > 0)
@@ -203,7 +204,7 @@ inline double V_n2(double* x, double a, int n, int p, int q)
 	return V_i_pq;
 }
 
-inline double V_n3(double* x, double a, int n, int p, int q, int r)
+inline double Elastic3DSpherical::V_n3(double* x, double a, int n, int p, int q, int r)
 {
 	double lambda;
 	if ((x[0] * x[0] + x[1] * x[1] + x[2] * x[2] - a * a) > 0)
@@ -216,7 +217,7 @@ inline double V_n3(double* x, double a, int n, int p, int q, int r)
 
 }
 
-inline double V_n4(double* x, double a, int n, int p, int q, int r, int t)
+inline double Elastic3DSpherical::V_n4(double* x, double a, int n, int p, int q, int r, int t)
 {
 	double lambda;
 	if ((x[0] * x[0] + x[1] * x[1] + x[2] * x[2] - a * a) > 0)
@@ -229,7 +230,7 @@ inline double V_n4(double* x, double a, int n, int p, int q, int r, int t)
 
 }
 
-inline double V_n5(double* x, double a, int n, int p, int q, int r, int t, int s)
+inline double Elastic3DSpherical::V_n5(double* x, double a, int n, int p, int q, int r, int t, int s)
 {
 	double lambda;
 	if ((x[0] * x[0] + x[1] * x[1] + x[2] * x[2] - a * a) > 0)
@@ -242,7 +243,7 @@ inline double V_n5(double* x, double a, int n, int p, int q, int r, int t, int s
 
 }
 
-inline double V_n6(double* x, double a, int n, int p, int q, int r, int t, int s, int h)
+inline double Elastic3DSpherical::V_n6(double* x, double a, int n, int p, int q, int r, int t, int s, int h)
 {
 	double lambda;
 	if ((x[0] * x[0] + x[1] * x[1] + x[2] * x[2] - a * a) > 0)
@@ -256,94 +257,94 @@ inline double V_n6(double* x, double a, int n, int p, int q, int r, int t, int s
 
 ////////////////////////////////////////////////////////////
 
-inline double Phi_00(double* x, double a)
+inline double Elastic3DSpherical::Phi_00(double* x, double a)
 {
 	double Phi = V_00(x, a);
 	return Phi;
 }
 
-inline double Phi_10(double* x, double a, int n)
+inline double Elastic3DSpherical::Phi_10(double* x, double a, int n)
 {
 	double Phi_n = a * a * x[n] * V_10(x, a, n);
 	return Phi_n;
 }
 
-inline double Phi_20(double* x, double a, int m, int n)
+inline double Elastic3DSpherical::Phi_20(double* x, double a, int m, int n)
 {
 	double Phi_mn = a * a * (x[m] * x[n] * a * a * V_20(x, a, m, n) + 0.25 * d[m][n] * (V_00(x, a) - x[1] * x[1] * V_10(x, a, 1) - x[2] * x[2] * V_10(x, a, 2) - x[3] * x[3] * V_10(x, a, 3)
 		- a * a * (V_10(x, a, m) - x[1] * x[1] * V_20(x, a, 1, m) - x[2] * x[2] * V_20(x, a, 2, m) - x[3] * x[3] * V_20(x, a, 3, m))));
 	return Phi_mn;
 }
 
-inline double Phi_01(double* x, double a, int i)
+inline double Elastic3DSpherical::Phi_01(double* x, double a, int i)
 {
 	double Phi_i = V_n1(x, a, 0, i);
 	return Phi_i;
 }
 
-inline double Phi_02(double* x, double a, int i, int j)
+inline double Elastic3DSpherical::Phi_02(double* x, double a, int i, int j)
 {
 	double Phi_ij = V_n2(x, a, 0, i, j);
 	return Phi_ij;
 }
 
-inline double Phi_03(double* x, double a, int i, int j, int k)
+inline double Elastic3DSpherical::Phi_03(double* x, double a, int i, int j, int k)
 {
 	double Phi_ijk = V_n3(x, a, 0, i, j, k);
 	return Phi_ijk;
 }
 
-inline double Phi_04(double* x, double a, int i, int j, int k, int l)
+inline double Elastic3DSpherical::Phi_04(double* x, double a, int i, int j, int k, int l)
 {
 	double Phi_ijkl = V_n4(x, a, 0, i, j, k, l);
 	return Phi_ijkl;
 }
 
-inline double Phi_05(double* x, double a, int i, int j, int k, int l, int p)
+inline double Elastic3DSpherical::Phi_05(double* x, double a, int i, int j, int k, int l, int p)
 {
 	double Phi_ijklp = V_n5(x, a, 0, i, j, k, l, p);
 	return Phi_ijklp;
 }
 
-inline double Phi_06(double* x, double a, int i, int j, int k, int l, int p, int q)
+inline double Elastic3DSpherical::Phi_06(double* x, double a, int i, int j, int k, int l, int p, int q)
 {
 	double Phi_ijklp = V_n6(x, a, 0, i, j, k, l, p, q);
 	return Phi_ijklp;
 
 }
 
-inline double Phi_11(double* x, double a, int n, int i)
+inline double Elastic3DSpherical::Phi_11(double* x, double a, int n, int i)
 {
 	double Phi_n_i = a * a * (d[i][n] * V_10(x, a, n) + x[n] * V_n1(x, a, 1, i));
 	return Phi_n_i;
 }
 
-inline double Phi_12(double* x, double a, int n, int i, int j)
+inline double Elastic3DSpherical::Phi_12(double* x, double a, int n, int i, int j)
 {
 	double Phi_n_ij = a * a * (d[i][n] * V_n1(x, a, 1, j) + d[j][n] * V_n1(x, a, 1, i) + x[n] * V_n2(x, a, 1, i, j));
 	return Phi_n_ij;
 }
 
-inline double Phi_13(double* x, double a, int n, int i, int j, int k)
+inline double Elastic3DSpherical::Phi_13(double* x, double a, int n, int i, int j, int k)
 {
 	double Phi_n_ijk = a * a * (d[i][n] * V_n2(x, a, 1, j, k) + d[j][n] * V_n2(x, a, 1, i, k) + d[n][k] * V_n2(x, a, 1, i, j) + x[n] * V_n3(x, a, 1, i, j, k));
 	return Phi_n_ijk;
 }
 
-inline double Phi_14(double* x, double a, int n, int i, int j, int k, int l)
+inline double Elastic3DSpherical::Phi_14(double* x, double a, int n, int i, int j, int k, int l)
 {
 	double Phi_n_ijkl = a * a * (d[i][n] * V_n3(x, a, 1, j, k, l) + d[j][n] * V_n3(x, a, 1, i, k, l) + d[n][k] * V_n3(x, a, 1, i, j, l) + d[n][l] * V_n3(x, a, 1, i, j, k) + x[n] * V_n4(x, a, 1, i, j, k, l));
 	return Phi_n_ijkl;
 }
 
-inline double Phi_15(double* x, double a, int n, int i, int j, int k, int l, int p)
+inline double Elastic3DSpherical::Phi_15(double* x, double a, int n, int i, int j, int k, int l, int p)
 {
 	double Phi_n_ijklp = a * a * (d[i][n] * V_n4(x, a, 1, j, k, l, p) + d[j][n] * V_n4(x, a, 1, i, k, l, p) + d[n][k] * V_n4(x, a, 1, i, j, l, p) + d[n][l] * V_n4(x, a, 1, i, j, k, p) + d[n][p] * V_n4(x, a, 1, i, j, k, l) + x[n] * V_n5(x, a, 1, i, j, k, l, p));
 	return Phi_n_ijklp;
 
 }
 
-inline double Phi_16(double* x, double a, int n, int i, int j, int k, int l, int p, int q)
+inline double Elastic3DSpherical::Phi_16(double* x, double a, int n, int i, int j, int k, int l, int p, int q)
 {
 	double Phi_n_ijklpq = a * a * (d[i][n] * V_n5(x, a, 1, j, k, l, p, q) + d[j][n] * V_n5(x, a, 1, i, k, l, p, q) + d[n][k] * V_n5(x, a, 1, i, j, l, p, q)
 		+ d[n][l] * V_n5(x, a, 1, i, j, k, p, q) + d[n][p] * V_n5(x, a, 1, i, j, k, l, q) + d[n][q] * V_n5(x, a, 1, i, j, k, l, p)
@@ -351,13 +352,13 @@ inline double Phi_16(double* x, double a, int n, int i, int j, int k, int l, int
 	return Phi_n_ijklpq;
 }
 
-inline double Phi_21(double* x, double a, int m, int n, int i)
+inline double Elastic3DSpherical::Phi_21(double* x, double a, int m, int n, int i)
 {
 	double Phi_mn_i = a * a * (a * a * (d[m][i] * x[n] + d[n][i] * x[m]) * V_20(x, a, m, n) + a * a * x[m] * x[n] * V_n1(x, a, 2, i) - d[m][n] * x[i] * (V_10(x, a, i) - a * a * V_20(x, a, i, m)));
 	return Phi_mn_i;
 }
 
-inline double Phi_22(double* x, double a, int m, int n, int i, int j)
+inline double Elastic3DSpherical::Phi_22(double* x, double a, int m, int n, int i, int j)
 {
 	double Phi_mn_ij = a * a * (a * a * (d[m][i] * d[n][j] + d[n][i] * d[m][j]) * V_20(x, a, m, n) + a * a * (d[m][i] * x[n] + d[n][i] * x[m]) * V_n1(x, a, 2, j)
 		+ a * a * (d[m][j] * x[n] + d[n][j] * x[m]) * V_n1(x, a, 2, i) + a * a * x[m] * x[n] * V_n2(x, a, 2, i, j)
@@ -365,7 +366,7 @@ inline double Phi_22(double* x, double a, int m, int n, int i, int j)
 	return Phi_mn_ij;
 }
 
-inline double Phi_23(double* x, double a, int m, int n, int i, int j, int k)
+inline double Elastic3DSpherical::Phi_23(double* x, double a, int m, int n, int i, int j, int k)
 {
 	double Phi_mn_ijk = a * a * a * a * ((d[m][i] * d[n][j] + d[n][i] * d[m][j]) * V_n1(x, a, 2, k) + (d[m][i] * d[n][k] + d[n][i] * d[m][k]) * V_n1(x, a, 2, j)
 		+ (d[m][j] * d[n][k] + d[n][j] * d[m][k]) * V_n1(x, a, 2, i) + (d[m][i] * x[n] + d[n][i] * x[m]) * V_n2(x, a, 2, j, k)
@@ -374,7 +375,7 @@ inline double Phi_23(double* x, double a, int m, int n, int i, int j, int k)
 	return Phi_mn_ijk;
 }
 
-inline double Phi_24(double* x, double a, int m, int n, int i, int j, int k, int l)
+inline double Elastic3DSpherical::Phi_24(double* x, double a, int m, int n, int i, int j, int k, int l)
 {
 	double Phi_mn_ijkl = a * a * a * a * ((d[m][i] * d[n][j] + d[n][i] * d[m][j]) * V_n2(x, a, 2, k, l) + (d[m][i] * d[n][k] + d[n][i] * d[m][k]) * V_n2(x, a, 2, j, l)
 		+ (d[m][j] * d[n][k] + d[n][j] * d[m][k]) * V_n2(x, a, 2, i, l) + (d[m][i] * d[n][l] + d[n][i] * d[m][l]) * V_n2(x, a, 2, j, k)
@@ -386,7 +387,7 @@ inline double Phi_24(double* x, double a, int m, int n, int i, int j, int k, int
 	return Phi_mn_ijkl;
 }
 
-inline double Phi_25(double* x, double a, int m, int n, int i, int j, int k, int l, int p)
+inline double Elastic3DSpherical::Phi_25(double* x, double a, int m, int n, int i, int j, int k, int l, int p)
 {
 	double Phi_mn_ijklp = a * a * a * a * ((d[m][i] * d[n][j] + d[n][i] * d[m][j]) * V_n3(x, a, 2, k, l, p) + (d[m][i] * d[n][k] + d[n][i] * d[m][k]) * V_n3(x, a, 2, j, l, p)
 		+ (d[m][j] * d[n][k] + d[n][j] * d[m][k]) * V_n3(x, a, 2, i, l, p) + (d[m][i] * d[n][l] + d[n][i] * d[m][l]) * V_n3(x, a, 2, j, k, p)
@@ -401,7 +402,7 @@ inline double Phi_25(double* x, double a, int m, int n, int i, int j, int k, int
 	return Phi_mn_ijklp;
 }
 
-inline double Phi_26(double* x, double a, int m, int n, int i, int j, int k, int l, int p, int q)
+inline double Elastic3DSpherical::Phi_26(double* x, double a, int m, int n, int i, int j, int k, int l, int p, int q)
 {
 	double Phi_mn_ijklpq = a * a * a * a * ((d[m][i] * d[n][j] + d[n][i] * d[m][j]) * V_n4(x, a, 2, k, l, p, q) + (d[m][i] * d[n][k] + d[n][i] * d[m][k]) * V_n4(x, a, 2, j, l, p, q)
 		+ (d[m][j] * d[n][k] + d[n][j] * d[m][k]) * V_n4(x, a, 2, i, l, p, q) + (d[m][i] * d[n][l] + d[n][i] * d[m][l]) * V_n4(x, a, 2, j, k, p, q)
@@ -425,34 +426,34 @@ inline double Phi_26(double* x, double a, int m, int n, int i, int j, int k, int
 
 ////////////////////////////////////////////////////////////
 
-inline double Psi_03(double* x, double a, int i, int j, int k)
+inline double Elastic3DSpherical::Psi_03(double* x, double a, int i, int j, int k)
 {
 	double Psi_ijk = d[i][j] * (V_n1(x, a, 0, k) - a * a * V_n1(x, a, 1, k)) + d[i][k] * (V_n1(x, a, 0, j) - a * a * V_n1(x, a, 1, j)) + x[i] * (V_n2(x, a, 0, j, k) - a * a * V_n2(x, a, 1, j, k));
 	return Psi_ijk;
 }
 
-inline double Psi_04(double* x, double a, int i, int j, int k, int l)
+inline double Elastic3DSpherical::Psi_04(double* x, double a, int i, int j, int k, int l)
 {
 	double Psi_ijkl = d[i][j] * (V_n2(x, a, 0, k, l) - a * a * V_n2(x, a, 1, k, l)) + d[i][k] * (V_n2(x, a, 0, j, l) - a * a * V_n2(x, a, 1, j, l)) + d[i][l] * (V_n2(x, a, 0, j, k) - a * a * V_n2(x, a, 1, j, k))
 		+ x[i] * (V_n3(x, a, 0, j, k, l) - a * a * V_n3(x, a, 1, j, k, l));
 	return Psi_ijkl;
 }
 
-inline double Psi_05(double* x, double a, int i, int j, int k, int l, int s)
+inline double Elastic3DSpherical::Psi_05(double* x, double a, int i, int j, int k, int l, int s)
 {
 	double Psi_ijkls = d[i][j] * (V_n3(x, a, 0, k, l, s) - a * a * V_n3(x, a, 1, k, l, s)) + d[i][k] * (V_n3(x, a, 0, j, l, s) - a * a * V_n3(x, a, 1, j, l, s)) + d[i][l] * (V_n3(x, a, 0, j, k, s) - a * a * V_n3(x, a, 1, j, k, s))
 		+ d[i][s] * (V_n3(x, a, 0, j, k, l) - a * a * V_n3(x, a, 1, j, k, l)) + x[i] * (V_n4(x, a, 0, j, k, l, s) - a * a * V_n4(x, a, 1, j, k, l, s));
 	return Psi_ijkls;
 }
 
-inline double Psi_06(double* x, double a, int i, int j, int k, int l, int s, int t)
+inline double Elastic3DSpherical::Psi_06(double* x, double a, int i, int j, int k, int l, int s, int t)
 {
 	double Psi_ijklst = d[i][j] * (V_n4(x, a, 0, k, l, s, t) - a * a * V_n4(x, a, 1, k, l, s, t)) + d[i][k] * (V_n4(x, a, 0, j, l, s, t) - a * a * V_n4(x, a, 1, j, l, s, t)) + d[i][l] * (V_n4(x, a, 0, j, k, s, t) - a * a * V_n4(x, a, 1, j, k, s, t))
 		+ d[i][s] * (V_n4(x, a, 0, j, k, l, t) - a * a * V_n4(x, a, 1, j, k, l, t)) + d[i][t] * (V_n4(x, a, 0, j, k, l, s) - a * a * V_n4(x, a, 1, j, k, l, s)) + x[i] * (V_n5(x, a, 0, j, k, l, s, t) - a * a * V_n5(x, a, 1, j, k, l, s, t));
 	return Psi_ijklst;
 }
 
-inline double Psi_07(double* x, double a, int i, int j, int k, int l, int s, int t, int p)
+inline double Elastic3DSpherical::Psi_07(double* x, double a, int i, int j, int k, int l, int s, int t, int p)
 {
 	double Psi_ijklstp = d[i][j] * (V_n5(x, a, 0, k, l, s, t, p) - a * a * V_n5(x, a, 1, k, l, s, t, p)) + d[i][k] * (V_n5(x, a, 0, j, l, s, t, p) - a * a * V_n5(x, a, 1, j, l, s, t, p)) + d[i][l] * (V_n5(x, a, 0, j, k, s, t, p) - a * a * V_n5(x, a, 1, j, k, s, t, p))
 		+ d[i][s] * (V_n5(x, a, 0, j, k, l, t, p) - a * a * V_n5(x, a, 1, j, k, l, t, p)) + d[i][t] * (V_n5(x, a, 0, j, k, l, s, p) - a * a * V_n5(x, a, 1, j, k, l, s, p)) + d[i][p] * (V_n5(x, a, 0, j, k, l, s, t) - a * a * V_n5(x, a, 1, j, k, l, s, t)) + x[i] * (V_n6(x, a, 0, j, k, l, s, t, p) - a * a * V_n6(x, a, 1, j, k, l, s, t, p));
@@ -460,7 +461,7 @@ inline double Psi_07(double* x, double a, int i, int j, int k, int l, int s, int
 
 }
 
-inline double Psi_13(double* x, double a, int n, int i, int j, int k)
+inline double Elastic3DSpherical::Psi_13(double* x, double a, int n, int i, int j, int k)
 {
 	double Psi_n_ijk = a * a * (d[i][n] * d[j][k] * (V_n0(x, a, 1) - a * a * V_n0(x, a, 2)) + d[i][n] * x[j] * (V_n1(x, a, 1, k) - a * a * V_n1(x, a, 2, k))
 		+ (d[n][j] * d[i][k] + d[i][j] * d[n][k]) * (V_n0(x, a, 1) - a * a * V_n0(x, a, 2)) + (d[n][j] * x[i] + d[i][j] * x[n]) * (V_n1(x, a, 1, k) - a * a * V_n1(x, a, 2, k))
@@ -469,7 +470,7 @@ inline double Psi_13(double* x, double a, int n, int i, int j, int k)
 	return Psi_n_ijk;
 }
 
-inline double Psi_14(double* x, double a, int n, int i, int j, int k, int l)
+inline double Elastic3DSpherical::Psi_14(double* x, double a, int n, int i, int j, int k, int l)
 {
 	double Psi_n_ijkl = a * a * (d[i][n] * d[j][k] * (V_n1(x, a, 1, l) - a * a * V_n1(x, a, 2, l)) + d[i][n] * d[j][l] * (V_n1(x, a, 1, k) - a * a * V_n1(x, a, 2, k))
 		+ d[i][n] * x[j] * (V_n2(x, a, 1, k, l) - a * a * V_n2(x, a, 2, k, l)) + (d[n][j] * d[i][k] + d[i][j] * d[n][k]) * (V_n1(x, a, 1, l) - a * a * V_n1(x, a, 2, l))
@@ -480,7 +481,7 @@ inline double Psi_14(double* x, double a, int n, int i, int j, int k, int l)
 	return Psi_n_ijkl;
 }
 
-inline double Psi_15(double* x, double a, int n, int i, int j, int k, int l, int s)
+inline double Elastic3DSpherical::Psi_15(double* x, double a, int n, int i, int j, int k, int l, int s)
 {
 	double Psi_n_ijkls = a * a * (d[i][n] * d[j][k] * (V_n2(x, a, 1, l, s) - a * a * V_n2(x, a, 2, l, s))
 		+ d[i][n] * d[j][l] * (V_n2(x, a, 1, k, s) - a * a * V_n2(x, a, 2, k, s)) + d[i][n] * d[j][s] * (V_n2(x, a, 1, k, l) - a * a * V_n2(x, a, 2, k, l)) + d[i][n] * x[j] * (V_n3(x, a, 1, k, l, s) - a * a * V_n3(x, a, 2, k, l, s))
@@ -493,7 +494,7 @@ inline double Psi_15(double* x, double a, int n, int i, int j, int k, int l, int
 	return Psi_n_ijkls;
 }
 
-inline double Psi_16(double* x, double a, int n, int i, int j, int k, int l, int s, int q)
+inline double Elastic3DSpherical::Psi_16(double* x, double a, int n, int i, int j, int k, int l, int s, int q)
 {
 	double Psi_n_ijklsq = a * a * (d[i][n] * d[j][k] * (V_n3(x, a, 1, l, s, q) - a * a * V_n3(x, a, 2, l, s, q)) + d[i][n] * d[j][l] * (V_n3(x, a, 1, k, s, q) - a * a * V_n3(x, a, 2, k, s, q))
 		+ d[i][n] * d[j][s] * (V_n3(x, a, 1, k, l, q) - a * a * V_n3(x, a, 2, k, l, q)) + d[i][n] * d[j][q] * (V_n3(x, a, 1, k, l, s) - a * a * V_n3(x, a, 2, k, l, s)) + d[i][n] * x[j] * (V_n4(x, a, 1, k, l, s, q) - a * a * V_n4(x, a, 2, k, l, s, q))
@@ -509,7 +510,7 @@ inline double Psi_16(double* x, double a, int n, int i, int j, int k, int l, int
 
 }
 
-inline double Psi_17(double* x, double a, int n, int i, int j, int k, int l, int s, int q, int p)
+inline double Elastic3DSpherical::Psi_17(double* x, double a, int n, int i, int j, int k, int l, int s, int q, int p)
 {
 	double Psi_n_ijklsqp = a * a * (d[i][n] * d[j][k] * (V_n4(x, a, 1, l, s, q, p) - a * a * V_n4(x, a, 2, l, s, q, p)) + d[i][n] * d[j][l] * (V_n4(x, a, 1, k, s, q, p) - a * a * V_n4(x, a, 2, k, s, q, p))
 		+ d[i][n] * d[j][s] * (V_n4(x, a, 1, k, l, q, p) - a * a * V_n4(x, a, 2, k, l, q, p)) + d[i][n] * d[j][q] * (V_n4(x, a, 1, k, l, s, p) - a * a * V_n4(x, a, 2, k, l, s, p)) + d[i][n] * d[j][p] * (V_n4(x, a, 1, k, l, s, q) - a * a * V_n4(x, a, 2, k, l, s, q)) + d[i][n] * x[j] * (V_n5(x, a, 1, k, l, s, q, p) - a * a * V_n5(x, a, 2, k, l, s, q, p))
@@ -525,7 +526,7 @@ inline double Psi_17(double* x, double a, int n, int i, int j, int k, int l, int
 	return Psi_n_ijklsqp;
 }
 
-inline double Psi_23(double* x, double a, int m, int n, int i, int j, int k)
+inline double Elastic3DSpherical::Psi_23(double* x, double a, int m, int n, int i, int j, int k)
 {
 	double Psi_mn_ijk = a * a * a * a * ((d[m][i] * d[n][j] + d[n][i] * d[m][j]) * x[k] * (V_n0(x, a, 2) - a * a * V_n0(x, a, 3))
 		+ ((d[m][i] * d[n][k] + d[n][i] * d[m][k]) * x[j] + (d[m][i] * x[n] + d[n][i] * x[m]) * d[j][k]) * (V_n0(x, a, 2) - a * a * V_n0(x, a, 3))
@@ -541,7 +542,7 @@ inline double Psi_23(double* x, double a, int m, int n, int i, int j, int k)
 	return Psi_mn_ijk;
 }
 
-inline double Psi_24(double* x, double a, int m, int n, int i, int j, int k, int l)
+inline double Elastic3DSpherical::Psi_24(double* x, double a, int m, int n, int i, int j, int k, int l)
 {
 	double Psi_mn_ijkl = a * a * a * a * ((d[m][i] * d[n][j] + d[n][i] * d[m][j]) * d[k][l] * (V_20(x, a, m, k) - a * a * V_n0(x, a, 3)) + (d[m][i] * d[n][j] + d[n][i] * d[m][j]) * x[k] * (V_n1(x, a, 2, l) - a * a * V_n1(x, a, 3, l))
 		+ ((d[m][i] * d[n][k] + d[n][i] * d[m][k]) * d[j][l] + (d[m][i] * d[n][l] + d[n][i] * d[m][l]) * d[j][k]) * (V_20(x, a, m, j) - a * a * V_n0(x, a, 3))
@@ -565,7 +566,7 @@ inline double Psi_24(double* x, double a, int m, int n, int i, int j, int k, int
 	return Psi_mn_ijkl;
 }
 
-inline double Psi_25(double* x, double a, int m, int n, int i, int j, int k, int l, int s)
+inline double Elastic3DSpherical::Psi_25(double* x, double a, int m, int n, int i, int j, int k, int l, int s)
 {
 	double Psi_mn_ijkls = a * a * a * a * ((d[m][i] * d[n][j] + d[n][i] * d[m][j]) * (d[k][l] * (V_n1(x, a, 2, s) - a * a * V_n1(x, a, 3, s)) + d[k][s] * (V_n1(x, a, 2, l) - a * a * V_n1(x, a, 3, l)) + x[k] * (V_n2(x, a, 2, l, s) - a * a * V_n2(x, a, 3, l, s)))
 		+ ((d[m][i] * d[n][k] + d[n][i] * d[m][k]) * d[j][l] + (d[m][i] * d[n][l] + d[n][i] * d[m][l]) * d[j][k]) * (V_n1(x, a, 2, s) - a * a * V_n1(x, a, 3, s))
@@ -602,7 +603,7 @@ inline double Psi_25(double* x, double a, int m, int n, int i, int j, int k, int
 	return Psi_mn_ijkls;
 }
 
-inline double Psi_26(double* x, double a, int m, int n, int i, int j, int k, int l, int s, int t)
+inline double Elastic3DSpherical::Psi_26(double* x, double a, int m, int n, int i, int j, int k, int l, int s, int t)
 {
 	double Psi_mn_ijklst = a * a * a * a * ((d[m][i] * d[n][j] + d[n][i] * d[m][j]) * (d[k][l] * (V_n2(x, a, 2, s, t) - a * a * V_n2(x, a, 3, s, t)) + d[k][s] * (V_n2(x, a, 2, l, t) - a * a * V_n2(x, a, 3, l, t)) + x[k] * (V_n3(x, a, 2, l, s, t) - a * a * V_n3(x, a, 3, l, s, t)) + d[k][t] * (V_n2(x, a, 2, l, s) - a * a * V_n2(x, a, 3, l, s)))
 		+ ((d[m][i] * d[n][k] + d[n][i] * d[m][k]) * d[j][l] + (d[m][i] * d[n][l] + d[n][i] * d[m][l]) * d[j][k]) * (V_n2(x, a, 2, s, t) - a * a * V_n2(x, a, 3, s, t))
@@ -661,7 +662,7 @@ inline double Psi_26(double* x, double a, int m, int n, int i, int j, int k, int
 
 }
 
-inline double Psi_27(double* x, double a, int m, int n, int i, int j, int k, int l, int s, int t, int h)
+inline double Elastic3DSpherical::Psi_27(double* x, double a, int m, int n, int i, int j, int k, int l, int s, int t, int h)
 {
 	double Psi_mn_ijklsth = a * a * a * a * ((d[m][i] * d[n][j] + d[n][i] * d[m][j]) * (d[k][l] * (V_n3(x, a, 2, s, t, h) - a * a * V_n3(x, a, 3, s, t, h)) + d[k][s] * (V_n3(x, a, 2, l, t, h) - a * a * V_n3(x, a, 3, l, t, h))
 		+ d[k][h] * (V_n3(x, a, 2, l, s, t) - a * a * V_n3(x, a, 3, l, s, t)) + x[k] * (V_n4(x, a, 2, l, s, t, h) - a * a * V_n4(x, a, 3, l, s, t, h)) + d[k][t] * (V_n3(x, a, 2, l, s, h) - a * a * V_n3(x, a, 3, l, s, h)))
@@ -750,7 +751,7 @@ inline double Psi_27(double* x, double a, int m, int n, int i, int j, int k, int
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-double R(double* x)
+double Elastic3DSpherical::R(double* x)
 {
 	double R = x[0] * x[0] + x[1] * x[1] + x[2] * x[2];
 
@@ -758,25 +759,25 @@ double R(double* x)
 	return R;
 }
 
-double R_01(double* x, int i)
+double Elastic3DSpherical::R_01(double* x, int i)
 {
 	double R_i = x[i] / R(x);
 	return R_i;
 }
 
-double R_02(double* x, int i, int j)
+double Elastic3DSpherical::R_02(double* x, int i, int j)
 {
 	double R_ij = (d[i][j] - (x[i] / R(x)) * (x[j] / R(x))) / R(x);
 	return R_ij;
 }
 
-double R_03(double* x, int i, int j, int k)
+double Elastic3DSpherical::R_03(double* x, int i, int j, int k)
 {
 	double R_ijk = (3 * (x[i] / R(x)) * (x[j] / R(x)) * (x[k] / R(x)) - d[i][j] * x[k] / R(x) - d[i][k] * x[j] / R(x) - d[j][k] * x[i] / R(x)) / (R(x) * R(x));
 	return R_ijk;
 }
 
-double R_04(double* x, int i, int j, int k, int l)
+double Elastic3DSpherical::R_04(double* x, int i, int j, int k, int l)
 {
 	double R_ijkl = 1 / (R(x) * R(x) * R(x)) * (-(d[i][j] * d[k][l] + d[i][k] * d[j][l] + d[i][l] * d[j][k])
 		+ 3 * (d[i][j] * (x[k] / R(x)) * (x[l] / R(x)) + d[i][k] * (x[j] / R(x)) * (x[l] / R(x)) + d[i][l] * (x[j] / R(x)) * (x[k] / R(x))
@@ -785,7 +786,7 @@ double R_04(double* x, int i, int j, int k, int l)
 	return R_ijkl;
 }
 
-double R_05(double* x, int i, int j, int k, int l, int s)
+double Elastic3DSpherical::R_05(double* x, int i, int j, int k, int l, int s)
 {
 	double R_ijkls = 1 / (R(x) * R(x) * R(x) * R(x)) * (105 * R_01(x, i) * R_01(x, j) * R_01(x, k) * R_01(x, l) * R_01(x, s)
 		- 15 * (d[i][j] * R_01(x, k) * R_01(x, l) * R_01(x, s) + d[i][k] * R_01(x, j) * R_01(x, l) * R_01(x, s) + d[i][l] * R_01(x, j) * R_01(x, k) * R_01(x, s)
@@ -801,7 +802,7 @@ double R_05(double* x, int i, int j, int k, int l, int s)
 
 }
 
-double R_06(double* x, int i, int j, int k, int l, int s, int t)
+double Elastic3DSpherical::R_06(double* x, int i, int j, int k, int l, int s, int t)
 {
 	double R_ijklst = 1 / (R(x) * R(x) * R(x) * R(x) * R(x)) * (-945 * R_01(x, i) * R_01(x, j) * R_01(x, k) * R_01(x, l) * R_01(x, s) * R_01(x, t)
 		+ 105 * (d[i][j] * R_01(x, k) * R_01(x, l) * R_01(x, s) * R_01(x, t) + d[i][k] * R_01(x, j) * R_01(x, l) * R_01(x, s) * R_01(x, t)
@@ -835,7 +836,7 @@ double R_06(double* x, int i, int j, int k, int l, int s, int t)
 
 }
 
-double R_07(double* x, int i, int j, int k, int l, int s, int t, int p)
+double Elastic3DSpherical::R_07(double* x, int i, int j, int k, int l, int s, int t, int p)
 {
 	double R_ijklstp = 1 / (R(x) * R(x) * R(x) * R(x) * R(x) * R(x)) * (10395 * R_01(x, i) * R_01(x, j) * R_01(x, k) * R_01(x, l) * R_01(x, s) * R_01(x, t) * R_01(x, p)
 
@@ -948,28 +949,28 @@ double R_07(double* x, int i, int j, int k, int l, int s, int t, int p)
 
 }
 
-double fR(double* x, int sign)
+double Elastic3DSpherical::fR(double* x, int sign)
 {
 	double R1 = sign * x[2] + R(x);
 	double fR = 1 / R1;
 	return fR;
 }
 
-double fR_01(double* x, int i, int sign)
+double Elastic3DSpherical::fR_01(double* x, int i, int sign)
 {
 	double R1 = sign * x[2] + R(x);
 	double fR_i = -(R_01(x, i) + sign * d[2][i]) / (R1 * R1);
 	return fR_i;
 }
 
-double fR_02(double* x, int i, int j, int sign)
+double Elastic3DSpherical::fR_02(double* x, int i, int j, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double fR_ij = -1.00 / (R1 * R1 * R1) * (R1 * R_02(x, i, j) - 2 * (R_01(x, i) + sign * d[2][i]) * (R_01(x, j) + sign * d[2][j]));
 	return fR_ij;
 }
 
-double fR_03(double* x, int i, int j, int k, int sign)
+double Elastic3DSpherical::fR_03(double* x, int i, int j, int k, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double fR_ijk = -1.00 / (R1 * R1 * R1 * R1) * (R1 * R1 * R_03(x, i, j, k) - 2 * R1 * ((R_01(x, i) + sign * d[2][i]) * R_02(x, j, k) + (R_01(x, j) + sign * d[2][j]) * R_02(x, i, k) + (R_01(x, k) + sign * d[2][k]) * R_02(x, i, j))
@@ -977,7 +978,7 @@ double fR_03(double* x, int i, int j, int k, int sign)
 	return fR_ijk;
 }
 
-double fR_04(double* x, int i, int j, int k, int l, int sign)
+double Elastic3DSpherical::fR_04(double* x, int i, int j, int k, int l, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double fR_ijkl = -1.00 / (R1 * R1 * R1 * R1 * R1) * (R1 * R1 * R1 * R_04(x, i, j, k, l) - 2 * R1 * R1 * ((R_01(x, i) + sign * d[2][i]) * R_03(x, j, k, l) + (R_01(x, j) + sign * d[2][j]) * R_03(x, i, k, l)
@@ -993,7 +994,7 @@ double fR_04(double* x, int i, int j, int k, int l, int sign)
 
 }
 
-double fR_05(double* x, int i, int j, int k, int l, int s, int sign)
+double Elastic3DSpherical::fR_05(double* x, int i, int j, int k, int l, int s, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double fR_ijkls = -1.00 / (R1 * R1 * R1 * R1 * R1 * R1) * (R1 * R1 * R1 * R1 * R_05(x, i, j, k, l, s)
@@ -1040,7 +1041,7 @@ double fR_05(double* x, int i, int j, int k, int l, int s, int sign)
 	return fR_ijkls;
 }
 
-double fR_06(double* x, int i, int j, int k, int l, int s, int t, int sign)
+double Elastic3DSpherical::fR_06(double* x, int i, int j, int k, int l, int s, int t, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double fR_ijklst = -1.00 / (R1 * R1 * R1 * R1 * R1 * R1 * R1) * (R1 * R1 * R1 * R1 * R1 * R_06(x, i, j, k, l, s, t)
@@ -1152,7 +1153,7 @@ double fR_06(double* x, int i, int j, int k, int l, int s, int t, int sign)
 
 }
 
-double fR_07(double* x, int i, int j, int k, int l, int s, int t, int p, int sign)
+double Elastic3DSpherical::fR_07(double* x, int i, int j, int k, int l, int s, int t, int p, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double fR_ijklstp = -1.00 / (R1 * R1 * R1 * R1 * R1 * R1 * R1 * R1) * (R1 * R1 * R1 * R1 * R1 * R1 * R_07(x, i, j, k, l, s, t, p)
@@ -1667,13 +1668,13 @@ double fR_07(double* x, int i, int j, int k, int l, int s, int t, int p, int sig
 	return fR_ijklstp;
 }
 
-double lnR_01(double* x, int i, int sign)
+double Elastic3DSpherical::lnR_01(double* x, int i, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double lnR_i = 1.0 / (R1) * (R_01(x, i) + d[2][i]);
 	return lnR_i;
 }
-double lnR_02(double* x, int i, int j, int sign)
+double Elastic3DSpherical::lnR_02(double* x, int i, int j, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 
@@ -1682,7 +1683,7 @@ double lnR_02(double* x, int i, int j, int sign)
 	return lnR_ij;
 }
 
-double lnR_03(double* x, int i, int j, int k, int sign)
+double Elastic3DSpherical::lnR_03(double* x, int i, int j, int k, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 
@@ -1694,7 +1695,7 @@ double lnR_03(double* x, int i, int j, int k, int sign)
 	return lnR_ijk;
 }
 
-double lnR_04(double* x, int i, int j, int k, int l, int sign)
+double Elastic3DSpherical::lnR_04(double* x, int i, int j, int k, int l, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double lnR_ijkl = 1 / (R1 * R1 * R1 * R1) * (R1 * R1 * R1 * R_04(x, i, j, k, l)
@@ -1709,7 +1710,7 @@ double lnR_04(double* x, int i, int j, int k, int l, int sign)
 	return lnR_ijkl;
 }
 
-double lnR_05(double* x, int i, int j, int k, int l, int s, int sign)
+double Elastic3DSpherical::lnR_05(double* x, int i, int j, int k, int l, int s, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double lnR_ijkls = 1 / (R1 * R1 * R1 * R1 * R1) * (R1 * R1 * R1 * R1 * R_05(x, i, j, k, l, s)
@@ -1756,7 +1757,7 @@ double lnR_05(double* x, int i, int j, int k, int l, int s, int sign)
 	return lnR_ijkls;
 }
 
-double lnR_06(double* x, int i, int j, int k, int l, int s, int t, int sign)
+double Elastic3DSpherical::lnR_06(double* x, int i, int j, int k, int l, int s, int t, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double lnR_ijklst = 1 / (R1 * R1 * R1 * R1 * R1 * R1) * (R1 * R1 * R1 * R1 * R1 * R_06(x, i, j, k, l, s, t)
@@ -1861,7 +1862,7 @@ double lnR_06(double* x, int i, int j, int k, int l, int s, int t, int sign)
 	return lnR_ijklst;
 }
 
-double lnR_07(double* x, int i, int j, int k, int l, int s, int t, int p, int sign)
+double Elastic3DSpherical::lnR_07(double* x, int i, int j, int k, int l, int s, int t, int p, int sign)
 {
 	double R1 = R(x) + sign * x[2];
 	double lnR_ijklstp = 1 / (R1 * R1 * R1 * R1 * R1 * R1 * R1) * (R1 * R1 * R1 * R1 * R1 * R1 * R_07(x, i, j, k, l, s, t, p)
@@ -2372,7 +2373,7 @@ double lnR_07(double* x, int i, int j, int k, int l, int s, int t, int p, int si
 
 ////////////////////////////////////////////////////////////////////////
 /////////////////////////Constitutive//////////////////////////////////
-double Constitutive(int i, int j, int k, int l)
+double Elastic3DSpherical::Constitutive(int i, int j, int k, int l)
 {
 	double c_ijkl = 2.0 * mu_0 * nu0 / (1 - 2 * nu0) * d[i][j] * d[k][l] + 1.0 * mu_0 * (d[i][k] * d[j][l] + d[i][l] * d[j][k]);
 	return c_ijkl;
@@ -2381,7 +2382,7 @@ double Constitutive(int i, int j, int k, int l)
 
 
 ////////////////////////Constitutive//////////////////////////////////
-double Constitutive1(int i, int j, int k, int l)
+double Elastic3DSpherical::Constitutive1(int i, int j, int k, int l)
 {
 	double c_ijkl = 2.0 * mu_1 * nu1 / (1 - 2 * nu1) * d[i][j] * d[k][l] + 1.0 * mu_1 * (d[i][k] * d[j][l] + d[i][l] * d[j][k]);
 	return c_ijkl;
@@ -2390,7 +2391,7 @@ double Constitutive1(int i, int j, int k, int l)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-double D_40(int i, int j, int k, int l, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
+double Elastic3DSpherical::D_40(int i, int j, int k, int l, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
 {
 	double x1[3];
 
@@ -2406,7 +2407,7 @@ double D_40(int i, int j, int k, int l, int s, int h, Ref<VectorXd> radius, Ref<
 }
 
 
-double D_50(int i, int j, int k, int l, int p, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
+double Elastic3DSpherical::D_50(int i, int j, int k, int l, int p, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
 {
 	double x1[3];
 
@@ -2422,7 +2423,7 @@ double D_50(int i, int j, int k, int l, int p, int s, int h, Ref<VectorXd> radiu
 }
 
 
-double D_60(int i, int j, int k, int l, int p, int q, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
+double Elastic3DSpherical::D_60(int i, int j, int k, int l, int p, int q, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
 {
 
 	double x1[3];
@@ -2441,7 +2442,7 @@ double D_60(int i, int j, int k, int l, int p, int q, int s, int h, Ref<VectorXd
 
 /////////////////////////
 
-double D_41(int i, int j, int k, int l, int r, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
+double Elastic3DSpherical::D_41(int i, int j, int k, int l, int r, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
 {
 
 	double x1[3];
@@ -2462,7 +2463,7 @@ double D_41(int i, int j, int k, int l, int r, int s, int h, Ref<VectorXd> radiu
 //////////////////////////////////
 
 
-double D_51(int i, int j, int k, int l, int p, int r, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
+double Elastic3DSpherical::D_51(int i, int j, int k, int l, int p, int r, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
 {
 	double x1[3];
 
@@ -2482,7 +2483,7 @@ double D_51(int i, int j, int k, int l, int p, int r, int s, int h, Ref<VectorXd
 //////////////////////////////////
 
 
-double D_61(int i, int j, int k, int l, int p, int q, int r, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
+double Elastic3DSpherical::D_61(int i, int j, int k, int l, int p, int q, int r, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
 {
 
 	double x1[3];
@@ -2501,7 +2502,7 @@ double D_61(int i, int j, int k, int l, int p, int q, int r, int s, int h, Ref<V
 
 
 //////////////////////////////////////////////////////
-double D_42(int i, int j, int k, int l, int r, int z, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
+double Elastic3DSpherical::D_42(int i, int j, int k, int l, int r, int z, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
 {
 
 	double x1[3];
@@ -2519,7 +2520,7 @@ double D_42(int i, int j, int k, int l, int r, int z, int s, int h, Ref<VectorXd
 ///////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////
-double D_52(int i, int j, int k, int l, int p, int r, int z, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
+double Elastic3DSpherical::D_52(int i, int j, int k, int l, int p, int r, int z, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
 {
 
 
@@ -2536,7 +2537,7 @@ double D_52(int i, int j, int k, int l, int p, int r, int z, int s, int h, Ref<V
 }
 /////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
-double D_62(int i, int j, int k, int l, int p, int q, int r, int z, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
+double Elastic3DSpherical::D_62(int i, int j, int k, int l, int p, int q, int r, int z, int s, int h, Ref<VectorXd> radius, Ref<MatrixXd> x_o, Ref<MatrixXd> x_p)
 {
 
 
@@ -2555,28 +2556,28 @@ double D_62(int i, int j, int k, int l, int p, int q, int r, int z, int s, int h
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-double Green(double* x, int i, int j) {
+double Elastic3DSpherical::Green(double* x, int i, int j) {
 
 	double G_ij = d[i][j] / (4 * Pi * mu_0) * fR(x, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_02(x, i, j);
 
 	return G_ij;
 }
 
-double Green_01(double* x, int i, int j, int k) {
+double Elastic3DSpherical::Green_01(double* x, int i, int j, int k) {
 
 	double G_ijk = d[i][j] / (4 * Pi * mu_0) * fR_01(x, k, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_03(x, i, j, k);
 
 	return G_ijk;
 }
 
-double Green_02(double* x, int i, int j, int k, int l) {
+double Elastic3DSpherical::Green_02(double* x, int i, int j, int k, int l) {
 
 	double G_ijkl = d[i][j] / (4 * Pi * mu_0) * fR_02(x, k, l, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_04(x, i, j, k, l);
 
 	return G_ijkl;
 }
 
-double Green_03(double* x, int i, int j, int k, int l, int s) {
+double Elastic3DSpherical::Green_03(double* x, int i, int j, int k, int l, int s) {
 
 	double G_ijkls = d[i][j] / (4 * Pi * mu_0) * fR_03(x, k, l, s, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_05(x, i, j, k, l, s);
 
@@ -2584,14 +2585,14 @@ double Green_03(double* x, int i, int j, int k, int l, int s) {
 }
 
 
-double Green_04(double* x, int i, int j, int k, int l, int s, int t) {
+double Elastic3DSpherical::Green_04(double* x, int i, int j, int k, int l, int s, int t) {
 
 	double G_ijklst = d[i][j] / (4 * Pi * mu_0) * fR_04(x, k, l, s, t, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_06(x, i, j, k, l, s, t);
 
 	return G_ijklst;
 }
 
-double Green_05(double* x, int i, int j, int k, int l, int s, int t, int r) {
+double Elastic3DSpherical::Green_05(double* x, int i, int j, int k, int l, int s, int t, int r) {
 
 	double G_ijklstr = d[i][j] / (4 * Pi * mu_0) * fR_05(x, k, l, s, t, r, 0) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * R_07(x, i, j, k, l, s, t, r);
 
@@ -2600,7 +2601,7 @@ double Green_05(double* x, int i, int j, int k, int l, int s, int t, int r) {
 
 ///////////////////////////////////////////////////////
 
-double IGreen_01(double* x, double a, int i, int j, int l) {
+double Elastic3DSpherical::IGreen_01(double* x, double a, int i, int j, int l) {
 
 	double IGreen_ij_l = 1 / (4 * Pi * mu_0) * (0.5 * d[i][j] * Phi_01(x, a, l) + 0.5 * d[i][l] * Phi_01(x, a, j)) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * Psi_03(x, a, i, j, l);
 
@@ -2608,14 +2609,14 @@ double IGreen_01(double* x, double a, int i, int j, int l) {
 }
 
 
-double IGreen_11(double* x, double a, int i, int j, int p, int l) {
+double Elastic3DSpherical::IGreen_11(double* x, double a, int i, int j, int p, int l) {
 
 	double IGreen_ijp_l = 1 / (4 * Pi * mu_0) * (0.5 * d[i][j] * Phi_11(x, a, p, l) + 0.5 * d[i][l] * Phi_11(x, a, p, j)) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * Psi_13(x, a, p, i, j, l);
 
 	return IGreen_ijp_l;
 }
 
-double IGreen_21(double* x, double a, int i, int j, int p, int q, int l) {
+double Elastic3DSpherical::IGreen_21(double* x, double a, int i, int j, int p, int q, int l) {
 
 	double IGreen_ijpq_l = 1 / (4 * Pi * mu_0) * (0.5 * d[i][j] * Phi_21(x, a, p, q, l) + 0.5 * d[i][l] * Phi_21(x, a, p, q, j)) - 1 / (16 * Pi * mu_0 * (1 - nu0)) * Psi_23(x, a, p, q, i, j, l);
 

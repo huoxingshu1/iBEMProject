@@ -7,6 +7,7 @@
 #include <fstream>
 
 using namespace Eigen;
+using namespace Elastic3DSpherical;
 
 void postProcessorElastic3D_arbitrary::get_for_stress_BEM_post(double* Vnorm, double* point, double* GCcor, double** Dst, double** Dsu)
 {

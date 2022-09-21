@@ -32,6 +32,7 @@
 //double nu0 = 0.25;
 //double mu_1 = 800000.0;
 //double nu1 = 0.25;
+using namespace Elastic3DSpherical;
 
 void get_for_stress_BEM2(double* Vnorm, double* point, double* GCcor, double** Dstwz, double** Dsuwz)
 {

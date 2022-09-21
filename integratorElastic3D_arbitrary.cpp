@@ -29,7 +29,7 @@
 #include "integratorElastic3D_arbitrary.h"
 #include "integratorElastic3DHelper.h"
 
-
+using namespace Elastic3DSpherical;
 /*
     Private members
 */
