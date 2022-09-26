@@ -404,8 +404,8 @@ void integratorPotential3D_elliptical::addFluxEquivalentFirstOrderInclusion(Conf
 # pragma omp parallel shared(A,num,radius,x_o,index_E_i,index_E_ij,orient, direc)
 
 	{
-		ofstream testH3;
-		testH3.open("testH3.txt");
+		//ofstream testH3;
+		//testH3.open("testH3.txt");
 
 
 		int t = 0;

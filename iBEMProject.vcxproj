@@ -165,13 +165,16 @@
     <ClCompile Include="BEMBuilderElastic2D_arbitrary.cpp" />
     <ClCompile Include="BEMBuilderElastic3D.cpp" />
     <ClCompile Include="BEMBuilderElastic3D_arbitrary.cpp" />
+    <ClCompile Include="BEMBuilderPotential3D.cpp" />
     <ClCompile Include="BEMElasticHelper2D.cpp" />
     <ClCompile Include="BEMElasticHelper2D_arbitrary.cpp" />
     <ClCompile Include="BEMElasticHelper3D.cpp" />
+    <ClCompile Include="BEMPotentialHelper3D.cpp" />
     <ClCompile Include="configElastic2D.cpp" />
     <ClCompile Include="configElastic2D_arbitrary.cpp" />
     <ClCompile Include="configElastic3D.cpp" />
     <ClCompile Include="configElastic3D_arbitrary.cpp" />
+    <ClCompile Include="configPotential3D_elliptical.cpp" />
     <ClCompile Include="inputGenerator.cpp" />
     <ClCompile Include="integratorElastic2D.cpp" />
     <ClCompile Include="integratorElastic2DHelper.cpp" />
@@ -181,6 +184,8 @@
     <ClCompile Include="integratorElastic3D_arbitrary.cpp" />
     <ClCompile Include="integratorhelper.cpp" />
     <ClCompile Include="integratorhelper3D_arbitrary.cpp" />
+    <ClCompile Include="integratorhelperPotential3D_elliptical.cpp" />
+    <ClCompile Include="integratorPotential3D_elliptical.cpp" />
     <ClCompile Include="Linear_Polygon_integral.cpp" />
     <ClCompile Include="Linear_Polyhedral_integral.cpp" />
     <ClCompile Include="main.cpp" />
@@ -189,6 +194,7 @@
     <ClCompile Include="postProcessorElastic3D.cpp" />
     <ClCompile Include="ibemRunner.cpp" />
     <ClCompile Include="postProcessorElastic3D_arbitrary.cpp" />
+    <ClCompile Include="postProcessorPotential3D_elliptical.cpp" />
     <ClCompile Include="Quadratic_Polygon_integral.cpp" />
     <ClCompile Include="Quadratic_Polyhedral.integral.cpp" />
     <ClCompile Include="Uniform_polygon_integral.cpp" />
@@ -200,15 +206,18 @@
     <ClInclude Include="BEMBuilderElastic2D_arbitrary.h" />
     <ClInclude Include="BEMBuilderElastic3D.h" />
     <ClInclude Include="BEMBuilderElastic3D_arbitrary.h" />
+    <ClInclude Include="BEMBuilderPotential3D.h" />
     <ClInclude Include="BEMElasticHelper2D.h" />
     <ClInclude Include="BEMElasticHelper2D_arbitrary.h" />
     <ClInclude Include="BEMElasticHelper3D.h" />
+    <ClInclude Include="BEMPotentialHelper3D.h" />
     <ClInclude Include="classFinder.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="configElastic2D.h" />
     <ClInclude Include="configElastic2D_arbitrary.h" />
     <ClInclude Include="configElastic3D.h" />
     <ClInclude Include="configElastic3D_arbitrary.h" />
+    <ClInclude Include="configPotential3D_elliptical.h" />
     <ClInclude Include="GlobalConstant.h" />
     <ClInclude Include="ibemRunner.h" />
     <ClInclude Include="iBEMSystemService.h" />
@@ -221,6 +230,8 @@
     <ClInclude Include="integratorElastic3DHelper.h" />
     <ClInclude Include="integratorElastic3D_arbitrary.h" />
     <ClInclude Include="integratorhelper.h" />
+    <ClInclude Include="integratorhelperPotential3D_elliptical.h" />
+    <ClInclude Include="integratorPotential3D_elliptical.h" />
     <ClInclude Include="Linear_Polygon_integral.h" />
     <ClInclude Include="Linear_Polyhedral_integral.h" />
     <ClInclude Include="postProcessor.h" />
@@ -228,6 +239,7 @@
     <ClInclude Include="postProcessorElastic2D_arbitrary.h" />
     <ClInclude Include="postProcessorElastic3D.h" />
     <ClInclude Include="postProcessorElastic3D_arbitrary.h" />
+    <ClInclude Include="postProcessorPotential3D_elliptical.h" />
     <ClInclude Include="postprocessService.h" />
     <ClInclude Include="preprocessService.h" />
     <ClInclude Include="Quadratic_Polygon_integral.h" />
@@ -239,6 +251,7 @@
     <ClInclude Include="systemSolverElastic2D_arbitrary.h" />
     <ClInclude Include="systemSolverElastic3D.h" />
     <ClInclude Include="systemSolverElastic3D_arbitrary.h" />
+    <ClInclude Include="systemSolverPotential3D_elliptical.h" />
     <ClInclude Include="systemSolverService.h" />
     <ClInclude Include="Uniform_polygon_integral.h" />
     <ClInclude Include="Uniform_Polyhedral_integral.h" />

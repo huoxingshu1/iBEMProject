@@ -1225,24 +1225,24 @@ void BEMBuilderPotential3D::getUTVector(Config & config_) {
 	cout << config.T << endl;
 	*/
 
-	ofstream testH1, testH2, testH3, testH4, testH5, testH6, testH7, testH8, testH9;
-	ofstream testG1, testG2, testG3, testG4, testG5, testG6, testG7, testG8, testG9;
+	//ofstream testH1, testH2, testH3, testH4, testH5, testH6, testH7, testH8, testH9;
+	//ofstream testG1, testG2, testG3, testG4, testG5, testG6, testG7, testG8, testG9;
 
-	testH9.open("testH9.txt");
-	testG9.open("testG9.txt");
+	//testH9.open("testH9.txt");
+	//testG9.open("testG9.txt");
 
-	for (int i = 0; i < NN + 12 * num; i++) {
-		testH9 << U(i);
-		testH9 << "\n";
-	}
+	//for (int i = 0; i < NN + 12 * num; i++) {
+	//	testH9 << U(i);
+	//	testH9 << "\n";
+	//}
 
-	for (int i = 0; i < 4 * NE; i++) {
-		testG9 << T(i);
-		testG9 << "\n";
-	}
+	//for (int i = 0; i < 4 * NE; i++) {
+	//	testG9 << T(i);
+	//	testG9 << "\n";
+	//}
 
-	testH9.close();
-	testG9.close();
+	//testH9.close();
+	//testG9.close();
 
 };
 

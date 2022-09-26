@@ -443,7 +443,7 @@ void postProcessorPotential3D_elliptical::getField(Config& config_) {
 	*/
 
 	ofstream myfile7;
-	myfile7.open("stress.txt");
+	myfile7.open("Temperature.txt");
 
 	for (int KK = 0; KK < nump; KK++) {
 			myfile7 << s_ptf[KK];

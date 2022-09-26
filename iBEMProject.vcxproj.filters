@@ -40,6 +40,12 @@
     <Filter Include="Source Files\Elastic_3D_arbitrary">
       <UniqueIdentifier>{f54c0eaa-a298-46dc-8980-8be2937fbb43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Potential_3D_elliptical">
+      <UniqueIdentifier>{171ebdea-8d76-4657-adb8-3479f863bcb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Potential_3D_elliptical">
+      <UniqueIdentifier>{fdd22e47-3cf4-4f59-ba90-7ff3ffd0305f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -137,6 +143,24 @@
     </ClCompile>
     <ClCompile Include="postProcessorElastic3D_arbitrary.cpp">
       <Filter>Source Files\Elastic_3D_arbitrary</Filter>
+    </ClCompile>
+    <ClCompile Include="BEMBuilderPotential3D.cpp">
+      <Filter>Source Files\Potential_3D_elliptical</Filter>
+    </ClCompile>
+    <ClCompile Include="BEMPotentialHelper3D.cpp">
+      <Filter>Source Files\Potential_3D_elliptical</Filter>
+    </ClCompile>
+    <ClCompile Include="configPotential3D_elliptical.cpp">
+      <Filter>Source Files\Potential_3D_elliptical</Filter>
+    </ClCompile>
+    <ClCompile Include="integratorhelperPotential3D_elliptical.cpp">
+      <Filter>Source Files\Potential_3D_elliptical</Filter>
+    </ClCompile>
+    <ClCompile Include="integratorPotential3D_elliptical.cpp">
+      <Filter>Source Files\Potential_3D_elliptical</Filter>
+    </ClCompile>
+    <ClCompile Include="postProcessorPotential3D_elliptical.cpp">
+      <Filter>Source Files\Potential_3D_elliptical</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +304,27 @@
     </ClInclude>
     <ClInclude Include="postProcessorElastic3D_arbitrary.h">
       <Filter>Header Files\Elastic_3D_arbitrary</Filter>
+    </ClInclude>
+    <ClInclude Include="BEMBuilderPotential3D.h">
+      <Filter>Header Files\Potential_3D_elliptical</Filter>
+    </ClInclude>
+    <ClInclude Include="BEMPotentialHelper3D.h">
+      <Filter>Header Files\Potential_3D_elliptical</Filter>
+    </ClInclude>
+    <ClInclude Include="configPotential3D_elliptical.h">
+      <Filter>Header Files\Potential_3D_elliptical</Filter>
+    </ClInclude>
+    <ClInclude Include="integratorhelperPotential3D_elliptical.h">
+      <Filter>Header Files\Potential_3D_elliptical</Filter>
+    </ClInclude>
+    <ClInclude Include="integratorPotential3D_elliptical.h">
+      <Filter>Header Files\Potential_3D_elliptical</Filter>
+    </ClInclude>
+    <ClInclude Include="postProcessorPotential3D_elliptical.h">
+      <Filter>Header Files\Potential_3D_elliptical</Filter>
+    </ClInclude>
+    <ClInclude Include="systemSolverPotential3D_elliptical.h">
+      <Filter>Header Files\Potential_3D_elliptical</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
