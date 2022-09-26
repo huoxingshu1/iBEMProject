@@ -23,7 +23,7 @@ public:
 	double k_0_ = 0.0;
 	double heat_src = 0.0;
 	int Dimension = 3;
-	double** s_pt;
+	double* s_pt;
 
 	string particleInput = "position.txt";
 	string bemInput = "BEM.txt";
@@ -48,8 +48,9 @@ public:
 	MatrixXd GMAT;
 	VectorXd U;
 	VectorXd T;
-
-	VectorXd b;
+	VectorXd f;
+	VectorXd Ff;
+	VectorXd Fb; 
 
 	void Readparticle_num() {
 

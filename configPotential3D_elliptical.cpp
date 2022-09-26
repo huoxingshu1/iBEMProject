@@ -64,9 +64,10 @@ void configPotential3D_elliptical::ReadBEM_info() {
 	GMAT = MatrixXd::Zero(NN + 12 * num, 4 * NE);
 	U = VectorXd::Zero(3 * NN + 12 * num);
 	T = VectorXd::Zero(4 * NE);
-	
-	b = VectorXd::Zero(NN + 12 * num);
+	Ff = VectorXd::Zero(9 * num);
+	Fb = VectorXd::Zero(NN);
 
+	b = VectorXd::Zero(NN + 12 * num);
 	myfile.close();
 
 }
@@ -78,12 +79,13 @@ void configPotential3D_elliptical::Readpartical_info() {
 	heat_src = 0.0;
 	myfile8 >> num;
 	myfile8 >> k_1;
+	cout << "k_1 = " << k_1 << endl;
 
-	MatrixXd eigen_point = MatrixXd::Zero(num, 3);
-	MatrixXd radius = MatrixXd::Zero(num, 3);
-	MatrixXd direc = MatrixXd::Zero(3 * num, 3);
-	VectorXi orient = VectorXi::Zero(num);
-	VectorXi type = VectorXi::Zero(num);
+	eigen_point = MatrixXd::Zero(num, 3);
+	radius = MatrixXd::Zero(num, 3);
+	direc = MatrixXd::Zero(3 * num, 3);
+	orient = VectorXi::Zero(num);
+	type = VectorXi::Zero(num);
 	
 	index_E_i = new int [3 * num];
 	index_E_ij = new int* [3 * num];
@@ -98,10 +100,6 @@ void configPotential3D_elliptical::Readpartical_info() {
 		myfile8 >> direc(3 * KK + 2, 0) >> direc(3 * KK + 2, 1) >> direc(3 * KK + 2, 2);
 	}
 
-
-	for (int KK = 0; KK < num; KK++) {
-		myfile8 >> eigen_point(KK, 0) >> eigen_point(KK, 1) >> eigen_point(KK, 2) >> radius(KK);
-	}
 	myfile8.close();
 
 
@@ -128,5 +126,21 @@ void configPotential3D_elliptical::Readpartical_info() {
 		}
 
 	}
+
+	f = VectorXd::Zero(num);
+	
+	for (int h = 0; h < num; h++) {
+		f(h) = heat_src;
+	}
+	cout << "partical position" << endl;
+	cout << eigen_point << endl;
+	cout << "radius" << endl;
+	cout << radius << endl;
+	cout << "direc" << endl;
+	cout << direc << endl;
+	cout << "orient" << endl;
+	cout << orient << endl;
+	cout << "type" << endl;
+	cout << type << endl;
 
 }

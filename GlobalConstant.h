@@ -27,6 +27,7 @@ const double Pi = 3.141592653589793;
 const int d[3][3] = { 1,0,0,0,1,0,0,0,1 };
 const int map[3][3] = { 1,2,2,0,1,2,0,0,1 };
 const int surface[4][3] = { {0,2,1},{1,2,3},{0,3,2},{0,1,3} };
+const int dd[4] = { 0, 1, 2, 0 };
 /*
     Add Gaussian integral points to use subdomain collcation method for 2D arbitrary cases
 */

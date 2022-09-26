@@ -32,6 +32,10 @@ namespace  BEMPotential3D {
 
 	double Green_01(double* x, int i);
 
+	double Green_02(double* x, int i, int j);
+
+	double Green_03(double* x, int i, int j, int k);
+
 	void UK(double* x, double r, double& UP);
 
 	void TK(double* x, double r, double& TP, double* Vnorm);

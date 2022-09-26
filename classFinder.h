@@ -47,6 +47,12 @@
 #include"postProcessorElastic3D_arbitrary.h"
 #include "systemSolverElastic3D_arbitrary.h"
 
+// 3D potential elliptical library
+#include "integratorPotential3D_elliptical.h"
+#include "BEMBuilderPotential3D.h"
+#include "postProcessorPotential3D_elliptical.h"
+#include "systemSolverPotential3D_elliptical.h"
+
 /*
 This header file allows iBEM to locate which specific problems to be run
 
@@ -72,6 +78,10 @@ shared_ptr<integrator> getIntegrator(string type) {
 	else if (type == "integratorElastic3D_arbitrary") {
 		return make_shared <integratorElastic3D_arbitrary>();
 	}
+
+	else if (type == "integratorPotential3D_elliptical") {
+		return make_shared <integratorPotential3D_elliptical>();
+	}
 	return NULL;
 }
 
@@ -94,6 +104,9 @@ shared_ptr<BEMBuilder> getBEMBuilder(string type) {
 		return make_shared< BEMBuilderElastic3D_arbitrary>();
 	}
 
+	else if (type == "BEMBuilderPotential3D") {
+		return make_shared< BEMBuilderPotential3D>();
+	}
 	return NULL;
 }
 
@@ -110,6 +123,9 @@ shared_ptr<postProcessor> getPostProcessor(string type) {
 	else if (type == "postProcessorElastic3D_arbitrary") {
 		return make_shared< postProcessorElastic3D_arbitrary>();
 	}
+	else if (type == "postProcessorPotential3D_elliptical") {
+		return make_shared< postProcessorPotential3D_elliptical>();
+	}
 	return NULL;
 }
 
@@ -125,6 +141,9 @@ shared_ptr<systemSolver> getSystemSolver(string type) {
 	}
 	else if (type == "systemSolverElastic3D_arbitrary") {
 		return make_shared < systemSolverElastic3D_arbitrary>();
+	}
+	else if (type == "systemSolverPotential3D_elliptical") {
+		return make_shared < systemSolverPotential3D_elliptical>();
 	}
 
 	return NULL;

@@ -310,6 +310,20 @@ double BEMPotential3D::Green_01(double* x, int i) {
 	return G_ijk;
 }
 
+double BEMPotential3D::Green_02(double* x, int i, int j) {
+
+	double G_ijkl = -1.0 / (4 * Pi * k_0) * fR_02(x, i, j, 0);
+
+	return G_ijkl;
+}
+
+double BEMPotential3D::Green_03(double* x, int i, int j, int k) {
+
+	double G_ijkls = -1.0 / (4 * Pi * k_0) * fR_03(x, i, j, k, 0);
+
+	return G_ijkls;
+}
+
 void BEMPotential3D::UK(double* x, double r, double& UP)
 {
 	UP = -1.0 / (4 * Pi * k_0) * (1.0 / r);
